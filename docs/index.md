@@ -1,4 +1,4 @@
-# Welcome to Artinet SDK
+# Welcome to Artinet SDK!
 
 ## What is the Artinet SDK?
 

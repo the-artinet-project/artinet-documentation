@@ -1,6 +1,6 @@
 # Quick Start Guide: Artinet SDK
 
-Welcome to the Artinet SDK! This guide will help you get your first A2A-compliant agent up and running and show you how to interact with it.
+This guide will help you get your first A2A-compliant agent up and running and show you how to interact with it.
 
 ## Installation
 

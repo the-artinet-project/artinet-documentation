@@ -6,11 +6,12 @@ site_description: Documentation and API reference for the Artinet SDK - Agent2Ag
 
 theme:
   name: material
-  logo: images/artinet-logo.jpeg
-  favicon: images/artinet-icon.png.webp
+  logo: images/artinet-logo.png
+  favicon: images/artinet-logo.ico
+  custom_dir: docs/overrides
   palette:
-    primary: indigo
-    accent: indigo
+    primary: black
+    accent: black
   features:
     - navigation.tabs
     - navigation.sections
@@ -21,6 +22,18 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascript/extra.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/the-artinet-project/artinet-sdk
+      name: Artinet SDK on GitHub
+
 nav:
   - Home: index.md
   - SDK:
@@ -30,7 +43,7 @@ nav:
   - Agents:
     - Quick Agents: agents/quick_agents.md
   - API Reference: 
-    - Coming Soon: api/index.md
+    - API Reference: api/index.md
   - Contributing:
     - Code Documentation: contributing/code-documentation.md
 
@@ -52,5 +65,5 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
 plugins:
-  - search 
+  - search
 
