@@ -1,0 +1,75 @@
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.md-typeset pre {
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.md-typeset pre:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.md-nav__link {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+
+.md-button {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
+}
+
+.md-button:hover {
+  transform: translateY(-2px);
+}
+
+
+.md-header {
+  transition: box-shadow 0.3s ease;
+}
+
+
+.md-typeset .admonition {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.md-typeset .admonition:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.md-typeset .grid.cards > :is(ul, ol) > li, 
+.md-typeset .grid > .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.md-typeset .grid.cards > :is(ul, ol) > li:hover, 
+.md-typeset .grid > .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.md-typeset table:not([class]) {
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.md-typeset table:not([class]):hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.md-typeset table:not([class]) tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: rgba(86, 111, 247, 0.05);
+}
