@@ -1,23 +1,56 @@
-site_name: Artinet Wiki
-site_url: https://the-artinet-project.github.io/artinet-wiki
+site_name: Artinet SDK Documentation
+site_url: https://the-artinet-project.github.io/artinet-wiki/
 repo_url: https://github.com/the-artinet-project/artinet-sdk
-edit_uri: ""
+repo_name: the-artinet-project/artinet-sdk
+site_description: Documentation and API reference for the Artinet SDK - Agent2Agent Protocol Implementation
 
 theme:
   name: material
+  logo: images/artinet-logo.jpeg
+  favicon: images/artinet-icon.png.webp
   palette:
-    scheme: default
-    primary: black     
-    accent: deep orange
-  logo: images/logo.png  
-  favicon: images/favicon.png
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
 
 nav:
   - Home: index.md
-  - SDK Guide:
-      - Quick-start: sdk/quickstart.md
-      - Core classes: sdk/core.md
-      - Examples: sdk/examples.md
-  - Quick-Agents (alpha): agents/quick_agents.md
-  - API Reference: api/index.html   
+  - SDK:
+    - Quickstart: sdk/quickstart.md
+    - Core API: sdk/core.md
+    - Examples: sdk/examples.md
+  - Agents:
+    - Quick Agents: agents/quick_agents.md
+  - API Reference: 
+    - Coming Soon: api/index.md
+  - Contributing:
+    - Code Documentation: contributing/code-documentation.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - tables
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+  - search 
 
