@@ -1,1 +1,23 @@
-site_name: My Docs
+site_name: Artinet Wiki
+site_url: https://the-artinet-project.github.io/artinet-wiki
+repo_url: https://github.com/the-artinet-project/artinet-sdk
+edit_uri: ""
+
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: black     
+    accent: deep orange
+  logo: images/logo.png  
+  favicon: images/favicon.png
+
+nav:
+  - Home: index.md
+  - SDK Guide:
+      - Quick-start: sdk/quickstart.md
+      - Core classes: sdk/core.md
+      - Examples: sdk/examples.md
+  - Quick-Agents (alpha): agents/quick_agents.md
+  - API Reference: api/index.html   
+
