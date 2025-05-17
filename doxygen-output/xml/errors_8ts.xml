@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="errors_8ts" kind="file" language="C++">
+    <compoundname>errors.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>NextFunction,<sp/>Request,<sp/>Response<sp/>}<sp/>from<sp/>&quot;express&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AErrorType,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInvalidParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInvalidRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeParseError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInternalError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeMethodNotFound,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeTaskNotFound,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeUnsupportedOperation,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeTaskNotCancelable,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodePushNotificationNotSupported,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskYieldUpdate,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logError<sp/>}<sp/>from<sp/>&quot;../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCError<sp/>}<sp/>from<sp/>&quot;../../types/schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>class<sp/>SystemError&lt;ErrorData<sp/>=<sp/>unknown,<sp/>C<sp/>extends<sp/>number<sp/>=<sp/>number&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>Error</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>implements<sp/>A2AErrorType</highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>code:<sp/>C;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data:<sp/>ErrorData;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>constructor(message:<sp/>string,<sp/>code:<sp/>C,<sp/>data:<sp/>ErrorData)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>super(message);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.name<sp/>=<sp/>&quot;RpcError&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.message<sp/>=<sp/>message;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.code<sp/>=<sp/>code;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.data<sp/>=<sp/>data;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>Factory<sp/>methods<sp/>for<sp/>common<sp/>errors</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>PARSE_ERROR<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeParseError&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Invalid<sp/>JSON<sp/>payload&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeParseError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>METHOD_NOT_FOUND<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeMethodNotFound&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Method<sp/>not<sp/>found&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeMethodNotFound,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>INVALID_REQUEST<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeInvalidRequest&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Request<sp/>payload<sp/>validation<sp/>error&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeInvalidRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>INVALID_PARAMS<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeInvalidParams&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Invalid<sp/>parameters&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeInvalidParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>INTERNAL_ERROR<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeInternalError&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Internal<sp/>error&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeInternalError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>TASK_NOT_FOUND<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeTaskNotFound&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Task<sp/>not<sp/>found&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeTaskNotFound,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>TASK_NOT_CANCELABLE<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeTaskNotCancelable&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Task<sp/>cannot<sp/>be<sp/>canceled&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeTaskNotCancelable,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>UNSUPPORTED_OPERATION<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(data:<sp/>ErrorData)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodeUnsupportedOperation&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;This<sp/>operation<sp/>is<sp/>not<sp/>supported&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodeUnsupportedOperation,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>PUSH_NOTIFICATION_NOT_SUPPORTED<sp/>=<sp/>&lt;ErrorData<sp/>=<sp/>unknown&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data:<sp/>ErrorData</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>new<sp/>SystemError&lt;ErrorData,<sp/>ErrorCodePushNotificationNotSupported&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;Push<sp/>Notification<sp/>is<sp/>not<sp/>supported&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>ErrorCodePushNotificationNotSupported,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>FAILED_UPDATE<sp/>=<sp/>(message:<sp/>string):<sp/>TaskYieldUpdate<sp/>=&gt;<sp/>({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>state:<sp/>&quot;failed&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>role:<sp/>&quot;agent&quot;<sp/>as<sp/>const,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>parts:<sp/>[{<sp/>type:<sp/>&quot;text&quot;<sp/>as<sp/>const,<sp/>text:<sp/>message<sp/>}],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal">});</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Express<sp/>error<sp/>handler<sp/>middleware.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorHandler<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>err:<sp/>Error,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>req:<sp/>Request,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res:<sp/>Response,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>next:<sp/>NextFunction</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>void;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Express<sp/>error<sp/>handler<sp/>middleware.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>errorHandler(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>err:<sp/>Error,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>req:<sp/>Request,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res:<sp/>Response,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>next:<sp/>NextFunction</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(res.headersSent)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>next(err);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logError(&quot;errorHandler&quot;,<sp/>JSON.stringify(err),<sp/>err);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>let<sp/>reqId<sp/>=<sp/>null;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(req.body<sp/>&amp;&amp;<sp/>typeof<sp/>req.body<sp/>===<sp/>&quot;object&quot;<sp/>&amp;&amp;<sp/>&quot;id&quot;<sp/>in<sp/>req.body)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>reqId<sp/>=<sp/>req.body.id;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(e)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;A2AServer&quot;,<sp/>&quot;Error<sp/>extracting<sp/>request<sp/>ID&quot;,<sp/>e);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>let<sp/>jsonRpcError:<sp/>JSONRPCError&lt;unknown<sp/>|<sp/>null,<sp/>number&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(err<sp/>instanceof<sp/>SystemError)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>jsonRpcError<sp/>=<sp/>{<sp/>code:<sp/>err.code,<sp/>message:<sp/>err.message,<sp/>data:<sp/>err.data<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>else<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>internalError<sp/>=<sp/>INTERNAL_ERROR(err.stack);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>jsonRpcError<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>code:<sp/>internalError.code,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>message:<sp/>internalError.message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>data:<sp/>internalError.data,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>errorResponse<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>jsonrpc:<sp/>&quot;2.0&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>id:<sp/>reqId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>error:<sp/>jsonRpcError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res.status(200).json(errorResponse);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common/errors.ts"/>
+  </compounddef>
+</doxygen>

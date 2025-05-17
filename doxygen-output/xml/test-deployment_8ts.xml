@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="test-deployment_8ts" kind="file" language="C++">
+    <compoundname>test-deployment.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ServerDeploymentRequestParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ServerDeploymentResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TestServerDeploymentRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>A2AClient<sp/>}<sp/>from<sp/>&quot;../../client/a2a-client.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>executeStreamEvents<sp/>}<sp/>from<sp/>&quot;../../transport/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logDebug<sp/>}<sp/>from<sp/>&quot;../../index.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@fileoverview<sp/>Provides<sp/>a<sp/>utility<sp/>for<sp/>testing<sp/>agent<sp/>deployments.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>module<sp/>allows<sp/>developers<sp/>to<sp/>simulate<sp/>the<sp/>deployment<sp/>of<sp/>an<sp/>agent&apos;s<sp/>code</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>to<sp/>a<sp/>sandboxed<sp/>environment<sp/>and<sp/>then<sp/>send<sp/>test<sp/>tasks<sp/>to<sp/>it<sp/>to<sp/>verify<sp/>its<sp/>behavior.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">const<sp/>testExecuteStreamEvents<sp/>=<sp/>executeStreamEvents<sp/>as<sp/>&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Req<sp/>extends<sp/>A2ARequest<sp/>|<sp/>TestServerDeploymentRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>StreamRes<sp/>extends<sp/>JSONRPCResponse<sp/>|<sp/>ServerDeploymentResponse,</highlight></codeline>
+<codeline><highlight class="normal">&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>baseUrl:<sp/>URL,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>Req[&quot;method&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>Req[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>customHeaders:<sp/>Record&lt;string,<sp/>string&gt;</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>AsyncIterable&lt;NonNullable&lt;StreamRes[&quot;result&quot;]&gt;&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Tests<sp/>an<sp/>agent<sp/>deployment<sp/>by<sp/>sending<sp/>its<sp/>code<sp/>to<sp/>a<sp/>test<sp/>deployment<sp/>endpoint</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>and<sp/>then<sp/>issuing<sp/>a<sp/>series<sp/>of<sp/>test<sp/>task<sp/>requests<sp/>to<sp/>the<sp/>deployed<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>function<sp/>first<sp/>initiates<sp/>a<sp/>deployment<sp/>to<sp/>`https://agents.artinet.io/test/deploy`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>streaming<sp/>deployment<sp/>status<sp/>events.<sp/>Once<sp/>a<sp/>successful<sp/>deployment<sp/>event<sp/>with<sp/>a<sp/>URL</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>is<sp/>received,<sp/>it<sp/>creates<sp/>an<sp/>`A2AClient`<sp/>for<sp/>that<sp/>URL<sp/>and<sp/>sends<sp/>each<sp/>of<sp/>the<sp/>provided</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>`SendTaskRequest`s<sp/>to<sp/>the<sp/>deployed<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>It<sp/>yields<sp/>all<sp/>events<sp/>from<sp/>the<sp/>deployment<sp/>stream<sp/>and<sp/>all<sp/>resulting<sp/>tasks<sp/>from<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>test<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>params<sp/>-<sp/>The<sp/>parameters<sp/>for<sp/>the<sp/>server<sp/>deployment,<sp/>including<sp/>the<sp/>agent&apos;s</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>name,<sp/>agent<sp/>card,<sp/>and<sp/>the<sp/>bundled<sp/>code.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>requests<sp/>-<sp/>An<sp/>array<sp/>of<sp/>`SendTaskRequest`<sp/>objects<sp/>to<sp/>be<sp/>sent<sp/>to<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>deployed<sp/>agent<sp/>for<sp/>testing.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>An<sp/>asynchronous<sp/>iterable<sp/>that<sp/>yields<sp/>`ServerDeploymentResponse`<sp/>events</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>during<sp/>the<sp/>deployment<sp/>phase,<sp/>and<sp/>`Task`<sp/>objects<sp/>resulting<sp/>from<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>test<sp/>requests.<sp/>Yields<sp/>`null`<sp/>for<sp/>other<sp/>event<sp/>types<sp/>not<sp/>explicitly<sp/>handled.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function*<sp/>testDeployment(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>ServerDeploymentRequestParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>requests:<sp/>SendTaskRequest[]</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>AsyncIterable&lt;Task<sp/>|<sp/>ServerDeploymentResponse<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>generator<sp/>=<sp/>await<sp/>testExecuteStreamEvents(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>new<sp/>URL(&quot;https://agents.artinet.io/test/deploy&quot;),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;/test/deploy&quot;<sp/>as<sp/>any,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params<sp/>as<sp/>any,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>{}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>requestExecutor<sp/>=<sp/>async<sp/>(url:<sp/>string)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>async<sp/>function*<sp/>()<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>testClient<sp/>=<sp/>new<sp/>A2AClient(url);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>(const<sp/>request<sp/>of<sp/>requests)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>task<sp/>=<sp/>await<sp/>testClient.sendTask({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>request.params.id,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>message:<sp/>request.params.message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;testDeployment&quot;,<sp/>&quot;task:<sp/>&quot;,<sp/>task);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>task;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>for<sp/>await<sp/>(const<sp/>event<sp/>of<sp/>generator)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>deploymentEvent:<sp/>ServerDeploymentResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>event<sp/>as<sp/>ServerDeploymentResponse;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result.deploymentId<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result.url</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;testDeployment&quot;,<sp/>&quot;deployment-event:<sp/>&quot;,<sp/>deploymentEvent);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>event;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>innerGenerator<sp/>=<sp/>await<sp/>requestExecutor(deploymentEvent.result.url);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>await<sp/>(const<sp/>task<sp/>of<sp/>innerGenerator())<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>task;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>else<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>event;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;testDeployment&quot;,<sp/>&quot;event-received:<sp/>&quot;,<sp/>event);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment/test-deployment.ts"/>
+  </compounddef>
+</doxygen>

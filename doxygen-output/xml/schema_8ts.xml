@@ -1,0 +1,887 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="schema_8ts" kind="file" language="C++">
+    <compoundname>schema.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">//<sp/>===<sp/>JSON-RPC<sp/>Base<sp/>Structures</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Base<sp/>interface<sp/>for<sp/>identifying<sp/>JSON-RPC<sp/>messages.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCMessageIdentifier<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Request<sp/>identifier.<sp/>Can<sp/>be<sp/>a<sp/>string,<sp/>number.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Responses<sp/>must<sp/>have<sp/>the<sp/>same<sp/>ID<sp/>as<sp/>the<sp/>request<sp/>they<sp/>relate<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Notifications<sp/>(requests<sp/>without<sp/>an<sp/>expected<sp/>response)<sp/>should<sp/>omit<sp/>the<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id?:<sp/>number<sp/>|<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Base<sp/>interface<sp/>for<sp/>all<sp/>JSON-RPC<sp/>messages<sp/>(Requests<sp/>and<sp/>Responses).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCMessage<sp/>extends<sp/>JSONRPCMessageIdentifier<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Specifies<sp/>the<sp/>JSON-RPC<sp/>version.<sp/>Must<sp/>be<sp/>&quot;2.0&quot;.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>&quot;2.0&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@const<sp/>&quot;2.0&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>jsonrpc?:<sp/>&quot;2.0&quot;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>request<sp/>object<sp/>base<sp/>structure.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Specific<sp/>request<sp/>types<sp/>should<sp/>extend<sp/>this.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCRequest<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>name<sp/>of<sp/>the<sp/>method<sp/>to<sp/>be<sp/>invoked.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>method.<sp/>Can<sp/>be<sp/>a<sp/>structured<sp/>object,<sp/>an<sp/>array,<sp/>or<sp/>omitted.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Specific<sp/>request<sp/>interfaces<sp/>will<sp/>define<sp/>the<sp/>exact<sp/>type.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params?:<sp/>unknown;<sp/>//<sp/>Base<sp/>type;<sp/>specific<sp/>requests<sp/>will<sp/>override</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>error<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCError&lt;Data<sp/>=<sp/>unknown,<sp/>Code<sp/>=<sp/>number&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>A<sp/>number<sp/>indicating<sp/>the<sp/>error<sp/>type<sp/>that<sp/>occurred.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>code:<sp/>Code;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>A<sp/>string<sp/>providing<sp/>a<sp/>short<sp/>description<sp/>of<sp/>the<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Additional<sp/>data<sp/>about<sp/>the<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data:<sp/>Data;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>response<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCResponse&lt;R<sp/>=<sp/>unknown,<sp/>E<sp/>=<sp/>unknown&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>result<sp/>of<sp/>the<sp/>method<sp/>invocation.<sp/>Required<sp/>on<sp/>success.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Should<sp/>be<sp/>omitted<sp/>if<sp/>an<sp/>error<sp/>occurred.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>result?:<sp/>R;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>An<sp/>error<sp/>object<sp/>if<sp/>an<sp/>error<sp/>occurred<sp/>during<sp/>the<sp/>request.<sp/>Required<sp/>on<sp/>failure.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Should<sp/>be<sp/>omitted<sp/>if<sp/>the<sp/>request<sp/>was<sp/>successful.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error?:<sp/>JSONRPCError&lt;E&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>===<sp/>Core<sp/>A2A<sp/>Data<sp/>Structures</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>state<sp/>of<sp/>a<sp/>task<sp/>within<sp/>the<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>An<sp/>enumeration.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskState<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;submitted&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;working&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;input-required&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;completed&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;canceled&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;failed&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>&quot;unknown&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>authentication<sp/>schemes<sp/>and<sp/>credentials<sp/>for<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentAuthentication<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>List<sp/>of<sp/>supported<sp/>authentication<sp/>schemes.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>schemes:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Credentials<sp/>for<sp/>authentication.<sp/>Can<sp/>be<sp/>a<sp/>string<sp/>(e.g.,<sp/>token)<sp/>or<sp/>omitted<sp/>if<sp/>not<sp/>required<sp/>initially.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>credentials?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Describes<sp/>the<sp/>capabilities<sp/>of<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentCapabilities<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Indicates<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>streaming<sp/>responses.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>false</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>streaming?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Indicates<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>push<sp/>notification<sp/>mechanisms.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>false</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushNotifications?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Indicates<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>providing<sp/>state<sp/>transition<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>false</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>stateTransitionHistory?:<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>provider<sp/>or<sp/>organization<sp/>behind<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentProvider<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>name<sp/>of<sp/>the<sp/>organization<sp/>providing<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>organization:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>URL<sp/>associated<sp/>with<sp/>the<sp/>agent<sp/>provider.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>a<sp/>specific<sp/>skill<sp/>or<sp/>capability<sp/>offered<sp/>by<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentSkill<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Unique<sp/>identifier<sp/>for<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Human-readable<sp/>name<sp/>of<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>description<sp/>of<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>list<sp/>of<sp/>tags<sp/>associated<sp/>with<sp/>the<sp/>skill<sp/>for<sp/>categorization.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>tags?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>list<sp/>of<sp/>example<sp/>inputs<sp/>or<sp/>use<sp/>cases<sp/>for<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>examples?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>list<sp/>of<sp/>input<sp/>modes<sp/>supported<sp/>by<sp/>this<sp/>skill,<sp/>overriding<sp/>agent<sp/>defaults.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>inputModes?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>list<sp/>of<sp/>output<sp/>modes<sp/>supported<sp/>by<sp/>this<sp/>skill,<sp/>overriding<sp/>agent<sp/>defaults.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>outputModes?:<sp/>string[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>metadata<sp/>card<sp/>for<sp/>an<sp/>agent,<sp/>describing<sp/>its<sp/>properties<sp/>and<sp/>capabilities.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentCard<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>name<sp/>of<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>An<sp/>optional<sp/>description<sp/>of<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>base<sp/>URL<sp/>endpoint<sp/>for<sp/>interacting<sp/>with<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Information<sp/>about<sp/>the<sp/>provider<sp/>of<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>provider?:<sp/>AgentProvider;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>version<sp/>identifier<sp/>for<sp/>the<sp/>agent<sp/>or<sp/>its<sp/>API.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>version:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>An<sp/>optional<sp/>URL<sp/>pointing<sp/>to<sp/>the<sp/>agent&apos;s<sp/>documentation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>documentationUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>capabilities<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>capabilities:<sp/>AgentCapabilities;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Authentication<sp/>details<sp/>required<sp/>to<sp/>interact<sp/>with<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>authentication?:<sp/>AgentAuthentication;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Default<sp/>input<sp/>modes<sp/>supported<sp/>by<sp/>the<sp/>agent<sp/>(e.g.,<sp/>&apos;text&apos;,<sp/>&apos;file&apos;,<sp/>&apos;json&apos;).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>[&quot;text&quot;]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>defaultInputModes?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Default<sp/>output<sp/>modes<sp/>supported<sp/>by<sp/>the<sp/>agent<sp/>(e.g.,<sp/>&apos;text&apos;,<sp/>&apos;file&apos;,<sp/>&apos;json&apos;).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>[&quot;text&quot;]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>defaultOutputModes?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>List<sp/>of<sp/>specific<sp/>skills<sp/>offered<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>skills:<sp/>AgentSkill[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>FileContentBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>name<sp/>of<sp/>the<sp/>file.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>MIME<sp/>type<sp/>of<sp/>the<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>mimeType?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>File<sp/>content<sp/>encoded<sp/>as<sp/>a<sp/>Base64<sp/>string.<sp/>Use<sp/>this<sp/>OR<sp/>`uri`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>bytes?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>URI<sp/>pointing<sp/>to<sp/>the<sp/>file<sp/>content.<sp/>Use<sp/>this<sp/>OR<sp/>`bytes`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>uri?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>FileContentBytes<sp/>=<sp/>FileContentBase<sp/>&amp;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/*<sp/>File<sp/>content<sp/>encoded<sp/>as<sp/>a<sp/>Base64<sp/>string.<sp/>Use<sp/>this<sp/>OR<sp/>`uri`.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>bytes:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>uri?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>FileContentUri<sp/>=<sp/>FileContentBase<sp/>&amp;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**<sp/>URI<sp/>pointing<sp/>to<sp/>the<sp/>file<sp/>content.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>uri:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>bytes?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>content<sp/>of<sp/>a<sp/>file,<sp/>either<sp/>as<sp/>base64<sp/>encoded<sp/>bytes<sp/>or<sp/>a<sp/>URI.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Ensures<sp/>that<sp/>either<sp/>&apos;bytes&apos;<sp/>or<sp/>&apos;uri&apos;<sp/>is<sp/>provided,<sp/>but<sp/>not<sp/>both.<sp/>(Note:<sp/>This<sp/>constraint<sp/>is<sp/>informational<sp/>in<sp/>TypeScript<sp/>types).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>FileContent<sp/>=<sp/>FileContentBytes<sp/>|<sp/>FileContentUri;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>part<sp/>of<sp/>a<sp/>message<sp/>containing<sp/>text<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TextPart<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>type:<sp/>&quot;text&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>text<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>text:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>text<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>part<sp/>of<sp/>a<sp/>message<sp/>containing<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>FilePart<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Type<sp/>identifier<sp/>for<sp/>this<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>type:<sp/>&quot;file&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>file<sp/>content,<sp/>provided<sp/>either<sp/>inline<sp/>or<sp/>via<sp/>URI.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>file:<sp/>FileContent;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>file<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>part<sp/>of<sp/>a<sp/>message<sp/>containing<sp/>structured<sp/>data<sp/>(JSON).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>DataPart<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Type<sp/>identifier<sp/>for<sp/>this<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>type:<sp/>&quot;data&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>structured<sp/>data<sp/>content<sp/>as<sp/>a<sp/>JSON<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>data<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>single<sp/>part<sp/>of<sp/>a<sp/>multi-part<sp/>message.<sp/>Can<sp/>be<sp/>text,<sp/>file,<sp/>or<sp/>data.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>Part<sp/>=<sp/>TextPart<sp/>|<sp/>FilePart<sp/>|<sp/>DataPart;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>an<sp/>artifact<sp/>generated<sp/>or<sp/>used<sp/>by<sp/>a<sp/>task,<sp/>potentially<sp/>composed<sp/>of<sp/>multiple<sp/>parts.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Artifact<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>name<sp/>for<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>description<sp/>of<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>constituent<sp/>parts<sp/>of<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>parts:<sp/>Part[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>index<sp/>for<sp/>ordering<sp/>artifacts,<sp/>especially<sp/>relevant<sp/>in<sp/>streaming<sp/>or<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>0</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>index?:<sp/>number;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>flag<sp/>indicating<sp/>if<sp/>this<sp/>artifact<sp/>content<sp/>should<sp/>append<sp/>to<sp/>previous<sp/>content<sp/>(for<sp/>streaming).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>append?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>flag<sp/>indicating<sp/>if<sp/>this<sp/>is<sp/>the<sp/>last<sp/>chunk<sp/>of<sp/>data<sp/>for<sp/>this<sp/>artifact<sp/>(for<sp/>streaming).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>lastChunk?:<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>message<sp/>exchanged<sp/>between<sp/>a<sp/>user<sp/>and<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Message<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>role<sp/>of<sp/>the<sp/>sender<sp/>(user<sp/>or<sp/>agent).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>role:<sp/>&quot;user&quot;<sp/>|<sp/>&quot;agent&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>content<sp/>of<sp/>the<sp/>message,<sp/>composed<sp/>of<sp/>one<sp/>or<sp/>more<sp/>parts.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>parts:<sp/>Part[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>status<sp/>of<sp/>a<sp/>task<sp/>at<sp/>a<sp/>specific<sp/>point<sp/>in<sp/>time.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskStatus<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>current<sp/>state<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>state:<sp/>TaskState;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>An<sp/>optional<sp/>message<sp/>associated<sp/>with<sp/>the<sp/>current<sp/>status<sp/>(e.g.,<sp/>progress<sp/>update,<sp/>final<sp/>response).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message?:<sp/>Message;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>timestamp<sp/>when<sp/>this<sp/>status<sp/>was<sp/>recorded<sp/>(ISO<sp/>8601<sp/>format).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@format<sp/>date-time</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>timestamp?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>task<sp/>being<sp/>processed<sp/>by<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Task<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Unique<sp/>identifier<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>identifier<sp/>for<sp/>the<sp/>session<sp/>this<sp/>task<sp/>belongs<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sessionId?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>current<sp/>status<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>status:<sp/>TaskStatus;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>list<sp/>of<sp/>artifacts<sp/>associated<sp/>with<sp/>the<sp/>task<sp/>(e.g.,<sp/>outputs,<sp/>intermediate<sp/>files).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifacts?:<sp/>Artifact[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>history<sp/>of<sp/>messages<sp/>exchanged<sp/>within<sp/>a<sp/>task&apos;s<sp/>session.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskHistory<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>List<sp/>of<sp/>messages<sp/>in<sp/>chronological<sp/>order.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>[]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>messageHistory?:<sp/>Message[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>status<sp/>update<sp/>event<sp/>for<sp/>a<sp/>task,<sp/>typically<sp/>used<sp/>in<sp/>streaming<sp/>scenarios.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskStatusUpdateEvent<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>being<sp/>updated.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>new<sp/>status<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>status:<sp/>TaskStatus;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Flag<sp/>indicating<sp/>if<sp/>this<sp/>is<sp/>the<sp/>final<sp/>update<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>false</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>final?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>update<sp/>event.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>an<sp/>artifact<sp/>update<sp/>event<sp/>for<sp/>a<sp/>task,<sp/>typically<sp/>used<sp/>in<sp/>streaming<sp/>scenarios.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskArtifactUpdateEvent<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>being<sp/>updated.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>new<sp/>or<sp/>updated<sp/>artifact<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifact:<sp/>Artifact;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Flag<sp/>indicating<sp/>if<sp/>this<sp/>is<sp/>the<sp/>final<sp/>update<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>false</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>final?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>update<sp/>event.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>Alias<sp/>for<sp/>backward<sp/>compatibility</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskUpdateEvent<sp/>=<sp/>TaskStatusUpdateEvent;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>===<sp/>Error<sp/>Types<sp/>(Standard<sp/>and<sp/>A2A)</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>JSON<sp/>Parse<sp/>Error<sp/>(-32700).<sp/>Invalid<sp/>JSON<sp/>was<sp/>received<sp/>by<sp/>the<sp/>server.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeParseError<sp/>=<sp/>-32700;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeParseError<sp/>=<sp/>typeof<sp/>ErrorCodeParseError;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Invalid<sp/>Request<sp/>(-32600).<sp/>The<sp/>JSON<sp/>sent<sp/>is<sp/>not<sp/>a<sp/>valid<sp/>Request<sp/>object.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInvalidRequest<sp/>=<sp/>-32600;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInvalidRequest<sp/>=<sp/>typeof<sp/>ErrorCodeInvalidRequest;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Method<sp/>Not<sp/>Found<sp/>(-32601).<sp/>The<sp/>method<sp/>does<sp/>not<sp/>exist<sp/>/<sp/>is<sp/>not<sp/>available.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeMethodNotFound<sp/>=<sp/>-32601;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeMethodNotFound<sp/>=<sp/>typeof<sp/>ErrorCodeMethodNotFound;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Invalid<sp/>Params<sp/>(-32602).<sp/>Invalid<sp/>method<sp/>parameter(s).<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInvalidParams<sp/>=<sp/>-32602;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInvalidParams<sp/>=<sp/>typeof<sp/>ErrorCodeInvalidParams;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Internal<sp/>Error<sp/>(-32603).<sp/>Internal<sp/>JSON-RPC<sp/>error.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInternalError<sp/>=<sp/>-32603;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInternalError<sp/>=<sp/>typeof<sp/>ErrorCodeInternalError;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Task<sp/>Not<sp/>Found<sp/>(-32001).<sp/>The<sp/>specified<sp/>task<sp/>was<sp/>not<sp/>found.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeTaskNotFound<sp/>=<sp/>-32001;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeTaskNotFound<sp/>=<sp/>typeof<sp/>ErrorCodeTaskNotFound;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Task<sp/>Not<sp/>Cancelable<sp/>(-32002).<sp/>The<sp/>specified<sp/>task<sp/>cannot<sp/>be<sp/>canceled.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeTaskNotCancelable<sp/>=<sp/>-32002;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeTaskNotCancelable<sp/>=<sp/>typeof<sp/>ErrorCodeTaskNotCancelable;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Push<sp/>Notification<sp/>Not<sp/>Supported<sp/>(-32003).<sp/>Push<sp/>Notifications<sp/>are<sp/>not<sp/>supported<sp/>for<sp/>this<sp/>operation<sp/>or<sp/>agent.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodePushNotificationNotSupported<sp/>=<sp/>-32003;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodePushNotificationNotSupported<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>typeof<sp/>ErrorCodePushNotificationNotSupported;</highlight></codeline>
+<codeline><highlight class="normal">/**<sp/>Error<sp/>code<sp/>for<sp/>Unsupported<sp/>Operation<sp/>(-32004).<sp/>The<sp/>requested<sp/>operation<sp/>is<sp/>not<sp/>supported<sp/>by<sp/>the<sp/>agent.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeUnsupportedOperation<sp/>=<sp/>-32004;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeUnsupportedOperation<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>typeof<sp/>ErrorCodeUnsupportedOperation;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Union<sp/>of<sp/>all<sp/>well-known<sp/>A2A<sp/>and<sp/>standard<sp/>JSON-RPC<sp/>error<sp/>codes<sp/>defined<sp/>in<sp/>this<sp/>schema.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Use<sp/>this<sp/>type<sp/>for<sp/>checking<sp/>against<sp/>specific<sp/>error<sp/>codes.<sp/>A<sp/>server<sp/>might<sp/>theoretically</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>use<sp/>other<sp/>codes<sp/>within<sp/>the<sp/>valid<sp/>JSON-RPC<sp/>ranges.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>KnownErrorCode<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeParseError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInvalidRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeMethodNotFound</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInvalidParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInternalError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeTaskNotFound</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeTaskNotCancelable</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodePushNotificationNotSupported</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeUnsupportedOperation;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2AError<sp/>=<sp/>JSONRPCError&lt;unknown,<sp/>KnownErrorCode<sp/>|<sp/>number&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>===<sp/>Push<sp/>Notifications<sp/>and<sp/>Authentication<sp/>Info</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Authentication<sp/>information,<sp/>potentially<sp/>including<sp/>additional<sp/>properties<sp/>beyond<sp/>the<sp/>standard<sp/>ones.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>(Note:<sp/>Schema<sp/>allows<sp/>additional<sp/>properties).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AuthenticationInfo<sp/>extends<sp/>AgentAuthentication<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**<sp/>Allow<sp/>any<sp/>other<sp/>properties<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>[key:<sp/>string]:<sp/>any;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Information<sp/>required<sp/>for<sp/>setting<sp/>up<sp/>push<sp/>notifications.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>PushNotificationConfig<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>URL<sp/>endpoint<sp/>where<sp/>the<sp/>agent<sp/>should<sp/>send<sp/>notifications.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>A<sp/>token<sp/>to<sp/>be<sp/>included<sp/>in<sp/>push<sp/>notification<sp/>requests<sp/>for<sp/>verification/authentication.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>token?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>authentication<sp/>details<sp/>needed<sp/>by<sp/>the<sp/>agent<sp/>to<sp/>call<sp/>the<sp/>notification<sp/>URL.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>authentication?:<sp/>AuthenticationInfo;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>push<sp/>notification<sp/>information<sp/>associated<sp/>with<sp/>a<sp/>specific<sp/>task<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>as<sp/>parameters<sp/>for<sp/>`tasks/pushNotification/set`<sp/>and<sp/>as<sp/>a<sp/>result<sp/>type.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskPushNotificationConfig<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>the<sp/>notification<sp/>config<sp/>is<sp/>associated<sp/>with.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>push<sp/>notification<sp/>configuration<sp/>details.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushNotificationConfig:<sp/>PushNotificationConfig;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>=================================================================<sp/>A2A<sp/>Request<sp/>Parameter<sp/>Types</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>=================================================================</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>`tasks/send`<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskSendParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Unique<sp/>identifier<sp/>for<sp/>the<sp/>task<sp/>being<sp/>initiated<sp/>or<sp/>continued.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>identifier<sp/>for<sp/>the<sp/>session<sp/>this<sp/>task<sp/>belongs<sp/>to.<sp/>If<sp/>not<sp/>provided,<sp/>a<sp/>new<sp/>session<sp/>might<sp/>be<sp/>implicitly<sp/>created<sp/>depending<sp/>on<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sessionId?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>message<sp/>content<sp/>to<sp/>send<sp/>to<sp/>the<sp/>agent<sp/>for<sp/>processing.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>Message;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>pushNotification<sp/>information<sp/>for<sp/>receiving<sp/>notifications<sp/>about<sp/>this<sp/>task.<sp/>Requires<sp/>agent<sp/>capability.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushNotification?:<sp/>PushNotificationConfig;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>parameter<sp/>to<sp/>specify<sp/>how<sp/>much<sp/>message<sp/>history<sp/>to<sp/>include<sp/>in<sp/>the<sp/>response.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>historyLength?:<sp/>number;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>associated<sp/>with<sp/>sending<sp/>this<sp/>message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Basic<sp/>parameters<sp/>used<sp/>for<sp/>task<sp/>ID<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>by:<sp/>`tasks/cancel`,<sp/>`tasks/pushNotification/get`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskIdParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>unique<sp/>identifier<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>to<sp/>include<sp/>with<sp/>the<sp/>operation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Parameters<sp/>used<sp/>for<sp/>querying<sp/>task-related<sp/>information<sp/>by<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>by:<sp/>`tasks/get`,<sp/>`tasks/getHistory`,<sp/>`tasks/subscribe`,<sp/>`tasks/resubscribe`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskQueryParams<sp/>extends<sp/>TaskIdParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>history<sp/>length<sp/>to<sp/>retrieve<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>historyLength?:<sp/>number;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>===<sp/>A2A<sp/>Request<sp/>Interfaces</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>send<sp/>a<sp/>message/initiate<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>SendTaskRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>sending<sp/>a<sp/>task<sp/>message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/send&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>send<sp/>task<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskSendParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>retrieve<sp/>the<sp/>current<sp/>state<sp/>of<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>GetTaskRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>getting<sp/>task<sp/>status.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/get&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>get<sp/>task<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskQueryParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>cancel<sp/>a<sp/>currently<sp/>running<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>CancelTaskRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>canceling<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/cancel&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>cancel<sp/>task<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskIdParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>set<sp/>or<sp/>update<sp/>the<sp/>push<sp/>notification<sp/>config<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>SetTaskPushNotificationRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>setting<sp/>a<sp/>task<sp/>notifications.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/pushNotification/set&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>set<sp/>task<sp/>push<sp/>notification<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskPushNotificationConfig;<sp/>//<sp/>Uses<sp/>TaskPushNotificationConfig<sp/>directly<sp/>as<sp/>params</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>retrieve<sp/>the<sp/>currently<sp/>configured<sp/>push<sp/>notification<sp/>configuration<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>GetTaskPushNotificationRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>getting<sp/>task<sp/>notification<sp/>configuration.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/pushNotification/get&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>get<sp/>task<sp/>push<sp/>notification<sp/>config<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskIdParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>resubscribe<sp/>to<sp/>updates<sp/>for<sp/>a<sp/>task<sp/>after<sp/>a<sp/>connection<sp/>interruption.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskResubscriptionRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>resubscribing<sp/>to<sp/>task<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/resubscribe&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>task<sp/>resubscription<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskQueryParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Request<sp/>to<sp/>send<sp/>a<sp/>message/initiate<sp/>a<sp/>task<sp/>and<sp/>subscribe<sp/>to<sp/>streaming<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>SendTaskStreamingRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Method<sp/>name<sp/>for<sp/>sending<sp/>a<sp/>task<sp/>message<sp/>and<sp/>subscribing<sp/>to<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;tasks/sendSubscribe&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Parameters<sp/>for<sp/>the<sp/>streaming<sp/>task<sp/>send<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>TaskSendParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>===<sp/>A2A<sp/>Response<sp/>Interfaces</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>`tasks/send`<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Contains<sp/>the<sp/>Task<sp/>object<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SendTaskResponse<sp/>=<sp/>JSONRPCResponse&lt;Task,<sp/>A2AError&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>streaming<sp/>task<sp/>operation,<sp/>either<sp/>through<sp/>`tasks/sendSubscribe`<sp/>or<sp/>a<sp/>subscription.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Contains<sp/>a<sp/>TaskStatusUpdateEvent,<sp/>TaskArtifactUpdateEvent,<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SendTaskStreamingResponse<sp/>=<sp/>JSONRPCResponse&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AError</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>`tasks/get`<sp/>request.<sp/>Contains<sp/>the<sp/>Task<sp/>object<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskResponse<sp/>=<sp/>JSONRPCResponse&lt;Task,<sp/>A2AError&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>`tasks/cancel`<sp/>request.<sp/>Contains<sp/>the<sp/>updated<sp/>Task<sp/>object<sp/>(usually<sp/>with<sp/>&apos;canceled&apos;<sp/>state)<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>CancelTaskResponse<sp/>=<sp/>JSONRPCResponse&lt;Task,<sp/>A2AError&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>`tasks/getHistory`<sp/>request.<sp/>Contains<sp/>the<sp/>TaskHistory<sp/>object<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskHistoryResponse<sp/>=<sp/>JSONRPCResponse&lt;TaskHistory,<sp/>A2AError&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>`tasks/pushNotification/set`<sp/>request.<sp/>Contains<sp/>the<sp/>confirmed<sp/>TaskPushNotificationConfig<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SetTaskPushNotificationResponse<sp/>=<sp/>JSONRPCResponse&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskPushNotificationConfig,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AError</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Response<sp/>to<sp/>a<sp/>`tasks/pushNotification/get`<sp/>request.<sp/>Contains<sp/>the<sp/>TaskPushNotificationConfig<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskPushNotificationResponse<sp/>=<sp/>JSONRPCResponse&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskPushNotificationConfig,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AError</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>Note:<sp/>The<sp/>response<sp/>to<sp/>TaskSubscriptionRequest<sp/>is<sp/>typically<sp/>handled<sp/>by<sp/>the<sp/>underlying<sp/>protocol</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>(like<sp/>WebSocket<sp/>messages<sp/>containing<sp/>TaskUpdateEvent)<sp/>rather<sp/>than<sp/>a<sp/>single<sp/>JSON-RPC<sp/>response<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>The<sp/>schema<sp/>doesn&apos;t<sp/>define<sp/>a<sp/>specific<sp/>JSON-RPC<sp/>response<sp/>type<sp/>for<sp/>`tasks/subscribe`.</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>===<sp/>Union<sp/>Types<sp/>for<sp/>A2A<sp/>Requests/Responses</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>any<sp/>valid<sp/>request<sp/>defined<sp/>in<sp/>the<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2ARequest<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendTaskRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>CancelTaskRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>|<sp/>GetTaskHistoryRequest<sp/>//<sp/>Removed<sp/>as<sp/>it&apos;s<sp/>not<sp/>in<sp/>the<sp/>latest<sp/>spec</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SetTaskPushNotificationRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskPushNotificationRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>|<sp/>TaskSubscriptionRequest<sp/>//<sp/>Removed<sp/>as<sp/>it&apos;s<sp/>replaced<sp/>by<sp/>sendSubscribe<sp/>or<sp/>resubscribe</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskResubscriptionRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendTaskStreamingRequest;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>any<sp/>valid<sp/>JSON-RPC<sp/>response<sp/>defined<sp/>in<sp/>the<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>(This<sp/>is<sp/>a<sp/>helper<sp/>type,<sp/>not<sp/>explicitly<sp/>defined<sp/>with<sp/>`oneOf`<sp/>in<sp/>the<sp/>schema<sp/>like<sp/>A2ARequest,<sp/>but<sp/>useful).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2AResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendTaskResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>CancelTaskResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskHistoryResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SetTaskPushNotificationResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskPushNotificationResponse;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>Subscription<sp/>responses<sp/>are<sp/>typically<sp/>event<sp/>streams<sp/>(TaskUpdateEvent)<sp/>sent<sp/>over<sp/>the<sp/>transport,</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>not<sp/>direct<sp/>JSON-RPC<sp/>responses<sp/>to<sp/>the<sp/>subscribe<sp/>request<sp/>itself.</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schema.ts"/>
+  </compounddef>
+</doxygen>

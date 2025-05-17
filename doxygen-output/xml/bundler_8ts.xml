@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="bundler_8ts" kind="file" language="C++">
+    <compoundname>bundler.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>logDebug,<sp/>logError<sp/>}<sp/>from<sp/>&quot;../logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>*<sp/>as<sp/>esbuild<sp/>from<sp/>&quot;esbuild&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>fileURLToPath<sp/>}<sp/>from<sp/>&quot;node:url&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Bundles<sp/>a<sp/>given<sp/>JavaScript<sp/>or<sp/>TypeScript<sp/>file<sp/>into<sp/>a<sp/>single<sp/>minified<sp/>ES<sp/>module<sp/>string.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>utility<sp/>leverages<sp/>`esbuild`<sp/>for<sp/>efficient<sp/>bundling,<sp/>minification,<sp/>and<sp/>sourcemap<sp/>generation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>It&apos;s<sp/>designed<sp/>to<sp/>prepare<sp/>agent<sp/>code<sp/>for<sp/>deployment<sp/>by<sp/>packaging<sp/>it<sp/>and<sp/>its<sp/>local<sp/>dependencies.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>filePath<sp/>-<sp/>The<sp/>URL<sp/>of<sp/>the<sp/>entry<sp/>point<sp/>file<sp/>to<sp/>bundle.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>a<sp/>string<sp/>containing<sp/>the<sp/>bundled<sp/>and<sp/>minified<sp/>code.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@throws<sp/>An<sp/>error<sp/>if<sp/>the<sp/>file<sp/>path<sp/>does<sp/>not<sp/>exist,<sp/>is<sp/>not<sp/>a<sp/>file,<sp/>or<sp/>if<sp/>bundling<sp/>fails<sp/>for<sp/>any<sp/>reason.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>bundle(filePath:<sp/>URL):<sp/>Promise&lt;string&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>entryPath<sp/>=<sp/>fileURLToPath(filePath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logDebug(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>`bundler:<sp/>`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>`Attempting<sp/>to<sp/>recursively<sp/>read<sp/>imports<sp/>starting<sp/>from:`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>entryPath</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>fs<sp/>=<sp/>await<sp/>import(&quot;node:fs&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>stats<sp/>=<sp/>fs.statSync(entryPath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!stats.isFile())<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(`bundler:<sp/>`,<sp/>`Filepath<sp/>is<sp/>not<sp/>a<sp/>file:`,<sp/>entryPath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`//<sp/>BUNDLING<sp/>FAILED:<sp/>Filepath<sp/>is<sp/>not<sp/>a<sp/>file:<sp/>${entryPath}`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(`bundler:<sp/>`,<sp/>`Filepath<sp/>exists:`,<sp/>entryPath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(err:<sp/>any)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(`bundler:<sp/>`,<sp/>`Filepath<sp/>does<sp/>not<sp/>exist:`,<sp/>entryPath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>`//<sp/>BUNDLING<sp/>FAILED:<sp/>Filepath<sp/>does<sp/>not<sp/>exist:<sp/>${entryPath}`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>result<sp/>=<sp/>await<sp/>esbuild.build({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>entryPoints:<sp/>[entryPath],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bundle:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>minify:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sourcemap:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>platform:<sp/>&quot;node&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>format:<sp/>&quot;esm&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>write:<sp/>false,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>output<sp/>=<sp/>result?.outputFiles?.[0]?.text<sp/>??<sp/>&quot;&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>`bundler:<sp/>Successfully<sp/>read<sp/>and<sp/>bundled<sp/>code:`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>output.length.toString()</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>output;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(err:<sp/>any)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(`bundler:<sp/>`,<sp/>`Error<sp/>during<sp/>recursive<sp/>read:`,<sp/>err.message);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(`//<sp/>BUNDLING<sp/>FAILED:<sp/>${err.message}`);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment/bundler.ts"/>
+  </compounddef>
+</doxygen>

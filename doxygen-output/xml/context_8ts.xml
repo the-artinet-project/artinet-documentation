@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="context_8ts" kind="file" language="C++">
+    <compoundname>context.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskYieldUpdate,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Context<sp/>object<sp/>provided<sp/>to<sp/>the<sp/>TaskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Contains<sp/>the<sp/>information<sp/>needed<sp/>for<sp/>the<sp/>handler<sp/>to<sp/>process<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>current<sp/>state<sp/>of<sp/>the<sp/>task<sp/>when<sp/>the<sp/>handler<sp/>is<sp/>invoked<sp/>or<sp/>resumed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>is<sp/>a<sp/>snapshot<sp/>-<sp/>the<sp/>latest<sp/>state<sp/>may<sp/>need<sp/>to<sp/>be<sp/>reloaded<sp/>during<sp/>async<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>specific<sp/>user<sp/>message<sp/>that<sp/>triggered<sp/>this<sp/>handler<sp/>invocation<sp/>or<sp/>resumption.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>userMessage:<sp/>Message;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Function<sp/>to<sp/>check<sp/>if<sp/>cancellation<sp/>has<sp/>been<sp/>requested<sp/>for<sp/>this<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handlers<sp/>should<sp/>check<sp/>this<sp/>periodically<sp/>during<sp/>long-running<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>True<sp/>if<sp/>cancellation<sp/>has<sp/>been<sp/>requested,<sp/>false<sp/>otherwise.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isCancelled():<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>message<sp/>history<sp/>associated<sp/>with<sp/>the<sp/>task<sp/>up<sp/>to<sp/>the<sp/>point<sp/>the<sp/>handler<sp/>is<sp/>invoked.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>history:<sp/>Message[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>signature<sp/>for<sp/>a<sp/>task<sp/>handler<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Handlers<sp/>are<sp/>implemented<sp/>as<sp/>async<sp/>generators.<sp/>They<sp/>receive<sp/>context<sp/>about<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>task<sp/>and<sp/>the<sp/>triggering<sp/>message.<sp/>They<sp/>perform<sp/>work<sp/>and<sp/>yield<sp/>status</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>artifact<sp/>updates<sp/>(TaskYieldUpdate).<sp/>The<sp/>server<sp/>consumes<sp/>these<sp/>yields,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>updates<sp/>the<sp/>task<sp/>state<sp/>in<sp/>the<sp/>store,<sp/>and<sp/>streams<sp/>events<sp/>if<sp/>applicable.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>TaskContext<sp/>object<sp/>containing<sp/>task<sp/>details<sp/>and<sp/>state.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@yields<sp/>Updates<sp/>to<sp/>the<sp/>task&apos;s<sp/>status<sp/>or<sp/>artifacts.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>Optionally<sp/>returns<sp/>the<sp/>final<sp/>complete<sp/>Task<sp/>object<sp/>(needed<sp/>for<sp/>non-streaming<sp/>&apos;tasks/send&apos;).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/>If<sp/>void<sp/>is<sp/>returned,<sp/>the<sp/>server<sp/>uses<sp/>the<sp/>last<sp/>known<sp/>state<sp/>after<sp/>processing<sp/>all<sp/>yields.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskHandler<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>TaskContext</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>AsyncGenerator&lt;TaskYieldUpdate,<sp/>Task<sp/>|<sp/>void,<sp/>unknown&gt;;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces/context.ts"/>
+  </compounddef>
+</doxygen>

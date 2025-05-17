@@ -53,7 +53,7 @@ const echoAgentLogic: TaskHandler = async function* (context: TaskContext) {
 
 // Configure and create the A2A Server instance
 const server = new A2AServer({
-  taskHandler: echoAgentLogic,          // The logic our agent will use
+  handler: echoAgentLogic,          // The logic our agent will use
   taskStore: new InMemoryTaskStore(),   // Stores task information (in memory for this example)
   port: 4000,                           // The port your agent server will run on
   basePath: "/a2a",                     // The base API path for your agent
@@ -117,7 +117,7 @@ async function talkToAgent() {
     console.log("Agent responded successfully!");
 
     // The final message from the agent is in taskResponse.message
-    if (taskResponse.message && taskResponse.message.parts[0]?.type === "text") {
+    if (taskResponse?.message && taskResponse.message.parts[0]?.type === "text") {
       console.log("Agent's final reply:", taskResponse.message.parts[0].text);
     } else {
       console.log("Agent's final response structure:", taskResponse);
@@ -142,7 +142,7 @@ talkToAgent();
 For long-running tasks or real-time updates, you can use the streaming API:
 
 ```typescript
-import { A2AClient, TaskStatusUpdateEvent } from "@artinet/sdk";
+import { A2AClient, TaskStatusUpdateEvent, TaskArtifactUpdateEvent } from "@artinet/sdk";
 
 async function streamFromAgent() {
   const client = new A2AClient("http://localhost:4000/a2a");
@@ -168,6 +168,10 @@ async function streamFromAgent() {
         if (statusUpdate.message?.parts[0]?.type === "text") {
           console.log(`Agent says: ${statusUpdate.message.parts[0].text}`);
         }
+      } else if ("artifact" in update) {
+        // Handle artifact updates
+        const artifactUpdate = update as TaskArtifactUpdateEvent;
+        console.log(`Received artifact: ${artifactUpdate.artifact.name}`);
       }
     }
     
@@ -193,7 +197,7 @@ To run these examples:
 
 Now that you've built your first agent, you can:
 
-- Explore more complex [examples](./examples.md)
+- Explore more complex [examples](./examples/index.md)
 - Learn about the [core components](./core.md) of the SDK
 - Add authentication to your agent's endpoints
 - Implement persistent storage with `FileStore`

@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="extended-schema_8ts" kind="file" language="C++">
+    <compoundname>extended-schema.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>file<sp/>contains<sp/>Artinet-specific<sp/>schema<sp/>definitions<sp/>separate<sp/>from<sp/>the<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>These<sp/>are<sp/>extensions<sp/>to<sp/>the<sp/>standard<sp/>A2A<sp/>protocol<sp/>defined<sp/>by<sp/>Google:</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@see<sp/>https://github.com/google/A2A/blob/main/samples/js/src/schema.ts</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatus,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Artifact,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCMessage,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCError,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Improved<sp/>JSON-RPC<sp/>Response<sp/>types<sp/>using<sp/>discriminated<sp/>unions</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>These<sp/>provide<sp/>better<sp/>type<sp/>safety<sp/>than<sp/>the<sp/>standard<sp/>optional<sp/>field<sp/>approach</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>JSONRPCResponse<sp/>instead</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>successful<sp/>JSON-RPC<sp/>response<sp/>with<sp/>a<sp/>result.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCSuccessResponse&lt;R<sp/>=<sp/>any&gt;<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>result<sp/>of<sp/>the<sp/>method<sp/>invocation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>result:<sp/>R;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>In<sp/>a<sp/>success<sp/>response,<sp/>error<sp/>must<sp/>never<sp/>be<sp/>present.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>JSONRPCResponse<sp/>instead</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>an<sp/>error<sp/>JSON-RPC<sp/>response.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCErrorResponse&lt;E<sp/>=<sp/>any&gt;<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>error<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error:<sp/>JSONRPCError&lt;E&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>In<sp/>an<sp/>error<sp/>response,<sp/>result<sp/>must<sp/>never<sp/>be<sp/>present.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>result?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>JSONRPCResponse<sp/>instead</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Combined<sp/>JSON-RPC<sp/>response<sp/>type<sp/>as<sp/>a<sp/>discriminated<sp/>union.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>ensures<sp/>a<sp/>response<sp/>is<sp/>either<sp/>a<sp/>success<sp/>with<sp/>a<sp/>result,<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ExtendedJSONRPCResponse&lt;R<sp/>=<sp/>any,<sp/>E<sp/>=<sp/>any&gt;<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCSuccessResponse&lt;R&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCErrorResponse&lt;E&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskEvent<sp/>=<sp/>TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent;</highlight></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>possible<sp/>types<sp/>of<sp/>updates<sp/>a<sp/>TaskHandler<sp/>can<sp/>yield.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Either<sp/>a<sp/>partial<sp/>TaskStatus<sp/>(without<sp/>the<sp/>server-managed<sp/>timestamp)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>a<sp/>complete<sp/>Artifact<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskYieldUpdate<sp/>=<sp/>Omit&lt;TaskStatus,<sp/>&quot;timestamp&quot;&gt;<sp/>|<sp/>Artifact;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ExtendedTaskStatusUpdate<sp/>=<sp/>Omit&lt;TaskStatus,<sp/>&quot;timestamp&quot;&gt;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>RequestParams<sp/>=<sp/>Required&lt;Pick&lt;A2ARequest,<sp/>&quot;params&quot;&gt;&gt;[&quot;params&quot;];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ServerDeploymentRequestParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>name<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>agent<sp/>card<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>agentCard:<sp/>AgentCard;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>minified<sp/>code<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>code:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>NPM<sp/>dependencies<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>dependencies?:<sp/>string[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>BaseServerDeploymentResponseParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>deployment<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>deploymentId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Whether<sp/>the<sp/>deployment<sp/>was<sp/>successful</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>success:<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ServerDeploymentSuccessResponseParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>BaseServerDeploymentResponseParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>name<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>URL<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>base<sp/>path<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>basePath:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ServerDeploymentRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>method<sp/>name</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;/deploy&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>parameters</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>ServerDeploymentRequestParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TestServerDeploymentRequest<sp/>extends<sp/>JSONRPCRequest<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>method<sp/>name</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>&quot;/test/deploy&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>parameters</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>ServerDeploymentRequestParams;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ServerDeploymentResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCResponse&lt;ServerDeploymentSuccessResponseParams&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>{<sp/>A2AError<sp/>as<sp/>A2AErrorType<sp/>}<sp/>from<sp/>&quot;./schema.js&quot;;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/extended-schema.ts"/>
+  </compounddef>
+</doxygen>

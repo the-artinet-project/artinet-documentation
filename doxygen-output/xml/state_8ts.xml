@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="state_8ts" kind="file" language="C++">
+    <compoundname>state.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getCurrentTimestamp,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isArtifactUpdate,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isTaskStatusUpdate,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../utils/common/utils.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatus,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Artifact,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskYieldUpdate,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;../interfaces/store.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>INVALID_REQUEST<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;../interfaces/store.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>updateTaskStatus(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>update:<sp/>TaskYieldUpdate</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>TaskStatus<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{<sp/>...task.status,<sp/>...update,<sp/>timestamp:<sp/>getCurrentTimestamp()<sp/>};</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>checkBounds(index:<sp/>number,<sp/>length:<sp/>number):<sp/>boolean<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>index<sp/>&gt;=<sp/>0<sp/>&amp;&amp;<sp/>index<sp/>&lt;<sp/>length;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>updateByIndex(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifacts:<sp/>Artifact[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>index:<sp/>number,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>update:<sp/>Artifact</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>{<sp/>artifacts:<sp/>Artifact[];<sp/>replaced:<sp/>boolean<sp/>}<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>existingArtifact:<sp/>Artifact<sp/>=<sp/>artifacts[index];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(update.append)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//deep<sp/>copy<sp/>to<sp/>avoid<sp/>mutating<sp/>original</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>appendedArtifact:<sp/>Artifact<sp/>=<sp/>JSON.parse(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>JSON.stringify(existingArtifact)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>appendedArtifact.parts.push(...update.parts);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(update.metadata)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>appendedArtifact.metadata<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>...(appendedArtifact.metadata<sp/>||<sp/>{}),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>...update.metadata,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(update.lastChunk<sp/>!==<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>appendedArtifact.lastChunk<sp/>=<sp/>update.lastChunk;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(update.description)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>appendedArtifact.description<sp/>=<sp/>update.description;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>artifacts[index]<sp/>=<sp/>appendedArtifact;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>else<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>artifacts[index]<sp/>=<sp/>{<sp/>...update<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{<sp/>artifacts,<sp/>replaced:<sp/>true<sp/>};</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>updateByName(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifacts:<sp/>Artifact[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>update:<sp/>Artifact</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>{<sp/>artifacts:<sp/>Artifact[];<sp/>replaced:<sp/>boolean<sp/>}<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>namedIndex<sp/>=<sp/>artifacts.findIndex((a)<sp/>=&gt;<sp/>a.name<sp/>===<sp/>update.name);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(namedIndex<sp/>&gt;=<sp/>0)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>artifacts[namedIndex]<sp/>=<sp/>{<sp/>...update<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>{<sp/>artifacts,<sp/>replaced:<sp/>true<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{<sp/>artifacts:<sp/>artifacts,<sp/>replaced:<sp/>false<sp/>};</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>processArtifactUpdate(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifacts:<sp/>Artifact[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>update:<sp/>Artifact</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>{<sp/>artifacts:<sp/>Artifact[];<sp/>replaced:<sp/>boolean<sp/>}<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>existingIndex<sp/>=<sp/>update.index<sp/>??<sp/>-1;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>let<sp/>replaced<sp/>=<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>let<sp/>newArtifacts<sp/>=<sp/>artifacts;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(checkBounds(existingIndex,<sp/>artifacts.length))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>({<sp/>artifacts:<sp/>newArtifacts,<sp/>replaced<sp/>}<sp/>=<sp/>updateByIndex(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>artifacts,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>existingIndex,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>update</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>));</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>else<sp/>if<sp/>(update.name)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>({<sp/>artifacts:<sp/>newArtifacts,<sp/>replaced<sp/>}<sp/>=<sp/>updateByName(artifacts,<sp/>update));</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!replaced)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>newArtifacts.push({<sp/>...update<sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(newArtifacts.some((a)<sp/>=&gt;<sp/>a.index<sp/>!==<sp/>undefined))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>newArtifacts.sort((a,<sp/>b)<sp/>=&gt;<sp/>(a.index<sp/>??<sp/>0)<sp/>-<sp/>(b.index<sp/>??<sp/>0));</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>replaced<sp/>=<sp/>true;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{<sp/>artifacts:<sp/>newArtifacts,<sp/>replaced<sp/>};</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>updateState(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskStore:<sp/>TaskStore,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>current:<sp/>TaskAndHistory,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>update:<sp/>TaskYieldUpdate</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>Promise&lt;TaskAndHistory&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>newTask<sp/>=<sp/>{<sp/>...current.task<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>newHistory<sp/>=<sp/>[...current.history];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(isTaskStatusUpdate(update))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>newTask.status<sp/>=<sp/>updateTaskStatus(newTask,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(update.message?.role<sp/>===<sp/>&quot;agent&quot;)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>newHistory.push(update.message);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>else<sp/>if<sp/>(isArtifactUpdate(update))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>artifacts<sp/>=<sp/>!newTask.artifacts<sp/>?<sp/>[]<sp/>:<sp/>[...newTask.artifacts];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>{<sp/>artifacts:<sp/>newArtifacts,<sp/>replaced<sp/>}<sp/>=<sp/>processArtifactUpdate(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>artifacts,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>update</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!replaced)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>INVALID_REQUEST(&quot;Invalid<sp/>artifact<sp/>update&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>newTask.artifacts<sp/>=<sp/>newArtifacts;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>currentData<sp/>=<sp/>{<sp/>task:<sp/>newTask,<sp/>history:<sp/>newHistory<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>await<sp/>taskStore.save(currentData);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>currentData;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Loads<sp/>or<sp/>creates<sp/>a<sp/>task<sp/>and<sp/>its<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>message<sp/>The<sp/>message<sp/>to<sp/>process</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>sessionId<sp/>Optional<sp/>session<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>metadata<sp/>Optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>The<sp/>task<sp/>and<sp/>history</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>loadState(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskStore:<sp/>TaskStore,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sessionId?:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>Promise&lt;TaskAndHistory&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>existingData<sp/>=<sp/>await<sp/>taskStore.load(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(existingData)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>existingData;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>timestamp<sp/>=<sp/>getCurrentTimestamp();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>newTask:<sp/>Task<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sessionId:<sp/>sessionId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>status:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>state:<sp/>&quot;submitted&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>timestamp,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>metadata:<sp/>metadata,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>newHistory:<sp/>Message[]<sp/>=<sp/>[message];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{<sp/>task:<sp/>newTask,<sp/>history:<sp/>newHistory<sp/>};</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/state.ts"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_d2d18170283abb3771c45cc071a7fcf3" kind="dir">
+    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment</compoundname>
+    <innerfile refid="bundler_8ts">bundler.ts</innerfile>
+    <innerfile refid="task-wrapper_8ts">task-wrapper.ts</innerfile>
+    <innerfile refid="test-deployment_8ts">test-deployment.ts</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment/"/>
+  </compounddef>
+</doxygen>

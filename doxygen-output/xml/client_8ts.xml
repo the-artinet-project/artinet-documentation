@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="client_8ts" kind="file" language="C++">
+    <compoundname>client.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskPushNotificationConfig,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskIdParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskQueryParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskSendParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@interface<sp/>Client</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Defines<sp/>the<sp/>standard<sp/>contract<sp/>for<sp/>an<sp/>A2A<sp/>(Agent-to-Agent)<sp/>client<sp/>implementation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>interface<sp/>allows<sp/>consumers<sp/>to<sp/>create<sp/>custom<sp/>client<sp/>solutions<sp/>while<sp/>ensuring</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>compatibility<sp/>with<sp/>the<sp/>A2A<sp/>protocol.<sp/>It<sp/>outlines<sp/>the<sp/>core<sp/>functionalities</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>required<sp/>for<sp/>interacting<sp/>with<sp/>an<sp/>A2A<sp/>agent<sp/>server,<sp/>including<sp/>task<sp/>management,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>capability<sp/>discovery,<sp/>and<sp/>communication<sp/>configuration.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Client<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Fetches<sp/>the<sp/>agent&apos;s<sp/>metadata<sp/>(AgentCard)<sp/>from<sp/>a<sp/>well-known<sp/>path<sp/>or<sp/>a<sp/>fallback<sp/>path.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>AgentCard<sp/>contains<sp/>essential<sp/>information<sp/>about<sp/>the<sp/>agent,<sp/>such<sp/>as<sp/>its<sp/>capabilities<sp/>and<sp/>endpoints.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{string}<sp/>wellKnownPath<sp/>The<sp/>standard<sp/>path<sp/>(e.g.,<sp/>&quot;/.well-known/a2a&quot;)<sp/>to<sp/>look<sp/>for<sp/>the<sp/>AgentCard.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{string}<sp/>fallbackPath<sp/>An<sp/>alternative<sp/>path<sp/>to<sp/>check<sp/>if<sp/>the<sp/>well-known<sp/>path<sp/>fails.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;AgentCard&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>AgentCard<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>agentCard():<sp/>Promise&lt;AgentCard&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Refreshes<sp/>the<sp/>cached<sp/>AgentCard<sp/>information<sp/>by<sp/>re-fetching<sp/>it<sp/>from<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Useful<sp/>when<sp/>the<sp/>agent&apos;s<sp/>capabilities<sp/>or<sp/>configuration<sp/>might<sp/>have<sp/>changed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;AgentCard&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>updated<sp/>AgentCard<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>refreshAgentCard():<sp/>Promise&lt;AgentCard&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>to<sp/>the<sp/>agent<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task,<sp/>including<sp/>the<sp/>task<sp/>definition<sp/>and<sp/>metadata.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;Task<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>initial<sp/>Task<sp/>object<sp/>representing<sp/>the<sp/>submitted<sp/>task,<sp/>or<sp/>null<sp/>if<sp/>the<sp/>submission<sp/>failed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendTask(params:<sp/>TaskSendParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>and<sp/>subscribes<sp/>to<sp/>real-time<sp/>updates<sp/>(status<sp/>changes,<sp/>artifact<sp/>updates)<sp/>for<sp/>that<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>uses<sp/>a<sp/>streaming<sp/>connection<sp/>if<sp/>available.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendTaskSubscribe(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskSendParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Retrieves<sp/>the<sp/>current<sp/>state<sp/>of<sp/>a<sp/>specific<sp/>task<sp/>by<sp/>its<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskQueryParams}<sp/>params<sp/>Parameters<sp/>containing<sp/>the<sp/>task<sp/>ID<sp/>to<sp/>query.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;Task<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>Task<sp/>object,<sp/>or<sp/>null<sp/>if<sp/>the<sp/>task<sp/>is<sp/>not<sp/>found.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getTask(params:<sp/>TaskQueryParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>request<sp/>to<sp/>cancel<sp/>an<sp/>ongoing<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskIdParams}<sp/>params<sp/>Parameters<sp/>containing<sp/>the<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>to<sp/>cancel.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;Task<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>final<sp/>state<sp/>of<sp/>the<sp/>cancelled<sp/>Task<sp/>object,<sp/>or<sp/>null<sp/>if<sp/>cancellation<sp/>failed<sp/>or<sp/>the<sp/>task<sp/>wasn&apos;t<sp/>found.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>cancelTask(params:<sp/>TaskIdParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Configures<sp/>push<sp/>notifications<sp/>for<sp/>a<sp/>specific<sp/>task.<sp/>This<sp/>allows<sp/>the<sp/>client</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>to<sp/>receive<sp/>updates<sp/>asynchronously<sp/>via<sp/>a<sp/>specified<sp/>webhook<sp/>URL.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Requires<sp/>the<sp/>agent<sp/>to<sp/>support<sp/>the<sp/>&apos;pushNotifications&apos;<sp/>capability.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskPushNotificationConfig}<sp/>params<sp/>The<sp/>configuration<sp/>details<sp/>for<sp/>the<sp/>push<sp/>notification,<sp/>including<sp/>the<sp/>task<sp/>ID<sp/>and<sp/>webhook<sp/>URL.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;TaskPushNotificationConfig<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>applied<sp/>configuration,<sp/>or<sp/>null<sp/>if<sp/>the<sp/>configuration<sp/>failed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>setTaskPushNotification(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskPushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;TaskPushNotificationConfig<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Retrieves<sp/>the<sp/>current<sp/>push<sp/>notification<sp/>configuration<sp/>for<sp/>a<sp/>specific<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskIdParams}<sp/>params<sp/>Parameters<sp/>containing<sp/>the<sp/>task<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;TaskPushNotificationConfig<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>push<sp/>notification<sp/>configuration,<sp/>or<sp/>null<sp/>if<sp/>not<sp/>configured<sp/>or<sp/>not<sp/>found.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getTaskPushNotification(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskIdParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;TaskPushNotificationConfig<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Resubscribes<sp/>to<sp/>updates<sp/>for<sp/>an<sp/>existing<sp/>task,<sp/>potentially<sp/>after<sp/>a<sp/>connection<sp/>drop<sp/>or<sp/>client<sp/>restart.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>allows<sp/>resuming<sp/>the<sp/>stream<sp/>of<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskQueryParams}<sp/>params<sp/>Parameters<sp/>containing<sp/>the<sp/>task<sp/>ID<sp/>to<sp/>resubscribe<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>resubscribeTask(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskQueryParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Checks<sp/>if<sp/>the<sp/>agent<sp/>server<sp/>supports<sp/>a<sp/>specific<sp/>capability.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{&quot;streaming&quot;<sp/>|<sp/>&quot;pushNotifications&quot;<sp/>|<sp/>&quot;stateTransitionHistory&quot;}<sp/>capability<sp/>The<sp/>capability<sp/>to<sp/>check<sp/>for.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;boolean&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>true<sp/>if<sp/>the<sp/>capability<sp/>is<sp/>supported,<sp/>false<sp/>otherwise.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>supports(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>capability:<sp/>&quot;streaming&quot;<sp/>|<sp/>&quot;pushNotifications&quot;<sp/>|<sp/>&quot;stateTransitionHistory&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;boolean&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sets<sp/>multiple<sp/>HTTP<sp/>headers<sp/>to<sp/>be<sp/>included<sp/>in<sp/>all<sp/>subsequent<sp/>requests<sp/>made<sp/>by<sp/>the<sp/>client<sp/>instance.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Replaces<sp/>any<sp/>previously<sp/>set<sp/>headers.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{Record&lt;string,<sp/>string&gt;}<sp/>headers<sp/>An<sp/>object<sp/>containing<sp/>header<sp/>names<sp/>and<sp/>values.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{void}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>setHeaders(headers:<sp/>Record&lt;string,<sp/>string&gt;):<sp/>void;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Adds<sp/>or<sp/>updates<sp/>a<sp/>single<sp/>HTTP<sp/>header<sp/>for<sp/>subsequent<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{string}<sp/>name<sp/>The<sp/>name<sp/>of<sp/>the<sp/>header.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{string}<sp/>value<sp/>The<sp/>value<sp/>of<sp/>the<sp/>header.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{void}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>addHeader(name:<sp/>string,<sp/>value:<sp/>string):<sp/>void;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Removes<sp/>a<sp/>specific<sp/>HTTP<sp/>header<sp/>from<sp/>subsequent<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{string}<sp/>name<sp/>The<sp/>name<sp/>of<sp/>the<sp/>header<sp/>to<sp/>remove.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{void}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>removeHeader(name:<sp/>string):<sp/>void;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Clears<sp/>all<sp/>custom<sp/>HTTP<sp/>headers<sp/>previously<sp/>set<sp/>on<sp/>the<sp/>client<sp/>instance.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{void}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>clearHeaders():<sp/>void;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client/interfaces/client.ts"/>
+  </compounddef>
+</doxygen>

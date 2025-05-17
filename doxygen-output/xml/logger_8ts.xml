@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="logger_8ts" kind="file" language="C++">
+    <compoundname>logger.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Logger<sp/>utility<sp/>for<sp/>the<sp/>SDK<sp/>using<sp/>Pino</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>pino<sp/>}<sp/>from<sp/>&quot;pino&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>Define<sp/>log<sp/>levels<sp/>for<sp/>type<sp/>safety</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>LogLevel<sp/>=<sp/>&quot;silent&quot;<sp/>|<sp/>&quot;error&quot;<sp/>|<sp/>&quot;warn&quot;<sp/>|<sp/>&quot;info&quot;<sp/>|<sp/>&quot;debug&quot;<sp/>|<sp/>&quot;trace&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>Create<sp/>the<sp/>base<sp/>logger<sp/>with<sp/>default<sp/>configuration</highlight></codeline>
+<codeline><highlight class="normal">const<sp/>baseLogger<sp/>=<sp/>pino({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>&quot;A2A&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>level:<sp/>&quot;error&quot;,<sp/>//<sp/>Default<sp/>level</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>In<sp/>production,<sp/>don&apos;t<sp/>use<sp/>the<sp/>pretty<sp/>transport<sp/>by<sp/>default</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>...(process.env.NODE_ENV<sp/>!==<sp/>&quot;production&quot;<sp/>&amp;&amp;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>transport:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>target:<sp/>&quot;pino-pretty&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>options:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>colorize:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>translateTime:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ignore:<sp/>&quot;pid,hostname&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}),</highlight></codeline>
+<codeline><highlight class="normal">});</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>SDK<sp/>logger<sp/>instance</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>logger<sp/>=<sp/>baseLogger;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Configures<sp/>the<sp/>logger<sp/>with<sp/>the<sp/>specified<sp/>options</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>options<sp/>-<sp/>Logger<sp/>configuration<sp/>options</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>configureLogger(options:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>level?:<sp/>LogLevel;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>prettyPrint?:<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal">})<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Change<sp/>log<sp/>level<sp/>if<sp/>specified</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(options.level)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logger.level<sp/>=<sp/>options.level;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Return<sp/>the<sp/>logger<sp/>instance<sp/>for<sp/>chaining</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>logger;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/logging/logger.ts"/>
+  </compounddef>
+</doxygen>

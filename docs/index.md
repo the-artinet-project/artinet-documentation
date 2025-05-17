@@ -11,6 +11,7 @@ The Artinet SDK is a robust implementation of the [Agent2Agent (A2A) Protocol](h
 * **Enhanced Client**: Features refined error handling, flexible header management for authentication, and clear separation of concerns.
 * **TypeScript First**: Fully written in TypeScript with comprehensive type definitions for a robust developer experience.
 * **Flexible Storage**: Choose between memory storage for development or file-based persistence for production.
+* **Server Registration**: Easily register your agents with the A2A registry for discovery.
 
 ## Getting Started
 
@@ -30,7 +31,7 @@ import {
 } from "@artinet/sdk";
 
 // Define your agent logic
-const myAgent: TaskHandler = async function* (context: TaskContext) {
+const myAgentLogic: TaskHandler = async function* (context: TaskContext) {
   yield { state: "working" };
   yield {
     state: "completed",
@@ -43,7 +44,7 @@ const myAgent: TaskHandler = async function* (context: TaskContext) {
 
 // Start your server
 const server = new A2AServer({
-  taskHandler: myAgent,
+  handler: myAgentLogic,
   taskStore: new InMemoryTaskStore(),
   port: 3000,
   basePath: "/a2a",
@@ -67,6 +68,7 @@ console.log("Agent running at http://localhost:3000/a2a");
 * **Configurable Logging**: Integrated structured logging via `pino` with configurable levels.
 * **Advanced Customization**: Fine-grained control over the JSON-RPC server, enabling integration with existing Express apps or adding custom methods.
 * **Comprehensive Testing**: Includes a robust test suite to ensure reliability and maintainability.
+* **Agent Discovery**: Support for registering agents with the A2A registry for discovery.
 
 ## Next Steps
 
@@ -74,6 +76,7 @@ Ready to dive deeper? Check out these resources:
 
 - [Quick Start Guide](./sdk/quickstart.md) - Get up and running with a complete agent example
 - [Core Components](./sdk/core.md) - Understand the fundamental building blocks of the SDK
-- [Examples](./sdk/examples.md) - Explore common usage patterns and scenarios
-- [API Reference](./api_reference/index.md) - Detailed documentation of all classes and methods
+- [Examples](./sdk/examples/index.md) - Explore common usage patterns and scenarios
+- [API Reference](./api/index.md) - Detailed documentation of all classes and methods
+- [Quick Agents](./agents/quick_agents.md) - Learn about bundling and testing agent deployments
 

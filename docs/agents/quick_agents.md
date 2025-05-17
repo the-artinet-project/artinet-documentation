@@ -8,7 +8,7 @@ Quick Agents provide a streamlined way to:
 
 1. **Bundle** your agent code and dependencies into a single file
 2. **Test** your agent in a sandboxed environment
-3. **Deploy** your agent to the Artinet platform (for beta users)
+3. **Deploy** your agent to the Artinet platform (for alpha testers)
 
 This feature is ideal for:
 
@@ -66,10 +66,10 @@ When writing an agent for bundling, you can use the `taskHandlerProxy` to simpli
 
 ```typescript
 // my-agent.ts
-import { taskHandlerProxy, fetchResponseProxy } from "@artinet/sdk";
+import { taskHandlerProxy, fetchResponseProxy, TaskContext } from "@artinet/sdk";
 
 // Define your agent's core logic as an async function
-async function* myQuickAgent(context) {
+async function* myQuickAgent(context: TaskContext) {
   // Extract the user's message
   const userInput = context.userMessage.parts[0]?.text || "";
   
@@ -104,26 +104,42 @@ import {
   SendTaskRequest 
 } from "@artinet/sdk";
 
-async function testMyAgent(bundledCode) {
+async function testMyAgent(bundledCode: string) {
   // Prepare deployment parameters
   const deploymentParams: ServerDeploymentRequestParams = {
-    code: bundledCode
+    code: bundledCode,
+    name: "MyTestAgent",
+    agentCard: {
+      name: "My Test Agent",
+      url: "placeholder-url", // Will be set by the test environment
+      version: "0.1.0",
+      capabilities: { streaming: true },
+      skills: [{ id: "test", name: "Test Skill" }]
+    }
   };
   
   // Create test tasks to verify your agent's behavior
   const testRequests: SendTaskRequest[] = [
     {
       id: "test-1",
-      message: {
-        role: "user",
-        parts: [{ type: "text", text: "Hello, agent!" }]
+      method: "tasks/send",
+      params: {
+        id: "test-1",
+        message: {
+          role: "user",
+          parts: [{ type: "text", text: "Hello, agent!" }]
+        }
       }
     },
     {
       id: "test-2",
-      message: {
-        role: "user",
-        parts: [{ type: "text", text: "What can you do?" }]
+      method: "tasks/send",
+      params: {
+        id: "test-2",
+        message: {
+          role: "user",
+          parts: [{ type: "text", text: "What can you do?" }]
+        }
       }
     }
   ];
@@ -154,9 +170,9 @@ async function testMyAgent(bundledCode) {
 Your Quick Agent can communicate with other agents in the Artinet ecosystem using the `fetchResponseProxy`:
 
 ```typescript
-import { taskHandlerProxy, fetchResponseProxy } from "@artinet/sdk";
+import { taskHandlerProxy, fetchResponseProxy, TaskContext } from "@artinet/sdk";
 
-async function* collaborativeAgent(context) {
+async function* collaborativeAgent(context: TaskContext) {
   const userInput = context.userMessage.parts[0]?.text || "";
   
   yield { state: "working" };
@@ -165,14 +181,13 @@ async function* collaborativeAgent(context) {
   try {
     const helperResponse = await fetchResponseProxy(
       "WeatherExpertAgent", // Name of another agent in the Artinet ecosystem
-      {
-        role: "user",
-        parts: [{ type: "text", text: `What's the weather in ${userInput}?` }]
-      }
+      [
+        {
+          role: "user",
+          content: `What's the weather in ${userInput}?`
+        }
+      ]
     );
-    
-    // Extract the helper agent's response
-    const weatherInfo = helperResponse.message?.parts[0]?.text || "No weather information available";
     
     yield {
       state: "completed",
@@ -180,18 +195,18 @@ async function* collaborativeAgent(context) {
         role: "agent",
         parts: [{ 
           type: "text", 
-          text: `I asked my colleague about the weather in ${userInput}. Here's what they said:\n\n${weatherInfo}` 
+          text: `I asked my colleague about the weather in ${userInput}. Here's what they said:\n\n${helperResponse}` 
         }]
       }
     };
   } catch (error) {
     yield {
-      state: "error",
+      state: "failed",
       message: {
         role: "agent",
         parts: [{ 
           type: "text", 
-          text: `Sorry, I couldn't get weather information: ${error.message}` 
+          text: `Sorry, I couldn't get weather information: ${error instanceof Error ? error.message : String(error)}` 
         }]
       }
     };
@@ -212,7 +227,7 @@ import {
   ServerDeploymentRequestParams,
   SendTaskRequest
 } from "@artinet/sdk";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -232,7 +247,7 @@ async function buildAndTestAgent() {
     
     // Optionally save the bundled code
     const outputPath = path.join(__dirname, "bundled-agent.js");
-    fs.writeFileSync(outputPath, bundledCode);
+    await fs.writeFile(outputPath, bundledCode);
     console.log(`Saved bundled code to: ${outputPath}`);
     
     console.log("\nStep 2: Testing agent in sandbox environment...");
@@ -240,11 +255,15 @@ async function buildAndTestAgent() {
     // Prepare deployment parameters
     const deploymentParams: ServerDeploymentRequestParams = {
       code: bundledCode,
-      // You can add optional metadata about your agent
-      metadata: {
+      name: "MyQuickAgent",
+      // Agent card information
+      agentCard: {
         name: "My Quick Agent",
+        url: "placeholder-url", // Will be assigned by test environment
         version: "1.0.0",
-        description: "A demonstration of the Quick Agents feature"
+        description: "A demonstration of the Quick Agents feature",
+        capabilities: { streaming: true },
+        skills: [{ id: "demo", name: "Demo Skill" }]
       }
     };
     
@@ -252,16 +271,24 @@ async function buildAndTestAgent() {
     const testRequests: SendTaskRequest[] = [
       {
         id: "greeting-test",
-        message: {
-          role: "user",
-          parts: [{ type: "text", text: "Hello there!" }]
+        method: "tasks/send",
+        params: {
+          id: "greeting-test",
+          message: {
+            role: "user",
+            parts: [{ type: "text", text: "Hello there!" }]
+          }
         }
       },
       {
         id: "question-test",
-        message: {
-          role: "user",
-          parts: [{ type: "text", text: "What's your purpose?" }]
+        method: "tasks/send",
+        params: {
+          id: "question-test",
+          message: {
+            role: "user",
+            parts: [{ type: "text", text: "What's your purpose?" }]
+          }
         }
       }
     ];
@@ -284,7 +311,7 @@ async function buildAndTestAgent() {
     
     console.log("\nAll tests completed successfully!");
     console.log("\nStep 3: Your agent is ready for deployment to Artinet!");
-    console.log("To join the beta and deploy your agent, email humans@artinet.io");
+    console.log("To join the alpha and deploy your agent, email humans@artinet.io");
     
   } catch (error) {
     console.error("Error during build and test process:", error);
@@ -309,9 +336,9 @@ When using Quick Agents, be aware of these limitations:
    - Memory and CPU usage are limited
    - Large dependencies may affect performance
 
-## Beta Access for Deployment
+## Alpha Access for Deployment
 
-The ability to permanently deploy agents to the Artinet platform is currently in beta. To join the waitlist:
+The ability to permanently deploy agents to the Artinet platform is currently in alpha. To join the waitlist:
 
 1. Email humans@artinet.io with your request
 2. Describe your agent's purpose and use case
@@ -336,19 +363,19 @@ For optimal results with Quick Agents:
 ## FAQ
 
 **Q: How long does it take to deploy a Quick Agent?**
-A: Test deployments typically take a few seconds. Production deployments (for beta users) may take 1-2 minutes.
+A: Test deployments typically take a few seconds. Production deployments (for alpha users) may take 1-2 minutes.
 
 **Q: Can I use external APIs in my Quick Agent?**
 A: Yes, using the fetchResponseProxy, but be mindful of rate limits and timeouts.
 
 **Q: How do I update a deployed agent?**
-A: For beta users, you can deploy a new version which will replace the previous one.
+A: For alpha users, you can deploy a new version which will replace the previous one.
 
 **Q: What's the difference between testDeployment and actual deployment?**
-A: testDeployment creates a temporary sandbox that expires after 60 seconds. Actual deployment (for beta users) creates a permanent agent instance in the Artinet ecosystem.
+A: testDeployment creates a temporary sandbox that expires after 60 seconds. Actual deployment (for alpha users) creates a permanent agent instance in the Artinet ecosystem.
 
 **Q: Can my Quick Agent maintain state between invocations?**
-A: Test agents cannot maintain state. For beta users, limited persistence capabilities are planned.
+A: Test agents cannot maintain state. For alpha users, limited persistence capabilities are planned.
 
 ## Next Steps
 
@@ -356,5 +383,5 @@ After mastering Quick Agents:
 
 1. Explore more complex agent architectures
 2. Implement collaboration between multiple agents
-3. Consider joining the beta program for production deployment
+3. Consider joining the alpha program for production deployment
 4. Explore integrations with other AI services and tools

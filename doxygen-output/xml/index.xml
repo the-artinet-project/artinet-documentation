@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.13.2" xml:lang="en-US">
+  <compound refid="a2a-client_8ts" kind="file"><name>a2a-client.ts</name>
+  </compound>
+  <compound refid="client_8ts" kind="file"><name>client.ts</name>
+  </compound>
+  <compound refid="a2a-server_8ts" kind="file"><name>a2a-server.ts</name>
+  </compound>
+  <compound refid="context_8ts" kind="file"><name>context.ts</name>
+  </compound>
+  <compound refid="params_8ts" kind="file"><name>params.ts</name>
+  </compound>
+  <compound refid="server_8ts" kind="file"><name>server.ts</name>
+  </compound>
+  <compound refid="store_8ts" kind="file"><name>store.ts</name>
+  </compound>
+  <compound refid="express-server_8ts" kind="file"><name>express-server.ts</name>
+  </compound>
+  <compound refid="json-middleware_8ts" kind="file"><name>json-middleware.ts</name>
+  </compound>
+  <compound refid="a2a-methods_8ts" kind="file"><name>a2a-methods.ts</name>
+  </compound>
+  <compound refid="factory_8ts" kind="file"><name>factory.ts</name>
+  </compound>
+  <compound refid="state_8ts" kind="file"><name>state.ts</name>
+  </compound>
+  <compound refid="file_8ts" kind="file"><name>file.ts</name>
+  </compound>
+  <compound refid="memory_8ts" kind="file"><name>memory.ts</name>
+  </compound>
+  <compound refid="parser_8ts" kind="file"><name>parser.ts</name>
+  </compound>
+  <compound refid="rpc-client_8ts" kind="file"><name>rpc-client.ts</name>
+  </compound>
+  <compound refid="event-stream_8ts" kind="file"><name>event-stream.ts</name>
+  </compound>
+  <compound refid="stream_8ts" kind="file"><name>stream.ts</name>
+  </compound>
+  <compound refid="extended-schema_8ts" kind="file"><name>extended-schema.ts</name>
+  </compound>
+  <compound refid="client_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="server_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="transport_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="types_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="utils_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="schema_8ts" kind="file"><name>schema.ts</name>
+  </compound>
+  <compound refid="register_8ts" kind="file"><name>register.ts</name>
+  </compound>
+  <compound refid="constants_8ts" kind="file"><name>constants.ts</name>
+  </compound>
+  <compound refid="errors_8ts" kind="file"><name>errors.ts</name>
+  </compound>
+  <compound refid="utils_8ts" kind="file"><name>utils.ts</name>
+  </compound>
+  <compound refid="bundler_8ts" kind="file"><name>bundler.ts</name>
+  </compound>
+  <compound refid="task-wrapper_8ts" kind="file"><name>task-wrapper.ts</name>
+  </compound>
+  <compound refid="test-deployment_8ts" kind="file"><name>test-deployment.ts</name>
+  </compound>
+  <compound refid="log_8ts" kind="file"><name>log.ts</name>
+  </compound>
+  <compound refid="logger_8ts" kind="file"><name>logger.ts</name>
+  </compound>
+  <compound refid="dir_11f533693b406a6f60c7c568e8c03064" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/api</name>
+  </compound>
+  <compound refid="dir_d6a36fb36cad4b4f3dc4b9bcbe4231c5" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk</name>
+  </compound>
+  <compound refid="dir_d99d95f99ba554b9fa257e22b0b049a6" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client</name>
+  </compound>
+  <compound refid="dir_9e03bd545a38b6dc614690d4e85afa46" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common</name>
+  </compound>
+  <compound refid="dir_d2d18170283abb3771c45cc071a7fcf3" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment</name>
+  </compound>
+  <compound refid="dir_cd83db7a681f39e901a951cbdd50a070" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client/interfaces</name>
+  </compound>
+  <compound refid="dir_9775c359e95761a80e3051d318fc9a71" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces</name>
+  </compound>
+  <compound refid="dir_f40a691c8bc2657f49cc98dbf64070a4" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib</name>
+  </compound>
+  <compound refid="dir_82f1aee3e6062712936b5351f55a5c0a" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/logging</name>
+  </compound>
+  <compound refid="dir_cbd972c4bc07f0a81a16f2f93c1ebce6" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/middleware</name>
+  </compound>
+  <compound refid="dir_1a71bd6eb39c83dd4f55da886b3c598b" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/rpc</name>
+  </compound>
+  <compound refid="dir_1eedc1b0248a44ec7ac7a29e048f4082" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server</name>
+  </compound>
+  <compound refid="dir_11d4b6bc4b47a464143cdb4c4b810e9e" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src</name>
+  </compound>
+  <compound refid="dir_5abc11739bc841bac941cd04ad54f287" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/storage</name>
+  </compound>
+  <compound refid="dir_42542a3e2278f7a2897250feca4ba07b" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/streaming</name>
+  </compound>
+  <compound refid="dir_7a2c89cf85c87e71af29da720dcbaaf8" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport</name>
+  </compound>
+  <compound refid="dir_4ae32042f0a0622e2a0f05c0172ff336" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types</name>
+  </compound>
+  <compound refid="dir_5cacdd47e5fc42c1cde4a2af35b0a573" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils</name>
+  </compound>
+</doxygenindex>

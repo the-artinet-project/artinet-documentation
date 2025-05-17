@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="store_8ts" kind="file" language="C++">
+    <compoundname>store.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Task,<sp/>Message<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>task<sp/>and<sp/>its<sp/>associated<sp/>message<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskAndHistory<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**<sp/>The<sp/>task<sp/>object<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**<sp/>The<sp/>complete<sp/>message<sp/>history<sp/>associated<sp/>with<sp/>the<sp/>task<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>history:<sp/>Message[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Interface<sp/>for<sp/>task<sp/>storage<sp/>providers.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Abstracts<sp/>the<sp/>storage<sp/>mechanism<sp/>for<sp/>tasks<sp/>and<sp/>their<sp/>message<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskStore<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Saves<sp/>a<sp/>task<sp/>and<sp/>its<sp/>associated<sp/>message<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Overwrites<sp/>existing<sp/>data<sp/>if<sp/>the<sp/>task<sp/>ID<sp/>exists.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>data<sp/>An<sp/>object<sp/>containing<sp/>the<sp/>task<sp/>and<sp/>its<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>when<sp/>the<sp/>save<sp/>operation<sp/>is<sp/>complete.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>save(data:<sp/>TaskAndHistory):<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Loads<sp/>a<sp/>task<sp/>and<sp/>its<sp/>history<sp/>by<sp/>task<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>to<sp/>load.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>an<sp/>object<sp/>containing<sp/>the<sp/>Task<sp/>and<sp/>its<sp/>history,<sp/>or<sp/>null<sp/>if<sp/>not<sp/>found.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>load(taskId:<sp/>string):<sp/>Promise&lt;TaskAndHistory<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces/store.ts"/>
+  </compounddef>
+</doxygen>

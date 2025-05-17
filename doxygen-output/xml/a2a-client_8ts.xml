@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="a2a-client_8ts" kind="file" language="C++">
+    <compoundname>a2a-client.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CancelTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskSendParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskQueryParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskIdParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskPushNotificationConfig,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendTaskResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CancelTaskResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../types/index.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>executeJsonRpcRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>executeGetRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>executeStreamEvents,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../transport/index.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logError,<sp/>INTERNAL_ERROR<sp/>}<sp/>from<sp/>&quot;../utils/index.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Client<sp/>}<sp/>from<sp/>&quot;./interfaces/client.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>A2AClient<sp/>is<sp/>the<sp/>main<sp/>client<sp/>class<sp/>for<sp/>interacting<sp/>with<sp/>Agent2Agent<sp/>(A2A)<sp/>protocol-compliant<sp/>services.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>It<sp/>provides<sp/>methods<sp/>for<sp/>sending<sp/>tasks,<sp/>retrieving<sp/>statuses,<sp/>canceling<sp/>operations,<sp/>and<sp/>handling<sp/>streaming<sp/>responses.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>class<sp/>A2AClient<sp/>implements<sp/>Client<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>baseUrl:<sp/>URL;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>cachedAgentCard:<sp/>AgentCard<sp/>|<sp/>null<sp/>=<sp/>null;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>customHeaders:<sp/>Record&lt;string,<sp/>string&gt;<sp/>=<sp/>{};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>fallbackPath:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Creates<sp/>a<sp/>new<sp/>A2AClient<sp/>instance.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>baseUrl<sp/>The<sp/>base<sp/>URL<sp/>for<sp/>the<sp/>A2A<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>headers<sp/>Optional<sp/>custom<sp/>headers<sp/>to<sp/>include<sp/>in<sp/>all<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>constructor(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>baseUrl:<sp/>URL<sp/>|<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>headers:<sp/>Record&lt;string,<sp/>string&gt;<sp/>=<sp/>{},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>fallbackPath?:<sp/>string</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.baseUrl<sp/>=<sp/>typeof<sp/>baseUrl<sp/>===<sp/>&quot;string&quot;<sp/>?<sp/>new<sp/>URL(baseUrl)<sp/>:<sp/>baseUrl;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.customHeaders<sp/>=<sp/>headers;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.fallbackPath<sp/>=<sp/>fallbackPath<sp/>??<sp/>&quot;/agent-card&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Retrieves<sp/>the<sp/>AgentCard<sp/>from<sp/>the<sp/>A2A<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Caches<sp/>the<sp/>result<sp/>after<sp/>the<sp/>first<sp/>successful<sp/>fetch.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>AgentCard.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>agentCard():<sp/>Promise&lt;AgentCard&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.cachedAgentCard)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>this.cachedAgentCard;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Standard<sp/>location<sp/>for<sp/>agent<sp/>cards</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>wellKnownUrl<sp/>=<sp/>new<sp/>URL(&quot;/.well-known/agent.json&quot;,<sp/>this.baseUrl);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>card<sp/>=<sp/>await<sp/>executeGetRequest&lt;AgentCard&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>wellKnownUrl,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;agent<sp/>card<sp/>(well-known)&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.cachedAgentCard<sp/>=<sp/>card;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>this.cachedAgentCard;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>fallbackUrl<sp/>=<sp/>new<sp/>URL(this.fallbackPath,<sp/>this.baseUrl);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>fallbackCard<sp/>=<sp/>await<sp/>executeGetRequest&lt;AgentCard&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fallbackUrl,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;agent<sp/>card<sp/>(fallback)&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.cachedAgentCard<sp/>=<sp/>fallbackCard;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>this.cachedAgentCard;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;A2AClient:agentCard&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Failed<sp/>to<sp/>fetch<sp/>or<sp/>parse<sp/>agent<sp/>card:&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>INTERNAL_ERROR(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`Could<sp/>not<sp/>retrieve<sp/>agent<sp/>card:<sp/>${</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error<sp/>instanceof<sp/>Error<sp/>?<sp/>error.message<sp/>:<sp/>String(error)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Refreshes<sp/>the<sp/>cached<sp/>AgentCard<sp/>by<sp/>fetching<sp/>it<sp/>again<sp/>from<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>updated<sp/>AgentCard.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>refreshAgentCard():<sp/>Promise&lt;AgentCard&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.cachedAgentCard<sp/>=<sp/>null;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.agentCard();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>to<sp/>the<sp/>agent<sp/>(non-streaming).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>for<sp/>the<sp/>tasks/send<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>Task<sp/>object<sp/>or<sp/>null.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>sendTask(params:<sp/>TaskSendParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>await<sp/>executeJsonRpcRequest&lt;SendTaskRequest,<sp/>SendTaskResponse&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.baseUrl,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/send&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>params,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Sends<sp/>a<sp/>task<sp/>and<sp/>returns<sp/>a<sp/>subscription<sp/>to<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>Task<sp/>parameters<sp/>for<sp/>the<sp/>request</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>An<sp/>AsyncIterable<sp/>that<sp/>yields<sp/>TaskStatusUpdateEvent<sp/>or<sp/>TaskArtifactUpdateEvent<sp/>payloads.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendTaskSubscribe(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskSendParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>executeStreamEvents&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>result:<sp/>TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&gt;(this.baseUrl,<sp/>&quot;tasks/sendSubscribe&quot;,<sp/>params,<sp/>this.customHeaders);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Retrieves<sp/>the<sp/>current<sp/>state<sp/>of<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>for<sp/>the<sp/>tasks/get<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>Task<sp/>object<sp/>or<sp/>null.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>getTask(params:<sp/>TaskQueryParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>await<sp/>executeJsonRpcRequest&lt;GetTaskRequest,<sp/>GetTaskResponse&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.baseUrl,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/get&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>params,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Cancels<sp/>a<sp/>currently<sp/>running<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>for<sp/>the<sp/>tasks/cancel<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>updated<sp/>Task<sp/>object<sp/>(usually<sp/>canceled<sp/>state)<sp/>or<sp/>null.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>cancelTask(params:<sp/>TaskIdParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>await<sp/>executeJsonRpcRequest&lt;CancelTaskRequest,<sp/>CancelTaskResponse&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.baseUrl,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/cancel&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>params,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Sets<sp/>or<sp/>updates<sp/>the<sp/>push<sp/>notification<sp/>config<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>for<sp/>the<sp/>tasks/pushNotification/set<sp/>method<sp/>(which<sp/>is<sp/>TaskPushNotificationConfig).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>confirmed<sp/>TaskPushNotificationConfig<sp/>or<sp/>null.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>setTaskPushNotification(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskPushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;TaskPushNotificationConfig<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>await<sp/>executeJsonRpcRequest&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>SetTaskPushNotificationRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>SetTaskPushNotificationResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&gt;(this.baseUrl,<sp/>&quot;tasks/pushNotification/set&quot;,<sp/>params,<sp/>this.customHeaders);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Retrieves<sp/>the<sp/>currently<sp/>configured<sp/>push<sp/>notification<sp/>config<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>for<sp/>the<sp/>tasks/pushNotification/get<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>TaskPushNotificationConfig<sp/>or<sp/>null.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>getTaskPushNotification(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskIdParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;TaskPushNotificationConfig<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>await<sp/>executeJsonRpcRequest&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>GetTaskPushNotificationRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>GetTaskPushNotificationResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&gt;(this.baseUrl,<sp/>&quot;tasks/pushNotification/get&quot;,<sp/>params,<sp/>this.customHeaders);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Resubscribes<sp/>to<sp/>an<sp/>existing<sp/>task&apos;s<sp/>update<sp/>stream.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>params<sp/>Parameters<sp/>identifying<sp/>the<sp/>task<sp/>to<sp/>resubscribe<sp/>to</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>An<sp/>AsyncIterable<sp/>that<sp/>yields<sp/>TaskStatusUpdateEvent<sp/>or<sp/>TaskArtifactUpdateEvent<sp/>payloads.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>resubscribeTask(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskQueryParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>executeStreamEvents&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>result:<sp/>TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&gt;(this.baseUrl,<sp/>&quot;tasks/resubscribe&quot;,<sp/>params,<sp/>this.customHeaders);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Checks<sp/>if<sp/>the<sp/>server<sp/>supports<sp/>a<sp/>specific<sp/>capability<sp/>based<sp/>on<sp/>the<sp/>agent<sp/>card.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>capability<sp/>The<sp/>capability<sp/>to<sp/>check<sp/>(e.g.,<sp/>&apos;streaming&apos;,<sp/>&apos;pushNotifications&apos;).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>true<sp/>if<sp/>the<sp/>capability<sp/>is<sp/>supported.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>supports(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>capability:<sp/>&quot;streaming&quot;<sp/>|<sp/>&quot;pushNotifications&quot;<sp/>|<sp/>&quot;stateTransitionHistory&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;boolean&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>card<sp/>=<sp/>await<sp/>this.agentCard();</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!card.capabilities)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>switch<sp/>(capability)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>case<sp/>&quot;streaming&quot;:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>!!card.capabilities.streaming;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>case<sp/>&quot;pushNotifications&quot;:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>!!card.capabilities.pushNotifications;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>case<sp/>&quot;stateTransitionHistory&quot;:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>!!card.capabilities.stateTransitionHistory;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>default:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;A2AClient:supports&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`Failed<sp/>to<sp/>determine<sp/>support<sp/>for<sp/>capability<sp/>&apos;${capability}&apos;:`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>false;<sp/>//<sp/>Assume<sp/>not<sp/>supported<sp/>if<sp/>card<sp/>fetch<sp/>fails</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Sets<sp/>custom<sp/>headers<sp/>to<sp/>be<sp/>included<sp/>in<sp/>all<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>headers<sp/>A<sp/>record<sp/>of<sp/>header<sp/>name/value<sp/>pairs.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>setHeaders(headers:<sp/>Record&lt;string,<sp/>string&gt;):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.customHeaders<sp/>=<sp/>{<sp/>...headers<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Adds<sp/>a<sp/>single<sp/>custom<sp/>header<sp/>to<sp/>be<sp/>included<sp/>in<sp/>all<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>name<sp/>The<sp/>header<sp/>name.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>value<sp/>The<sp/>header<sp/>value.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>addHeader(name:<sp/>string,<sp/>value:<sp/>string):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.customHeaders[name]<sp/>=<sp/>value;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Removes<sp/>a<sp/>custom<sp/>header.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>name<sp/>The<sp/>header<sp/>name<sp/>to<sp/>remove.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>removeHeader(name:<sp/>string):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>delete<sp/>this.customHeaders[name];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Clears<sp/>all<sp/>custom<sp/>headers.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>clearHeaders():<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.customHeaders<sp/>=<sp/>{};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client/a2a-client.ts"/>
+  </compounddef>
+</doxygen>

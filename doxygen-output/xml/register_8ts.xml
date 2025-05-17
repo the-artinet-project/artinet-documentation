@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="register_8ts" kind="file" language="C++">
+    <compoundname>register.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>IRegistration,<sp/>MetadataValidator<sp/>}<sp/>from<sp/>&quot;@artinet/metadata-validator&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>AgentCard,<sp/>AgentSkill<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logDebug,<sp/>logInfo,<sp/>logWarn<sp/>}<sp/>from<sp/>&quot;../logging/log.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Registers<sp/>an<sp/>agent<sp/>with<sp/>the<sp/>A2A<sp/>registry.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>metadata<sp/>The<sp/>metadata<sp/>to<sp/>register.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>the<sp/>registration<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>apiRegister(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata:<sp/>string</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>Promise&lt;{<sp/>success:<sp/>boolean;<sp/>registrationId?:<sp/>string;<sp/>error?:<sp/>string<sp/>}&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>restResponse:<sp/>any<sp/>=<sp/>await<sp/>fetch(&quot;https://api.artinet.io/register&quot;,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>method:<sp/>&quot;POST&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>headers:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Content-Type&quot;:<sp/>&quot;application/json&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Access-Control-Allow-Origin&quot;:<sp/>&quot;*&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Access-Control-Allow-Headers&quot;:<sp/>&quot;*&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Access-Control-Allow-Methods&quot;:<sp/>&quot;*&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Access-Control-Allow-Credentials&quot;:<sp/>&quot;true&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>body:<sp/>JSON.stringify({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>registrationPayload:<sp/>metadata,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>response<sp/>=<sp/>await<sp/>restResponse.json();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>JSON.parse(response.body).registrationResponse;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Converts<sp/>an<sp/>AgentCard<sp/>object<sp/>into<sp/>a<sp/>RegistrationSchema<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>card<sp/>The<sp/>AgentCard<sp/>to<sp/>convert.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>RegistrationSchema<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>convert(card:<sp/>AgentCard):<sp/>IRegistration<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Extract<sp/>skill<sp/>names<sp/>for<sp/>capabilities<sp/>and<sp/>tags,<sp/>limiting<sp/>capabilities<sp/>to<sp/>5</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>skillNames<sp/>=<sp/>card.skills.map((skill:<sp/>AgentSkill)<sp/>=&gt;<sp/>skill.name);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>capabilities<sp/>=<sp/>skillNames.slice(0,<sp/>5)<sp/>as<sp/>IRegistration[&quot;capabilities&quot;];<sp/>//<sp/>Type<sp/>assertion<sp/>based<sp/>on<sp/>slice<sp/>limit</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Determine<sp/>if<sp/>authentication<sp/>is<sp/>required<sp/>based<sp/>on<sp/>the<sp/>agent<sp/>card,<sp/>ensuring<sp/>type<sp/>is<sp/>boolean<sp/>|<sp/>undefined</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>requiresAuth<sp/>=<sp/>card.authentication</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>?<sp/>card.authentication.schemes.length<sp/>&gt;<sp/>0</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/>undefined;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>registration:<sp/>IRegistration<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>schemaVersion:<sp/>&quot;1.0.0&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>serviceName:<sp/>card.name,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>description:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>card.description<sp/>??<sp/>&quot;sdk-generated<sp/>registration<sp/>for<sp/>&quot;<sp/>+<sp/>card.name,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>version:<sp/>card.version,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>capabilities:<sp/>capabilities,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>tags:<sp/>[&quot;a2a&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>communication:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>endpoints:<sp/>[</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>url:<sp/>card.url,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>type:<sp/>&quot;jsonrpc&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>authentication:<sp/>requiresAuth,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>description:<sp/>&quot;Primary<sp/>agent<sp/>interaction<sp/>endpoint&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>protocols:<sp/>[&quot;jsonrpc-2.0&quot;,<sp/>&quot;a2a&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>metadata:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>agentCard:<sp/>card,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>registration;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Registers<sp/>an<sp/>agent<sp/>with<sp/>the<sp/>A2A<sp/>registry.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>card<sp/>The<sp/>AgentCard<sp/>to<sp/>register.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>the<sp/>registration<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>register(card:<sp/>AgentCard):<sp/>Promise&lt;string&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!card)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logWarn(&quot;A2AServer&quot;,<sp/>&quot;No<sp/>card<sp/>provided&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>&quot;&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>card.url<sp/>===<sp/>undefined<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>card.url<sp/>===<sp/>null<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>card.url<sp/>===<sp/>&quot;&quot;<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>card.url.includes(&quot;localhost&quot;)<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>card.url.includes(&quot;127.0.0.1&quot;)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Invalid<sp/>URL<sp/>provided&quot;,<sp/>card.url);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>&quot;&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>registration<sp/>=<sp/>convert(card);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logInfo(&quot;A2AServer&quot;,<sp/>&quot;Registration&quot;,<sp/>registration);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>validator<sp/>=<sp/>new<sp/>MetadataValidator();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>{<sp/>isValid,<sp/>error:<sp/>validationError<sp/>}<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>await<sp/>validator.validateMetadata(registration);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!isValid)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Validation<sp/>failed&quot;,<sp/>validationError);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(validationError);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>{<sp/>success,<sp/>error,<sp/>registrationId<sp/>}<sp/>=<sp/>await<sp/>apiRegister(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>JSON.stringify(registration)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!success<sp/>||<sp/>!registrationId)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;API<sp/>registration<sp/>failed&quot;,<sp/>error);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(error);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logInfo(&quot;A2AServer&quot;,<sp/>&quot;Registration<sp/>successful&quot;,<sp/>registrationId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>registrationId;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//we<sp/>dont<sp/>want<sp/>to<sp/>throw<sp/>an<sp/>error<sp/>here,<sp/>because<sp/>we<sp/>want<sp/>to<sp/>allow<sp/>the<sp/>server<sp/>to<sp/>start<sp/>even<sp/>if<sp/>registration<sp/>fails</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//we<sp/>will<sp/>log<sp/>the<sp/>error<sp/>and<sp/>return<sp/>an<sp/>empty<sp/>string</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//it<sp/>is<sp/>up<sp/>to<sp/>the<sp/>developer<sp/>to<sp/>decide<sp/>if<sp/>they<sp/>want<sp/>to<sp/>register<sp/>their<sp/>server<sp/>or<sp/>not</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logWarn(&quot;A2AServer&quot;,<sp/>&quot;Registration<sp/>failed&quot;,<sp/>error);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>&quot;&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/api/register.ts"/>
+  </compounddef>
+</doxygen>

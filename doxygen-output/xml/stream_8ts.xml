@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="stream_8ts" kind="file" language="C++">
+    <compoundname>stream.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>Response<sp/>}<sp/>from<sp/>&quot;express&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Artifact,<sp/>JSONRPCError,<sp/>JSONRPCResponse<sp/>}<sp/>from<sp/>&quot;../../types/schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskEvent<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>updateState<sp/>}<sp/>from<sp/>&quot;../../server/lib/state.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskStore,<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/store.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>FAILED_UPDATE,<sp/>INTERNAL_ERROR<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isArtifactUpdate,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isTaskStatusUpdate,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../utils/common/utils.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logError<sp/>}<sp/>from<sp/>&quot;../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>FINAL_STATES<sp/>}<sp/>from<sp/>&quot;../../utils/common/constants.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Sets<sp/>up<sp/>a<sp/>Server-Sent<sp/>Events<sp/>stream<sp/>with<sp/>appropriate<sp/>headers</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>and<sp/>initializes<sp/>tracking<sp/>for<sp/>the<sp/>stream.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>Express<sp/>Response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID<sp/>to<sp/>associate<sp/>with<sp/>this<sp/>stream</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>reqId<sp/>The<sp/>request<sp/>ID<sp/>for<sp/>acknowledgment</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>initialStatus<sp/>Optional<sp/>initial<sp/>status<sp/>to<sp/>send</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>addStreamMethod<sp/>Function<sp/>to<sp/>add<sp/>stream<sp/>to<sp/>tracking</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>sendSseMethod<sp/>Function<sp/>to<sp/>send<sp/>SSE<sp/>events</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>setupSseStream(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res:<sp/>Response,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>initialStatus:<sp/>TaskEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>addStreamMethod?:<sp/>(taskId:<sp/>string,<sp/>res:<sp/>Response)<sp/>=&gt;<sp/>void</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Set<sp/>up<sp/>SSE<sp/>stream<sp/>headers</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res.setHeader(&quot;Content-Type&quot;,<sp/>&quot;text/event-stream&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res.setHeader(&quot;Cache-Control&quot;,<sp/>&quot;no-cache&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res.setHeader(&quot;Connection&quot;,<sp/>&quot;keep-alive&quot;);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Track<sp/>this<sp/>stream<sp/>for<sp/>potential<sp/>cancellation<sp/>if<sp/>tracking<sp/>method<sp/>provided</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(addStreamMethod)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>addStreamMethod(taskId,<sp/>res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Send<sp/>initial<sp/>status<sp/>if<sp/>provided</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(initialStatus)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>initialStatus);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Sends<sp/>a<sp/>Server-Sent<sp/>Event<sp/>with<sp/>task<sp/>data.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>Express<sp/>Response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>reqId<sp/>The<sp/>request<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>eventData<sp/>The<sp/>event<sp/>data<sp/>to<sp/>send</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>sendSSEEvent(res:<sp/>Response,<sp/>update:<sp/>TaskEvent):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!res.writable)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>response:<sp/>JSONRPCResponse&lt;TaskEvent&gt;<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>jsonrpc:<sp/>&quot;2.0&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>id:<sp/>update.id,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>result:<sp/>update,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res.write(`data:<sp/>${JSON.stringify(response)}\n\n`);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Sends<sp/>a<sp/>Server-Sent<sp/>Event<sp/>with<sp/>error<sp/>data.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>Express<sp/>Response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>reqId<sp/>The<sp/>request<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>error<sp/>The<sp/>error<sp/>to<sp/>send</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>sendSSEError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res:<sp/>Response,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error:<sp/>JSONRPCError&lt;any,<sp/>any&gt;</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!res.writable)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>response:<sp/>JSONRPCResponse&lt;null,<sp/>any&gt;<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>jsonrpc:<sp/>&quot;2.0&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>error:<sp/>error,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res.write(`data:<sp/>${JSON.stringify(response)}\n\n`);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Processes<sp/>a<sp/>task<sp/>stream,<sp/>handling<sp/>generator<sp/>yields<sp/>and<sp/>sending<sp/>SSE<sp/>events.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>req<sp/>The<sp/>request<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>task<sp/>context</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>initialData<sp/>The<sp/>initial<sp/>task<sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>processTaskStream(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskStore:<sp/>TaskStore,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskHandler:<sp/>TaskHandler,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>res:<sp/>Response,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>TaskContext,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>initialData:<sp/>TaskAndHistory,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>onCancel:<sp/>(data:<sp/>TaskAndHistory,<sp/>res:<sp/>Response)<sp/>=&gt;<sp/>Promise&lt;void&gt;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>onEnd:<sp/>(taskId:<sp/>string,<sp/>res:<sp/>Response)<sp/>=&gt;<sp/>Promise&lt;void&gt;</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>let<sp/>currentData<sp/>=<sp/>initialData;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>generator<sp/>=<sp/>taskHandler(context);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>for<sp/>await<sp/>(const<sp/>yieldValue<sp/>of<sp/>generator)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(context.isCancelled())<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>await<sp/>onCancel(currentData,<sp/>res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>currentData<sp/>=<sp/>await<sp/>updateState(taskStore,<sp/>currentData,<sp/>yieldValue);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>context.task<sp/>=<sp/>currentData.task;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(isTaskStatusUpdate(yieldValue))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>status:<sp/>currentData.task.status,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>final:<sp/>FINAL_STATES.includes(currentData.task.status.state),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>else<sp/>if<sp/>(isArtifactUpdate(yieldValue))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>artifactIndex<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>currentData.task.artifacts?.findIndex(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(a:<sp/>Artifact)<sp/>=&gt;<sp/>a.name<sp/>&amp;&amp;<sp/>a.name<sp/>===<sp/>yieldValue.name</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>)<sp/>??</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>yieldValue.index<sp/>??</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-1;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>artifactIndex<sp/>&gt;=<sp/>0<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>currentData.task.artifacts<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>artifactIndex<sp/>&lt;<sp/>currentData.task.artifacts.length</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>artifact:<sp/>currentData.task.artifacts[artifactIndex],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>final:<sp/>FINAL_STATES.includes(currentData.task.status.state),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>failedUpdate<sp/>=<sp/>FAILED_UPDATE(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error<sp/>instanceof<sp/>Error<sp/>?<sp/>error.message<sp/>:<sp/>String(error)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>currentData<sp/>=<sp/>await<sp/>updateState(taskStore,<sp/>currentData,<sp/>failedUpdate);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>status:<sp/>currentData.task.status,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(saveError)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;A2AServer&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;Failed<sp/>to<sp/>save<sp/>error<sp/>state<sp/>for<sp/>streaming<sp/>task&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>saveError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>taskId,<sp/>originalError:<sp/>error<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sendSSEError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>INTERNAL_ERROR(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`Task<sp/>execution<sp/>error:<sp/>${</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error<sp/>instanceof<sp/>Error<sp/>?<sp/>error.message<sp/>:<sp/>String(error)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>finally<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>onEnd(taskId,<sp/>res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!res.writableEnded)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res.write(&quot;event:<sp/>close\ndata:<sp/>{}\n\n&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res.end();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/streaming/stream.ts"/>
+  </compounddef>
+</doxygen>

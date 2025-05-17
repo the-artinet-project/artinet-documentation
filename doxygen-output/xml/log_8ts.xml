@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="log_8ts" kind="file" language="C++">
+    <compoundname>log.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>logger<sp/>}<sp/>from<sp/>&quot;./logger.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Logger<sp/>utility<sp/>for<sp/>server<sp/>operations</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>context<sp/>of<sp/>the<sp/>log<sp/>(e.g.,<sp/>&quot;A2AServer&quot;,<sp/>&quot;TaskStore&quot;)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>message<sp/>The<sp/>message<sp/>to<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>data<sp/>Optional<sp/>data<sp/>to<sp/>include<sp/>in<sp/>the<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>logDebug(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data?:<sp/>unknown</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>logData:<sp/>Record&lt;string,<sp/>unknown&gt;<sp/>=<sp/>{<sp/>component:<sp/>context<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(data<sp/>!==<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logData.data<sp/>=<sp/>data;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logger.debug(logData,<sp/>message);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Logger<sp/>utility<sp/>for<sp/>server<sp/>errors</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>context<sp/>of<sp/>the<sp/>log<sp/>(e.g.,<sp/>&quot;A2AServer&quot;,<sp/>&quot;TaskStore&quot;)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>message<sp/>The<sp/>message<sp/>to<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>error<sp/>The<sp/>error<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>data<sp/>Optional<sp/>additional<sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error:<sp/>unknown,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data?:<sp/>unknown</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>logData:<sp/>Record&lt;string,<sp/>unknown&gt;<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>component:<sp/>context,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>err:<sp/>error<sp/>instanceof<sp/>Error<sp/>?<sp/>error<sp/>:<sp/>new<sp/>Error(String(error)),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(data<sp/>!==<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logData.data<sp/>=<sp/>data;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logger.error(logData,<sp/>message);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Logger<sp/>utility<sp/>for<sp/>server<sp/>warnings</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>context<sp/>of<sp/>the<sp/>log<sp/>(e.g.,<sp/>&quot;A2AServer&quot;,<sp/>&quot;TaskStore&quot;)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>message<sp/>The<sp/>message<sp/>to<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>data<sp/>Optional<sp/>data<sp/>to<sp/>include<sp/>in<sp/>the<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>logWarn(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data?:<sp/>unknown</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>logData:<sp/>Record&lt;string,<sp/>unknown&gt;<sp/>=<sp/>{<sp/>component:<sp/>context<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(data<sp/>!==<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logData.data<sp/>=<sp/>data;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logger.warn(logData,<sp/>message);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Logger<sp/>utility<sp/>for<sp/>server<sp/>information</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>context<sp/>of<sp/>the<sp/>log<sp/>(e.g.,<sp/>&quot;A2AServer&quot;,<sp/>&quot;TaskStore&quot;)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>message<sp/>The<sp/>message<sp/>to<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>data<sp/>Optional<sp/>data<sp/>to<sp/>include<sp/>in<sp/>the<sp/>log</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>logInfo(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data?:<sp/>unknown</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>logData:<sp/>Record&lt;string,<sp/>unknown&gt;<sp/>=<sp/>{<sp/>component:<sp/>context<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(data<sp/>!==<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logData.data<sp/>=<sp/>data;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logger.info(logData,<sp/>message);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/logging/log.ts"/>
+  </compounddef>
+</doxygen>

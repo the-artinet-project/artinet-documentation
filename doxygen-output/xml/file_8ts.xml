@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="file_8ts" kind="file" language="C++">
+    <compoundname>file.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskAndHistory,<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;../../interfaces/store.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Task,<sp/>Message<sp/>}<sp/>from<sp/>&quot;../../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logError,<sp/>logDebug<sp/>}<sp/>from<sp/>&quot;../../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>fs<sp/>from<sp/>&quot;fs/promises&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>path<sp/>from<sp/>&quot;path&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>File-based<sp/>implementation<sp/>of<sp/>the<sp/>TaskStore<sp/>interface.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Stores<sp/>tasks<sp/>and<sp/>their<sp/>history<sp/>as<sp/>JSON<sp/>files<sp/>on<sp/>disk.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>class<sp/>FileStore<sp/>implements<sp/>TaskStore<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>baseDir:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Creates<sp/>a<sp/>new<sp/>FileStore.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>baseDir<sp/>The<sp/>base<sp/>directory<sp/>to<sp/>store<sp/>task<sp/>files<sp/>in.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>constructor(baseDir:<sp/>string)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.baseDir<sp/>=<sp/>baseDir;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Constructs<sp/>the<sp/>file<sp/>path<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>The<sp/>full<sp/>file<sp/>path<sp/>for<sp/>the<sp/>task<sp/>JSON<sp/>file</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>getTaskFilePath(taskId:<sp/>string):<sp/>string<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>path.join(this.baseDir,<sp/>`${taskId}.task.json`);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Constructs<sp/>the<sp/>file<sp/>path<sp/>for<sp/>a<sp/>task&apos;s<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>The<sp/>full<sp/>file<sp/>path<sp/>for<sp/>the<sp/>history<sp/>JSON<sp/>file</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>getHistoryFilePath(taskId:<sp/>string):<sp/>string<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>path.join(this.baseDir,<sp/>`${taskId}.history.json`);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Ensures<sp/>the<sp/>base<sp/>directory<sp/>exists.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>directory<sp/>exists.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>async<sp/>ensureBaseDir():<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>await<sp/>fs.mkdir(this.baseDir,<sp/>{<sp/>recursive:<sp/>true<sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;FileStore&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`Failed<sp/>to<sp/>create<sp/>directory:<sp/>${this.baseDir}`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>error;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Writes<sp/>data<sp/>to<sp/>a<sp/>JSON<sp/>file.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>filePath<sp/>The<sp/>path<sp/>to<sp/>write<sp/>to</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>data<sp/>The<sp/>data<sp/>to<sp/>write</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>write<sp/>is<sp/>complete</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>async<sp/>writeJsonFile&lt;T&gt;(filePath:<sp/>string,<sp/>data:<sp/>T):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>await<sp/>this.ensureBaseDir();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>await<sp/>fs.writeFile(filePath,<sp/>JSON.stringify(data,<sp/>null,<sp/>2),<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>encoding:<sp/>&quot;utf8&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(&quot;FileStore&quot;,<sp/>`Failed<sp/>to<sp/>write<sp/>file:<sp/>${filePath}`,<sp/>error);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>error;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Reads<sp/>data<sp/>from<sp/>a<sp/>JSON<sp/>file.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>filePath<sp/>The<sp/>path<sp/>to<sp/>read<sp/>from</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>parsed<sp/>data,<sp/>or<sp/>null<sp/>if<sp/>the<sp/>file<sp/>doesn&apos;t<sp/>exist</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>async<sp/>readJsonFile&lt;T&gt;(filePath:<sp/>string):<sp/>Promise&lt;T<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>content<sp/>=<sp/>await<sp/>fs.readFile(filePath,<sp/>{<sp/>encoding:<sp/>&quot;utf8&quot;<sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>JSON.parse(content)<sp/>as<sp/>T;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>((error<sp/>as<sp/>NodeJS.ErrnoException).code<sp/>===<sp/>&quot;ENOENT&quot;)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>File<sp/>not<sp/>found<sp/>-<sp/>return<sp/>null<sp/>rather<sp/>than<sp/>throwing</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>null;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(&quot;FileStore&quot;,<sp/>`Failed<sp/>to<sp/>read<sp/>file:<sp/>${filePath}`,<sp/>error);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>error;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Type<sp/>guard<sp/>to<sp/>validate<sp/>the<sp/>structure<sp/>of<sp/>history<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>content<sp/>The<sp/>content<sp/>to<sp/>check</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>True<sp/>if<sp/>the<sp/>content<sp/>is<sp/>a<sp/>valid<sp/>history<sp/>file<sp/>content</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>private<sp/>isHistoryFileContent(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>content:<sp/>unknown</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>content<sp/>is<sp/>{<sp/>messageHistory:<sp/>Message[]<sp/>}<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>typeof<sp/>content<sp/>===<sp/>&quot;object&quot;<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>content<sp/>!==<sp/>null<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;messageHistory&quot;<sp/>in<sp/>content<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>Array.isArray((content<sp/>as<sp/>any).messageHistory)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Loads<sp/>a<sp/>task<sp/>and<sp/>its<sp/>history<sp/>by<sp/>task<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>to<sp/>load.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>resolving<sp/>to<sp/>the<sp/>task<sp/>and<sp/>history,<sp/>or<sp/>null<sp/>if<sp/>not<sp/>found.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>load(taskId:<sp/>string):<sp/>Promise&lt;TaskAndHistory<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;FileStore&quot;,<sp/>`Loading<sp/>task:<sp/>${taskId}`);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>taskFilePath<sp/>=<sp/>this.getTaskFilePath(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>historyFilePath<sp/>=<sp/>this.getHistoryFilePath(taskId);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Read<sp/>task<sp/>file<sp/>first<sp/>-<sp/>if<sp/>it<sp/>doesn&apos;t<sp/>exist,<sp/>the<sp/>task<sp/>doesn&apos;t<sp/>exist.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>task<sp/>=<sp/>await<sp/>this.readJsonFile&lt;Task&gt;(taskFilePath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!task)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>null;<sp/>//<sp/>Task<sp/>not<sp/>found</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Task<sp/>exists,<sp/>now<sp/>try<sp/>to<sp/>read<sp/>history.<sp/>It<sp/>might<sp/>not<sp/>exist<sp/>yet.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>let<sp/>history:<sp/>Message[]<sp/>=<sp/>[];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>historyContent<sp/>=<sp/>await<sp/>this.readJsonFile&lt;unknown&gt;(historyFilePath);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Validate<sp/>the<sp/>structure</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(this.isHistoryFileContent(historyContent))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>history<sp/>=<sp/>historyContent.messageHistory;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>else<sp/>if<sp/>(historyContent<sp/>!==<sp/>null)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Log<sp/>a<sp/>warning<sp/>if<sp/>the<sp/>history<sp/>file<sp/>exists<sp/>but<sp/>is<sp/>malformed</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;FileStore&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`Malformed<sp/>history<sp/>file<sp/>found<sp/>for<sp/>task<sp/>${taskId}`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>new<sp/>Error(&quot;Invalid<sp/>history<sp/>file<sp/>format&quot;),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>path:<sp/>historyFilePath<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Proceed<sp/>with<sp/>empty<sp/>history</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>If<sp/>historyContent<sp/>is<sp/>null<sp/>(file<sp/>not<sp/>found),<sp/>history<sp/>remains<sp/>[]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Log<sp/>error<sp/>reading<sp/>history<sp/>but<sp/>proceed<sp/>with<sp/>empty<sp/>history</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;FileStore&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`Error<sp/>reading<sp/>history<sp/>file<sp/>for<sp/>task<sp/>${taskId}`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>path:<sp/>historyFilePath<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Proceed<sp/>with<sp/>empty<sp/>history</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>{<sp/>task,<sp/>history<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Saves<sp/>a<sp/>task<sp/>and<sp/>its<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>data<sp/>The<sp/>task<sp/>and<sp/>history<sp/>to<sp/>save.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>save<sp/>is<sp/>complete.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>save(data:<sp/>TaskAndHistory):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;FileStore&quot;,<sp/>`Saving<sp/>task:<sp/>${data.task.id}`);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>taskFilePath<sp/>=<sp/>this.getTaskFilePath(data.task.id);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>historyFilePath<sp/>=<sp/>this.getHistoryFilePath(data.task.id);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>For<sp/>simplicity<sp/>and<sp/>atomicity,<sp/>we&apos;ll<sp/>write<sp/>each<sp/>file<sp/>individually</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>First,<sp/>write<sp/>the<sp/>task<sp/>file</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>this.writeJsonFile(taskFilePath,<sp/>data.task);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Then,<sp/>write<sp/>the<sp/>history<sp/>file</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>We&apos;ll<sp/>wrap<sp/>it<sp/>in<sp/>an<sp/>object<sp/>to<sp/>allow<sp/>for<sp/>future<sp/>extensibility</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>this.writeJsonFile(historyFilePath,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>messageHistory:<sp/>data.history,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/storage/file.ts"/>
+  </compounddef>
+</doxygen>

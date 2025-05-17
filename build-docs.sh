@@ -1,24 +1,127 @@
 #!/bin/bash
+set -e  # Exit on any error
 
-# Make sure we have the SDK repository
-if [ -d "../artinet-sdk" ]; then
-    echo "Updating SDK repository..."
-    cd ../artinet-sdk
-    git pull
-    cd ../artinet-wiki
-else
-    echo "Cloning SDK repository..."
-    cd ..
-    git clone https://github.com/the-artinet-project/artinet-sdk.git
-    cd artinet-wiki
-fi
+echo "Starting documentation build process..."
+
+# Make sure we're in the artinet-wiki directory
+cd "$(dirname "$0")"
+
+# Update mkdocs.yml to include the examples and tests sections
+echo "Updating MkDocs configuration..."
+# Create a backup of the original file
+cp mkdocs.yml mkdocs.yml.bak
+
+# Update the navigation section to properly include examples and tests
+cat > mkdocs.yml << 'EOF'
+site_name: Artinet SDK Documentation
+site_url: https://the-artinet-project.github.io/artinet-wiki/
+use_directory_urls: false
+repo_url: https://github.com/the-artinet-project/artinet-sdk
+repo_name: the-artinet-project/artinet-sdk
+site_description: Documentation and API reference for the Artinet SDK - Agent2Agent Protocol Implementation
+
+theme:
+  name: material
+  logo: images/artinet-logo.png
+  favicon: images/artinet-logo.ico
+  custom_dir: docs/overrides
+  palette:
+    primary: black
+    accent: black
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascript/extra.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/the-artinet-project/artinet-sdk
+      name: Artinet SDK on GitHub
+
+nav:
+  - Home: index.md
+  - SDK:
+    - Quickstart: sdk/quickstart.md
+    - Core: sdk/core.md
+    - Examples:
+      - Overview: sdk/examples/index.md
+      - Basic Server: sdk/examples/basic-server.md
+      - Basic Usage: sdk/examples/basic-usage.md
+      - Code Deployment: sdk/examples/code-deployment.md
+      - File Storage Client: sdk/examples/file-storage-client.md
+      - File Storage Client (Continued): sdk/examples/file-storage-client-continued.md
+      - File Storage Server: sdk/examples/file-storage-server.md
+      - Streaming Updates: sdk/examples/streaming-updates.md
+      - Task Resubscribe: sdk/examples/task-resubscribe.md
+      - Task Wrapper: sdk/examples/task-wrapper.md
+    - Tests:
+      - Overview: sdk/tests/index.md
+      - A2A Protocol: sdk/tests/a2a-protocol.test.md
+      - Bundler: sdk/tests/bundler.test.md
+      - Client: sdk/tests/client.test.md
+      - Common Errors: sdk/tests/common-errors.test.md
+      - File Storage: sdk/tests/file-storage.test.md
+      - HTTP Utils: sdk/tests/http-utils.test.md
+      - Integration: sdk/tests/integration.test.md
+      - Register: sdk/tests/register.test.md
+      - RPC Client: sdk/tests/rpc-client.test.md
+      - Server: sdk/tests/server.test.md
+      - Server Error Handling: sdk/tests/server-error-handling.test.md
+      - Server Impl: sdk/tests/server-impl.test.md
+      - Streaming: sdk/tests/streaming.test.md
+  - Agents:
+    - Quick Agents: agents/quick_agents.md
+  - API:
+    - Overview: api/index.md
+  - Contributing:
+    - Code Documentation: contributing/code-documentation.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - tables
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+EOF
+
+echo "MkDocs configuration updated"
 
 # Generate Doxygen documentation
 echo "Generating Doxygen documentation..."
-doxygen Doxyfile
+if [ -f "Doxyfile" ]; then
+    doxygen Doxyfile
+else
+    echo "Warning: Doxyfile not found. Skipping Doxygen documentation."
+fi
 
-# Build MkDocs site
+# Clean and build MkDocs site
 echo "Building MkDocs site..."
-mkdocs build
+mkdocs build --clean
 
 echo "Documentation build complete!"
+echo "Run 'mkdocs serve' to preview the site locally."

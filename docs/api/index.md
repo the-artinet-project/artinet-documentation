@@ -24,8 +24,14 @@ class A2AClient {
   /**
    * Creates a new A2AClient instance.
    * @param baseUrl The base URL of the A2A-compliant server
+   * @param headers Optional custom headers to include in requests
+   * @param fallbackPath Optional path for retrieving the agent card if the standard path fails
    */
-  constructor(baseUrl: string);
+  constructor(
+    baseUrl: string | URL,
+    headers?: Record<string, string>,
+    fallbackPath?: string
+  );
   
   /**
    * Adds a single HTTP header to requests.
@@ -41,57 +47,81 @@ class A2AClient {
   setHeaders(headers: Record<string, string>): void;
   
   /**
+   * Removes a specific HTTP header.
+   * @param name The header name to remove
+   */
+  removeHeader(name: string): void;
+  
+  /**
+   * Clears all custom HTTP headers.
+   */
+  clearHeaders(): void;
+  
+  /**
    * Sends a task and returns the final result.
    * @param params The task parameters
    * @returns A Promise resolving to the completed task
    */
-  async sendTask(params: SendTaskRequest["params"]): Promise<Task>;
+  async sendTask(params: TaskSendParams): Promise<Task | null>;
   
   /**
    * Retrieves information about an existing task.
    * @param params The task parameters including task ID
    * @returns A Promise resolving to the task
    */
-  async getTask(params: GetTaskRequest["params"]): Promise<Task>;
+  async getTask(params: TaskQueryParams): Promise<Task | null>;
   
   /**
    * Cancels an in-progress task.
    * @param params The task parameters including task ID
    */
-  async cancelTask(params: CancelTaskRequest["params"]): Promise<void>;
+  async cancelTask(params: TaskIdParams): Promise<Task | null>;
   
   /**
    * Sends a task and subscribes to streaming updates.
    * @param params The task parameters
-   * @returns An AsyncGenerator yielding status and artifact updates
+   * @returns An AsyncIterable yielding status and artifact updates
    */
-  sendTaskSubscribe(params: SendTaskRequest["params"]): AsyncGenerator<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
+  sendTaskSubscribe(params: TaskSendParams): AsyncIterable<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
   
   /**
    * Resubscribes to updates for an existing task.
    * @param params The resubscribe parameters including task ID
-   * @returns An AsyncGenerator yielding status and artifact updates
+   * @returns An AsyncIterable yielding status and artifact updates
    */
-  resubscribe(params: ResubscribeRequest["params"]): AsyncGenerator<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
+  resubscribeTask(params: TaskQueryParams): AsyncIterable<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
   
   /**
    * Configures push notifications for a task.
    * @param params The push notification parameters
    */
-  async setTaskPushNotification(params: SetTaskPushNotificationRequest["params"]): Promise<void>;
+  async setTaskPushNotification(params: TaskPushNotificationConfig): Promise<TaskPushNotificationConfig | null>;
   
   /**
    * Retrieves push notification configuration for a task.
    * @param params The parameters including task ID
    * @returns The push notification configuration
    */
-  async getTaskPushNotification(params: GetTaskPushNotificationRequest["params"]): Promise<TaskPushNotificationInfo>;
+  async getTaskPushNotification(params: TaskIdParams): Promise<TaskPushNotificationConfig | null>;
   
   /**
    * Retrieves the agent card describing the server's capabilities.
    * @returns A Promise resolving to the agent card
    */
-  async getAgentCard(): Promise<AgentCard>;
+  async agentCard(): Promise<AgentCard>;
+  
+  /**
+   * Refreshes the cached agent card.
+   * @returns A Promise resolving to the refreshed agent card
+   */
+  async refreshAgentCard(): Promise<AgentCard>;
+  
+  /**
+   * Checks if the server supports a specific capability.
+   * @param capability The capability to check
+   * @returns A Promise resolving to a boolean indicating support
+   */
+  async supports(capability: "streaming" | "pushNotifications" | "stateTransitionHistory"): Promise<boolean>;
 }
 ```
 
@@ -100,24 +130,24 @@ class A2AClient {
 Represents client-side errors encountered during A2A communication.
 
 ```typescript
-class RpcError extends Error {
+class SystemError<ErrorData = unknown, C extends number = number> extends Error {
   /**
-   * The error code (typically an HTTP status code)
+   * The error code (typically a JSON-RPC error code)
    */
-  code: number;
+  code: C;
   
   /**
    * Additional error data, if any
    */
-  data?: unknown;
+  data: ErrorData;
   
   /**
-   * Creates a new RpcError.
+   * Creates a new SystemError.
    * @param message The error message
    * @param code The error code
-   * @param data Additional error data (optional)
+   * @param data Additional error data
    */
-  constructor(message: string, code: number, data?: unknown);
+  constructor(message: string, code: C, data: ErrorData);
 }
 ```
 
@@ -137,9 +167,9 @@ class A2AServer {
   
   /**
    * Starts the server, making it available to accept requests.
-   * @returns A Promise that resolves when the server is started
+   * @returns The Express application instance
    */
-  start(): Promise<void>;
+  start(): express.Express;
   
   /**
    * Stops the server, closing all connections.
@@ -152,7 +182,61 @@ class A2AServer {
    * Useful for advanced customization.
    * @returns The Express application
    */
-  getExpressApp(): Express.Application;
+  getExpressApp(): express.Express;
+  
+  /**
+   * Registers the server with the A2A registry.
+   * @returns A Promise resolving to the registration ID
+   */
+  registerServer(): Promise<string>;
+  
+  /**
+   * Gets the base path for the server.
+   * @returns The base path
+   */
+  getBasePath(): string;
+  
+  /**
+   * Gets the CORS options for the server.
+   * @returns The CORS options
+   */
+  getCorsOptions(): CorsOptions;
+  
+  /**
+   * Gets the agent card for the server.
+   * @returns The agent card
+   */
+  getCard(): AgentCard;
+  
+  /**
+   * Gets the task store.
+   * @returns The task store
+   */
+  getTaskStore(): TaskStore;
+  
+  /**
+   * Gets the task handler.
+   * @returns The task handler
+   */
+  getTaskHandler(): TaskHandler;
+  
+  /**
+   * Gets the active cancellations set.
+   * @returns The set of active cancellations
+   */
+  getActiveCancellations(): Set<string>;
+  
+  /**
+   * Gets the active streams map.
+   * @returns The map of active streams
+   */
+  getActiveStreams(): Map<string, Response[]>;
+  
+  /**
+   * Gets the port number.
+   * @returns The port number
+   */
+  getPort(): number;
 }
 ```
 
@@ -165,20 +249,20 @@ interface A2AServerParams {
   /**
    * The task handler function that implements agent logic
    */
-  taskHandler: TaskHandler;
+  handler: TaskHandler;
   
   /**
    * The storage implementation for persisting tasks
    */
-  taskStore: TaskStore;
+  taskStore?: TaskStore;
   
   /**
    * Metadata about the agent's capabilities
    */
-  card: AgentCard;
+  card?: AgentCard;
   
   /**
-   * Port number to listen on (default: 3000)
+   * Port number to listen on (default: 41241)
    */
   port?: number;
   
@@ -188,7 +272,7 @@ interface A2AServerParams {
   host?: string;
   
   /**
-   * Base URL path for API endpoints (default: '/a2a')
+   * Base URL path for API endpoints (default: '/')
    */
   basePath?: string;
   
@@ -198,7 +282,7 @@ interface A2AServerParams {
   fallbackPath?: string;
   
   /**
-   * Whether to register this agent with the Artinet registry
+   * Whether to register this agent with the Artinet registry (default: false)
    */
   register?: boolean;
   
@@ -206,6 +290,11 @@ interface A2AServerParams {
    * Custom JSON-RPC server factory for advanced usage
    */
   createJSONRPCServer?: JSONRPCServerFactory;
+  
+  /**
+   * CORS options for the server
+   */
+  corsOptions?: CorsOptions;
   
   /**
    * Logging verbosity level (default: LogLevel.info)
@@ -228,7 +317,7 @@ The core type for defining agent logic.
  */
 type TaskHandler = (
   context: TaskContext
-) => AsyncGenerator<TaskYieldUpdate>;
+) => AsyncGenerator<TaskYieldUpdate, Task | void, unknown>;
 ```
 
 ### TaskContext
@@ -250,15 +339,10 @@ interface TaskContext {
   /**
    * Message history for this task (if available)
    */
-  readonly history?: Message[];
+  readonly history: Message[];
   
   /**
-   * Task ID for this task
-   */
-  readonly taskId: string;
-  
-  /**
-   * Checks if the task has been cancelled
+   * Function to check if the task has been cancelled
    * @returns true if the task is cancelled, false otherwise
    */
   isCancelled(): boolean;
@@ -282,7 +366,7 @@ type TaskYieldUpdate =
   /**
    * Artifact creation
    */
-  | { name: string; mimeType: string; parts: Part[] };
+  | { name: string; parts: Part[]; mimeType?: string };
 ```
 
 ## Storage API
@@ -294,40 +378,36 @@ Interface for task persistence implementations.
 ```typescript
 interface TaskStore {
   /**
-   * Retrieves a task by its ID
-   * @param taskId The task ID
-   * @returns A Promise resolving to the task, or undefined if not found
+   * Saves a task and its associated message history.
+   * @param data An object containing the task and its history
+   * @returns A promise resolving when the save operation is complete
    */
-  getTask(taskId: string): Promise<Task | undefined>;
+  save(data: TaskAndHistory): Promise<void>;
   
   /**
-   * Creates a new task in the store
-   * @param taskId The task ID
-   * @param task The task data
-   * @returns A Promise that resolves when the task is saved
+   * Loads a task and its history by task ID.
+   * @param taskId The ID of the task to load
+   * @returns A promise resolving to an object containing the Task and its history, or null if not found
    */
-  createTask(taskId: string, task: Task): Promise<void>;
+  load(taskId: string): Promise<TaskAndHistory | null>;
+}
+```
+
+### TaskAndHistory
+
+Interface representing a task and its associated message history.
+
+```typescript
+interface TaskAndHistory {
+  /**
+   * The task object
+   */
+  task: Task;
   
   /**
-   * Saves a new task or fully replaces an existing task
-   * @param task The task to save
-   * @returns A Promise that resolves when the task is saved
+   * The complete message history associated with the task
    */
-  saveTask(task: Task): Promise<void>;
-  
-  /**
-   * Updates an existing task with new data
-   * @param task The task with updated data
-   * @returns A Promise that resolves when the task is updated
-   */
-  updateTask(task: Task): Promise<void>;
-  
-  /**
-   * Removes a task from the store
-   * @param taskId The task ID
-   * @returns A Promise that resolves when the task is deleted
-   */
-  deleteTask(taskId: string): Promise<void>;
+  history: Message[];
 }
 ```
 
@@ -342,12 +422,18 @@ class InMemoryTaskStore implements TaskStore {
    */
   constructor();
   
-  // Implements all TaskStore methods using in-memory storage
-  getTask(taskId: string): Promise<Task | undefined>;
-  createTask(taskId: string, task: Task): Promise<void>;
-  saveTask(task: Task): Promise<void>;
-  updateTask(task: Task): Promise<void>;
-  deleteTask(taskId: string): Promise<void>;
+  /**
+   * Saves a task and its associated message history.
+   * @param data An object containing the task and its history
+   */
+  save(data: TaskAndHistory): Promise<void>;
+  
+  /**
+   * Loads a task and its history by task ID.
+   * @param taskId The ID of the task to load
+   * @returns A promise resolving to the task and history, or null if not found
+   */
+  load(taskId: string): Promise<TaskAndHistory | null>;
 }
 ```
 
@@ -363,12 +449,18 @@ class FileStore implements TaskStore {
    */
   constructor(dataDirectory: string);
   
-  // Implements all TaskStore methods using filesystem storage
-  getTask(taskId: string): Promise<Task | undefined>;
-  createTask(taskId: string, task: Task): Promise<void>;
-  saveTask(task: Task): Promise<void>;
-  updateTask(task: Task): Promise<void>;
-  deleteTask(taskId: string): Promise<void>;
+  /**
+   * Saves a task and its associated message history.
+   * @param data An object containing the task and its history
+   */
+  save(data: TaskAndHistory): Promise<void>;
+  
+  /**
+   * Loads a task and its history by task ID.
+   * @param taskId The ID of the task to load
+   * @returns A promise resolving to the task and history, or null if not found
+   */
+  load(taskId: string): Promise<TaskAndHistory | null>;
 }
 ```
 
@@ -394,7 +486,7 @@ Function to configure the logging level and other options.
  * Configures the global logger's settings
  * @param options Configuration options
  */
-function configureLogger(options: { level?: LogLevel }): void;
+function configureLogger(options: { level?: LogLevel, name?: string, prettyPrint?: boolean }): Logger;
 ```
 
 ### Log Helper Functions
@@ -402,53 +494,44 @@ function configureLogger(options: { level?: LogLevel }): void;
 ```typescript
 /**
  * Logs a message at DEBUG level with context
- * @param component Name of the component generating the log
- * @param context Additional context objects
+ * @param context Name of the component generating the log
  * @param message The log message
- * @param error Optional error object
+ * @param data Optional data to include
  */
-function logDebug(component: string, context: object, message: string, error?: Error): void;
+function logDebug(context: string, message: string, data?: unknown): void;
 
 /**
  * Logs a message at INFO level with context
- * @param component Name of the component generating the log
- * @param context Additional context objects
+ * @param context Name of the component generating the log
  * @param message The log message
- * @param error Optional error object
+ * @param data Optional data to include
  */
-function logInfo(component: string, context: object, message: string, error?: Error): void;
+function logInfo(context: string, message: string, data?: unknown): void;
 
 /**
  * Logs a message at WARN level with context
- * @param component Name of the component generating the log
- * @param context Additional context objects
+ * @param context Name of the component generating the log
  * @param message The log message
- * @param error Optional error object
+ * @param data Optional data to include
  */
-function logWarn(component: string, context: object, message: string, error?: Error): void;
+function logWarn(context: string, message: string, data?: unknown): void;
 
 /**
  * Logs a message at ERROR level with context
- * @param component Name of the component generating the log
- * @param context Additional context objects
+ * @param context Name of the component generating the log
  * @param message The log message
- * @param error Optional error object
+ * @param error The error object
+ * @param data Optional additional data
  */
-function logError(component: string, context: object, message: string, error?: Error): void;
+function logError(context: string, message: string, error: unknown, data?: unknown): void;
 ```
 
 ### LogLevel
 
-Enum defining logging levels.
+Type defining logging levels.
 
 ```typescript
-enum LogLevel {
-  ERROR = "error",
-  WARN = "warn",
-  INFO = "info",
-  DEBUG = "debug",
-  TRACE = "trace"
-}
+type LogLevel = "silent" | "error" | "warn" | "info" | "debug" | "trace";
 ```
 
 ## Advanced Customization API
@@ -487,7 +570,7 @@ interface CreateJSONRPCServerParams {
   /**
    * The agent's metadata
    */
-  agentCard: AgentCard;
+  card: AgentCard;
   
   /**
    * Set of active task cancellations
@@ -497,7 +580,7 @@ interface CreateJSONRPCServerParams {
   /**
    * Function to create a TaskContext for a task
    */
-  createTaskContext: (task: Task) => TaskContext;
+  createTaskContext: (task: Task, message: Message, history: Message[]) => TaskContext;
   
   /**
    * Function to close all streams for a task
@@ -512,29 +595,42 @@ interface CreateJSONRPCServerParams {
 /**
  * Type definition for the tasks/send method handler
  */
-type SendTaskMethod = (
-  deps: CreateJSONRPCServerParams,
-  params: SendTaskRequest["params"],
-  callback: JSONRPCCallback
-) => void;
+type SendTaskMethod = A2AMethodHandler<
+  SendTaskRequest["params"],
+  SendTaskResponse | null
+>;
 
 /**
  * Type definition for the tasks/get method handler
  */
-type GetTaskMethod = (
-  deps: CreateJSONRPCServerParams,
-  params: GetTaskRequest["params"],
-  callback: JSONRPCCallback
-) => void;
+type GetTaskMethod = A2AMethodHandler<
+  GetTaskRequest["params"],
+  GetTaskResponse | null
+>;
 
 /**
  * Type definition for the tasks/cancel method handler
  */
-type CancelTaskMethod = (
-  deps: CreateJSONRPCServerParams,
-  params: CancelTaskRequest["params"],
-  callback: JSONRPCCallback
-) => void;
+type CancelTaskMethod = A2AMethodHandler<
+  CancelTaskRequest["params"],
+  CancelTaskResponse | null
+>;
+
+/**
+ * Type definition for the tasks/pushNotification/set method handler
+ */
+type SetTaskPushNotificationMethod = A2AMethodHandler<
+  SetTaskPushNotificationRequest["params"],
+  SetTaskPushNotificationResponse | null
+>;
+
+/**
+ * Type definition for the tasks/pushNotification/get method handler
+ */
+type GetTaskPushNotificationMethod = A2AMethodHandler<
+  GetTaskPushNotificationRequest["params"],
+  GetTaskPushNotificationResponse | null
+>;
 ```
 
 ### createJSONRPCMethod
@@ -549,11 +645,14 @@ Helper function for creating JSON-RPC method handlers.
  * @param methodName The name of the method
  * @returns A configured JSON-RPC method handler
  */
-function createJSONRPCMethod<T, R>(
+function createJSONRPCMethod<
+  Params extends RequestParams,
+  Result extends A2AResponse | null,
+>(
   deps: CreateJSONRPCServerParams,
-  methodImpl: (deps: CreateJSONRPCServerParams, params: T, callback: JSONRPCCallback) => void,
+  methodImpl: A2AMethodHandler<Params, Result>,
   methodName: string
-): (params: T, callback: JSONRPCCallback) => void;
+): (params: Params, callback: JSONRPCCallback<Result>) => void;
 ```
 
 ## Quick Agent API
@@ -582,7 +681,7 @@ Simplifies agent implementation for quick agents.
  * @returns A Promise that resolves when the agent completes
  */
 function taskHandlerProxy(
-  agentLogic: (context: TaskContext) => AsyncGenerator<TaskYieldUpdate>
+  agentLogic: (context: TaskContext) => AsyncGenerator<TaskYieldUpdate, Task | void, unknown>
 ): Promise<void>;
 ```
 
@@ -593,14 +692,14 @@ Enables communication between quick agents.
 ```typescript
 /**
  * Fetches a response from another agent in the Artinet ecosystem
- * @param targetAgent Name of the agent to call
- * @param message Message to send to the target agent
- * @returns A Promise resolving to the agent's response
+ * @param agentID Name of the agent to call
+ * @param messages Array of message objects to send to the target agent
+ * @returns A Promise resolving to the agent's response string
  */
 function fetchResponseProxy(
-  targetAgent: string,
-  message: Message
-): Promise<{ message: Message }>;
+  agentID: string,
+  messages: { role: string; content: string }[]
+): Promise<string>;
 ```
 
 ### testDeployment
@@ -617,7 +716,7 @@ Tests a deployment in a temporary sandbox environment.
 function testDeployment(
   params: ServerDeploymentRequestParams,
   requests: SendTaskRequest[]
-): AsyncGenerator<ServerDeploymentResponse>;
+): AsyncGenerator<Task | ServerDeploymentResponse | null>;
 ```
 
 ### Deployment Types
@@ -633,13 +732,19 @@ interface ServerDeploymentRequestParams {
   code: string;
   
   /**
-   * Optional metadata about the agent
+   * Name of the agent
    */
-  metadata?: {
-    name?: string;
-    version?: string;
-    description?: string;
-  };
+  name: string;
+  
+  /**
+   * The agent card defining capabilities and metadata
+   */
+  agentCard: AgentCard;
+  
+  /**
+   * Optional NPM dependencies
+   */
+  dependencies?: string[];
 }
 
 /**
@@ -647,24 +752,29 @@ interface ServerDeploymentRequestParams {
  */
 interface ServerDeploymentResponse {
   /**
-   * The task ID
+   * The deployment ID
    */
-  id: string;
+  deploymentId: string;
   
   /**
-   * The response message from the agent
+   * Whether the deployment was successful 
    */
-  message: Message;
+  success: boolean;
   
   /**
-   * The task status
+   * The name of the server (if successful)
    */
-  status: TaskStatus;
+  name?: string;
   
   /**
-   * Any artifacts generated by the agent
+   * The URL of the server (if successful)
    */
-  artifacts?: Artifact[];
+  url?: string;
+  
+  /**
+   * The base path of the server (if successful)
+   */
+  basePath?: string;
 }
 ```
 
@@ -691,7 +801,7 @@ interface AgentCard {
   /**
    * The agent's version
    */
-  version?: string;
+  version: string;
   
   /**
    * Description of the agent's purpose
@@ -701,22 +811,27 @@ interface AgentCard {
   /**
    * The agent's capabilities
    */
-  capabilities?: {
+  capabilities: {
     /**
      * Whether the agent supports streaming
      */
     streaming?: boolean;
     
     /**
-     * Whether the agent supports artifacts
+     * Whether the agent supports push notifications
      */
-    artifacts?: boolean;
+    pushNotifications?: boolean;
+    
+    /**
+     * Whether the agent supports state transition history
+     */
+    stateTransitionHistory?: boolean;
   };
   
   /**
    * Skills the agent provides
    */
-  skills?: Array<{
+  skills: Array<{
     /**
      * Unique identifier for the skill
      */
@@ -752,14 +867,14 @@ interface Task {
   status: TaskStatus;
   
   /**
-   * The message that initiated this task
+   * Optional message that initiated this task
    */
-  message: Message;
+  message?: Message;
   
   /**
-   * Message history for this task
+   * Optional session identifier
    */
-  history?: Message[];
+  sessionId?: string;
   
   /**
    * Custom metadata associated with the task
@@ -770,11 +885,6 @@ interface Task {
    * Artifacts generated during task execution
    */
   artifacts?: Artifact[];
-  
-  /**
-   * Optional session identifier
-   */
-  sessionId?: string;
 }
 ```
 
@@ -793,6 +903,11 @@ interface Message {
    * Content parts of the message
    */
   parts: Part[];
+  
+  /**
+   * Optional metadata about the message
+   */
+  metadata?: Record<string, unknown>;
 }
 ```
 
@@ -801,26 +916,57 @@ interface Message {
 Represents a part of a message in the A2A protocol.
 
 ```typescript
-interface Part {
+type Part = TextPart | FilePart | DataPart;
+
+interface TextPart {
   /**
-   * The type of content in this part
+   * Type identifier
    */
-  type: "text" | "image" | "video" | "audio" | "file";
+  type: "text";
   
   /**
-   * Text content (for type: "text")
+   * Text content
    */
-  text?: string;
+  text: string;
   
   /**
-   * A link to an external resource (for media types)
+   * Optional metadata
    */
-  uri?: string;
+  metadata?: Record<string, unknown>;
+}
+
+interface FilePart {
+  /**
+   * Type identifier
+   */
+  type: "file";
   
   /**
-   * Metadata about the part
+   * File content
    */
-  [key: string]: unknown;
+  file: FileContent;
+  
+  /**
+   * Optional metadata
+   */
+  metadata?: Record<string, unknown>;
+}
+
+interface DataPart {
+  /**
+   * Type identifier
+   */
+  type: "data";
+  
+  /**
+   * Structured data
+   */
+  data: Record<string, unknown>;
+  
+  /**
+   * Optional metadata
+   */
+  metadata?: Record<string, unknown>;
 }
 ```
 
@@ -833,17 +979,42 @@ interface Artifact {
   /**
    * Name of the artifact
    */
-  name: string;
+  name?: string;
+  
+  /**
+   * Description of the artifact
+   */
+  description?: string;
   
   /**
    * MIME type of the artifact
    */
-  mimeType: string;
+  mimeType?: string;
   
   /**
    * Content parts of the artifact
    */
   parts: Part[];
+  
+  /**
+   * Optional index for ordering
+   */
+  index?: number;
+  
+  /**
+   * Whether to append to existing content
+   */
+  append?: boolean;
+  
+  /**
+   * Optional metadata
+   */
+  metadata?: Record<string, unknown>;
+  
+  /**
+   * Whether this is the last chunk
+   */
+  lastChunk?: boolean;
 }
 ```
 
@@ -856,12 +1027,17 @@ interface TaskStatus {
   /**
    * Current state of the task
    */
-  state: "active" | "working" | "completed" | "failed" | "cancelled";
+  state: TaskState;
   
   /**
    * Optional message describing the status
    */
-  statusMessage?: string;
+  message?: Message;
+  
+  /**
+   * Timestamp when the status was recorded
+   */
+  timestamp?: string;
 }
 ```
 
@@ -873,14 +1049,24 @@ interface TaskStatus {
  */
 interface TaskStatusUpdateEvent {
   /**
+   * Task ID
+   */
+  id: string;
+  
+  /**
    * The new status
    */
   status: TaskStatus;
   
   /**
-   * Optional message from the agent
+   * Whether this is the final update
    */
-  message?: Message;
+  final?: boolean;
+  
+  /**
+   * Optional metadata
+   */
+  metadata?: Record<string, unknown>;
 }
 
 /**
@@ -888,9 +1074,24 @@ interface TaskStatusUpdateEvent {
  */
 interface TaskArtifactUpdateEvent {
   /**
+   * Task ID
+   */
+  id: string;
+  
+  /**
    * The generated artifact
    */
   artifact: Artifact;
+  
+  /**
+   * Whether this is the final update
+   */
+  final?: boolean;
+  
+  /**
+   * Optional metadata
+   */
+  metadata?: Record<string, unknown>;
 }
 ```
 

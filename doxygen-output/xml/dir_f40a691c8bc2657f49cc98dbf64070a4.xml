@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_f40a691c8bc2657f49cc98dbf64070a4" kind="dir">
+    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib</compoundname>
+    <innerdir refid="dir_cbd972c4bc07f0a81a16f2f93c1ebce6">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/middleware</innerdir>
+    <innerdir refid="dir_5abc11739bc841bac941cd04ad54f287">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/storage</innerdir>
+    <innerfile refid="express-server_8ts">express-server.ts</innerfile>
+    <innerfile refid="json-middleware_8ts">json-middleware.ts</innerfile>
+    <innerfile refid="state_8ts">state.ts</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/"/>
+  </compounddef>
+</doxygen>

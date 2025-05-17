@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_5cacdd47e5fc42c1cde4a2af35b0a573" kind="dir">
+    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils</compoundname>
+    <innerdir refid="dir_11f533693b406a6f60c7c568e8c03064">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/api</innerdir>
+    <innerdir refid="dir_9e03bd545a38b6dc614690d4e85afa46">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common</innerdir>
+    <innerdir refid="dir_d2d18170283abb3771c45cc071a7fcf3">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment</innerdir>
+    <innerdir refid="dir_82f1aee3e6062712936b5351f55a5c0a">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/logging</innerdir>
+    <innerfile refid="utils_2index_8ts">index.ts</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/"/>
+  </compounddef>
+</doxygen>

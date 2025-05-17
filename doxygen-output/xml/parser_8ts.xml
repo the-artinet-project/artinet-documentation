@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="parser_8ts" kind="file" language="C++">
+    <compoundname>parser.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCResponse<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>SystemError,<sp/>PARSE_ERROR<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logError<sp/>}<sp/>from<sp/>&quot;../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Parses<sp/>a<sp/>JSON-RPC<sp/>response<sp/>string<sp/>and<sp/>validates<sp/>its<sp/>structure.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>If<sp/>the<sp/>response<sp/>contains<sp/>an<sp/>error,<sp/>it<sp/>is<sp/>thrown<sp/>as<sp/>an<sp/>A2AError.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>If<sp/>the<sp/>response<sp/>contains<sp/>neither<sp/>a<sp/>result<sp/>nor<sp/>an<sp/>error,<sp/>a<sp/>validation<sp/>error<sp/>is<sp/>thrown.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>data<sp/>Response<sp/>data<sp/>as<sp/>string</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>The<sp/>parsed<sp/>and<sp/>validated<sp/>response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@throws<sp/>A2AError<sp/>if<sp/>the<sp/>response<sp/>contains<sp/>an<sp/>error<sp/>or<sp/>is<sp/>invalid</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>parseResponse&lt;Res<sp/>extends<sp/>JSONRPCResponse&gt;(data:<sp/>string):<sp/>Res<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!data)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR(&quot;Invalid<sp/>response<sp/>data&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>parsed<sp/>=<sp/>JSON.parse(data)<sp/>as<sp/>Res;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(parsed.error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>SystemError(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsed.error.message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsed.error.code,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsed.error.data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>typeof<sp/>parsed<sp/>!==<sp/>&quot;object&quot;<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>parsed<sp/>===<sp/>null<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>parsed.jsonrpc<sp/>!==<sp/>&quot;2.0&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR&lt;string&gt;(&quot;invalid<sp/>jsonrpc&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(parsed.result<sp/>===<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR(&quot;result<sp/>is<sp/>undefined&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>parsed;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;parseResponse&quot;,<sp/>&quot;Error<sp/>parsing<sp/>response:&quot;,<sp/>data);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(error<sp/>instanceof<sp/>SystemError)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>error;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR(error);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/rpc/parser.ts"/>
+  </compounddef>
+</doxygen>
