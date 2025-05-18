@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
 
   const mainHeading = document.querySelector('h1');
-  if (mainHeading && window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html')) {
+  if (mainHeading && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html'))) {
     const originalText = mainHeading.textContent;
     mainHeading.textContent = '';
     mainHeading.style.opacity = '1';
