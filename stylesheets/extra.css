@@ -2,6 +2,15 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Prevent vertical scrollbar flash and layout shift */
+html {
+  overflow-y: scroll;
+}
+
+/* Prevent header shake/typewriter effect layout shift */
+.md-typeset h1, .md-typeset .typewriter-header {
+  min-height: 2.5em; /* Adjust as needed for your header size */
+}
 
 .md-typeset pre {
   border-radius: 6px;
@@ -9,16 +18,23 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Always show full code blocks, allow scrolling for large blocks */
+.md-typeset pre, .md-typeset pre code {
+  max-height: 800px;
+  overflow: auto !important;
+  white-space: pre;
+  background: inherit;
+  color: inherit;
+}
+
 .md-typeset pre:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-
 .md-nav__link {
   transition: color 0.3s ease, transform 0.3s ease;
 }
-
 
 .md-button {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
@@ -28,11 +44,9 @@
   transform: translateY(-2px);
 }
 
-
 .md-header {
   transition: box-shadow 0.3s ease;
 }
-
 
 .md-typeset .admonition {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -42,7 +56,6 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .md-typeset .grid.cards > :is(ul, ol) > li, 
 .md-typeset .grid > .card {
@@ -55,7 +68,6 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-
 .md-typeset table:not([class]) {
   transition: box-shadow 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -64,7 +76,6 @@
 .md-typeset table:not([class]):hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .md-typeset table:not([class]) tbody tr {
   transition: background-color 0.2s ease;
