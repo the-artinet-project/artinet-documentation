@@ -70,6 +70,11 @@ nav:
     - Quick Agents: agents/quick_agents.md
   - API:
     - Overview: api/index.md
+    - A2AClient: api/client.md
+    - A2AServer: api/server.md
+    - Task Context: api/task-context.md
+    - Agent Bundler: api/bundler.md
+  - Version History: versions.md
   - Contributing:
     - Code Documentation: contributing/code-documentation.md
 

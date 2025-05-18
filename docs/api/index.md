@@ -6,12 +6,28 @@ This section provides a comprehensive reference for the Artinet SDK Core API com
 
 The Artinet SDK API is organized into several key component categories:
 
-1. **Client API** - For sending tasks to and receiving responses from agents
-2. **Server API** - For hosting and implementing agent behavior
-3. **Task Handling API** - For defining agent logic and processing tasks
-4. **Storage API** - For persisting task data and state 
-5. **Advanced Customization API** - For fine-tuning server behavior
-6. **Core Types** - Shared type definitions used throughout the SDK
+=== "Client API"
+    - `A2AClient` - For sending tasks to and receiving responses from agents
+    - Task submission and streaming
+    - Push notification handling
+
+=== "Server API"
+    - `A2AServer` - For hosting and implementing agent behavior
+    - Task processing and state management
+    - Server registration
+
+=== "Storage API"
+    - `InMemoryTaskStore` - For development
+    - `FileTaskStore` - For production
+    - Custom store implementations
+
+=== "Advanced"
+    - Task handling customization
+    - Express middleware integration
+    - Runtime configuration
+
+!!! info "TypeScript Support"
+    The Artinet SDK is fully written in TypeScript with comprehensive type definitions for a robust developer experience.
 
 ## Client API
 

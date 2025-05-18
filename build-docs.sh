@@ -6,6 +6,42 @@ echo "Starting documentation build process..."
 # Make sure we're in the artinet-wiki directory
 cd "$(dirname "$0")"
 
+# Update the versions.md file with the latest CHANGELOG content
+echo "Updating version history from CHANGELOG.md..."
+if [ -f "../artinet-sdk/CHANGELOG.md" ]; then
+    # Extract content from CHANGELOG.md
+    CHANGELOG_CONTENT=$(cat "../artinet-sdk/CHANGELOG.md")
+    
+    # Create a temporary file with the updated content
+    cat > temp_changelog.md << EOF
+<!-- BEGIN CHANGELOG -->
+$CHANGELOG_CONTENT
+<!-- END CHANGELOG -->
+EOF
+    
+    # Use awk to replace the content between markers
+    awk '
+    /<!-- BEGIN CHANGELOG -->/ { print; system("cat temp_changelog.md"); skip=1; next }
+    /<!-- END CHANGELOG -->/ { skip=0 }
+    !skip { print }
+    ' docs/versions.md > docs/versions.md.new
+    
+    # Replace the original file with the new one
+    mv docs/versions.md.new docs/versions.md
+    rm temp_changelog.md
+    echo "Version history updated from CHANGELOG.md"
+else
+    echo "Warning: CHANGELOG.md not found. Skipping version history update."
+fi
+
+# Generate API documentation from source code
+echo "Generating API documentation from source code..."
+if [ -f "generate-api-docs.js" ]; then
+    node generate-api-docs.js
+else
+    echo "Warning: generate-api-docs.js not found. Skipping API docs generation."
+fi
+
 # Update mkdocs.yml to include the examples and tests sections
 echo "Updating MkDocs configuration..."
 # Create a backup of the original file
@@ -85,6 +121,11 @@ nav:
     - Quick Agents: agents/quick_agents.md
   - API:
     - Overview: api/index.md
+    - A2AClient: api/client.md
+    - A2AServer: api/server.md
+    - Task Context: api/task-context.md
+    - Agent Bundler: api/bundler.md
+  - Version History: versions.md
   - Contributing:
     - Code Documentation: contributing/code-documentation.md
 
