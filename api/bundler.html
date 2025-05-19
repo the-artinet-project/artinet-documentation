@@ -1,4 +1,3 @@
-<!-- Customized header with version selector -->
 
 <!doctype html>
 <html lang="en" class="no-js">
@@ -11,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://the-artinet-project.github.io/artinet-wiki/api/bundler.html">
+        <link rel="canonical" href="https://the-artinet-project.github.io/artinet-documentation/api/bundler.html">
       
       
         <link rel="prev" href="task-context.html">
@@ -89,7 +88,7 @@
     
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="https://the-artinet-project.github.io/artinet-wiki/" title="Artinet SDK Documentation" class="md-header__button md-logo" aria-label="Artinet SDK Documentation">
+    <a href="https://the-artinet-project.github.io/artinet-documentation/" title="Artinet SDK Documentation" class="md-header__button md-logo" aria-label="Artinet SDK Documentation">
       
   <img src="../images/artinet-logo.png" alt="logo">
 
@@ -1314,6 +1313,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Agent Bundler
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="bundler.html" class="md-nav__link md-nav__link--active">
         
   
@@ -1325,6 +1337,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      bundle
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1455,6 +1495,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      bundle
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1473,6 +1530,59 @@
 
 
 <h1 id="agent-bundler">Agent Bundler</h1>
+<h2 id="bundle">bundle</h2>
+<p>Bundles a given JavaScript or TypeScript file into a single minified ES module string.
+This utility leverages <code>esbuild</code> for efficient bundling, minification, and sourcemap generation.
+It's designed to prepare agent code for deployment by packaging it and its local dependencies.</p>
+<p>@param filePath - The URL of the entry point file to bundle.
+@returns A promise that resolves to a string containing the bundled and minified code.
+@throws An error if the file path does not exist, is not a file, or if bundling fails for any reason.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">(</span><span class="nx">filePath</span><span class="o">:</span><span class="w"> </span><span class="kt">URL</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">entryPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fileURLToPath</span><span class="p">(</span><span class="nx">filePath</span><span class="p">);</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nx">logDebug</span><span class="p">(</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="sb">`bundler: `</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="sb">`Attempting to recursively read imports starting from:`</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nx">entryPath</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">);</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s2">&quot;node:fs&quot;</span><span class="p">);</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">statSync</span><span class="p">(</span><span class="nx">entryPath</span><span class="p">);</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">stats</span><span class="p">.</span><span class="nx">isFile</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="nx">logError</span><span class="p">(</span><span class="sb">`bundler: `</span><span class="p">,</span><span class="w"> </span><span class="sb">`Filepath is not a file:`</span><span class="p">,</span><span class="w"> </span><span class="nx">entryPath</span><span class="p">);</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="sb">`// BUNDLING FAILED: Filepath is not a file: </span><span class="si">${</span><span class="nx">entryPath</span><span class="si">}</span><span class="sb">`</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="p">);</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nx">logDebug</span><span class="p">(</span><span class="sb">`bundler: `</span><span class="p">,</span><span class="w"> </span><span class="sb">`Filepath exists:`</span><span class="p">,</span><span class="w"> </span><span class="nx">entryPath</span><span class="p">);</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="nx">logError</span><span class="p">(</span><span class="sb">`bundler: `</span><span class="p">,</span><span class="w"> </span><span class="sb">`Filepath does not exist:`</span><span class="p">,</span><span class="w"> </span><span class="nx">entryPath</span><span class="p">);</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">      </span><span class="sb">`// BUNDLING FAILED: Filepath does not exist: </span><span class="si">${</span><span class="nx">entryPath</span><span class="si">}</span><span class="sb">`</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="p">);</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">esbuild</span><span class="p">.</span><span class="nx">build</span><span class="p">({</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="nx">entryPoints</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">entryPath</span><span class="p">],</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="nx">bundle</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">      </span><span class="nx">minify</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">      </span><span class="nx">sourcemap</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">      </span><span class="nx">platform</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">      </span><span class="nx">format</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;esm&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">      </span><span class="nx">write</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">    </span><span class="p">});</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="o">?</span><span class="p">.</span><span class="nx">outputFiles</span><span class="o">?</span><span class="p">.[</span><span class="mf">0</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">text</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">    </span><span class="nx">logDebug</span><span class="p">(</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">      </span><span class="sb">`bundler: Successfully read and bundled code:`</span><span class="p">,</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">      </span><span class="nx">output</span><span class="p">.</span><span class="nx">length</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">    </span><span class="p">);</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">output</span><span class="p">;</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">    </span><span class="nx">logError</span><span class="p">(</span><span class="sb">`bundler: `</span><span class="p">,</span><span class="w"> </span><span class="sb">`Error during recursive read:`</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`// BUNDLING FAILED: </span><span class="si">${</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="p">}</span>
+</code></pre></div>
 
 
 
