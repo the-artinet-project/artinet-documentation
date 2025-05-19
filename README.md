@@ -1,6 +1,6 @@
 # Artinet SDK Documentation
 
-This repository contains the documentation for the [Artinet SDK](https://github.com/the-artinet-project/artinet-sdk). The documentation is built with MkDocs and deployed to GitHub Pages.
+This repository contains the documentation for the [Artinet SDK](https://github.com/the-artinet-project/artinet-sdk).
 
 ## Documentation Site
 
@@ -15,10 +15,13 @@ The documentation covers:
 - Usage examples
 - API reference
 - Quick agents functionality
+- Detailed version history and migration guides
 
 ## Contributing
 
 Contributions to improve the documentation are welcome! Feel free to submit pull requests with corrections or enhancements.
+
+When updating documentation, ensure all repository references point to `artinet-documentation`.
 
 ## License
 
