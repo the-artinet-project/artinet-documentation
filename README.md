@@ -4,7 +4,7 @@ This repository contains the documentation for the [Artinet SDK](https://github.
 
 ## Documentation Site
 
-Visit the documentation at: [https://the-artinet-project.github.io/artinet-wiki/](https://the-artinet-project.github.io/artinet-wiki/)
+Visit the documentation at: [https://the-artinet-project.github.io/artinet-documentation/](https://the-artinet-project.github.io/artinet-documentation/)
 
 ## Contents
 

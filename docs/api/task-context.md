@@ -71,6 +71,6 @@ updates the task state in the store, and streams events if applicable.
   If void is returned, the server uses the last known state after processing all yields.
 
 ```typescript
-
+task: Task;
 ```
 

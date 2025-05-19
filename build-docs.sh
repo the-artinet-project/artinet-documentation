@@ -3,7 +3,7 @@ set -e  # Exit on any error
 
 echo "Starting documentation build process..."
 
-# Make sure we're in the artinet-wiki directory
+# Make sure we're in the artinet-documentation directory
 cd "$(dirname "$0")"
 
 # Update the versions.md file with the latest CHANGELOG content
@@ -50,7 +50,7 @@ cp mkdocs.yml mkdocs.yml.bak
 # Update the navigation section to properly include examples and tests
 cat > mkdocs.yml << 'EOF'
 site_name: Artinet SDK Documentation
-site_url: https://the-artinet-project.github.io/artinet-wiki/
+site_url: https://the-artinet-project.github.io/artinet-documentation/
 use_directory_urls: false
 repo_url: https://github.com/the-artinet-project/artinet-sdk
 repo_name: the-artinet-project/artinet-sdk
