@@ -114,3 +114,127 @@ html {
 .md-typeset table:not([class]) tbody tr:hover {
   background-color: rgba(86, 111, 247, 0.05);
 }
+
+/* Team Member Styles */
+.team-member {
+  border-left: 4px solid var(--md-primary-fg-color);
+  padding-left: 20px;
+  margin-bottom: 40px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.team-member h3 {
+  margin-top: 0;
+  color: var(--md-primary-fg-color);
+  border-bottom: none !important;
+  font-size: 1.4em;
+}
+
+.team-member .position {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.team-member .location {
+  font-style: italic;
+  color: #666;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.team-member p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.team-member h4 {
+  margin-top: 20px;
+  color: #555;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.team-member ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.team-member li {
+  margin-bottom: 5px;
+}
+
+/* Vision section styling */
+.vision-section {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  border-left: 4px solid var(--md-accent-fg-color);
+}
+
+.vision-section h2 {
+  margin-top: 0;
+  color: var(--md-accent-fg-color);
+}
+
+/* Focus areas styling */
+.focus-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.focus-item {
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 15px;
+  border-radius: 8px;
+  border-top: 3px solid var(--md-primary-fg-color);
+  transition: transform 0.3s ease;
+}
+
+.focus-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Team section divider */
+.team-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
+  margin: 40px 0;
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] .team-member {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-md-color-scheme="slate"] .team-member .position {
+  color: #eee;
+}
+
+[data-md-color-scheme="slate"] .team-member .location {
+  color: #bbb;
+}
+
+[data-md-color-scheme="slate"] .focus-item {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-md-color-scheme="slate"] .vision-section {
+  background-color: rgba(255, 255, 255, 0.03);
+}

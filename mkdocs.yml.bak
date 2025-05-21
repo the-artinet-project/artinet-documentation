@@ -37,6 +37,8 @@ extra:
 
 nav:
   - Home: index.md
+  - About: 
+    - Working Group: about/working-group.md
   - SDK:
     - Quickstart: sdk/quickstart.md
     - Core: sdk/core.md

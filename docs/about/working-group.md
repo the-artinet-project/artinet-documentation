@@ -6,18 +6,77 @@ We're transitioning into a more research-focused organization with a mission to 
 ## Our Team
 
 <div class="team-member">
-  <img src="../images/1517467881997.jpeg" alt="Patrick Buah" class="profile-image">
-  <h3>Patrick Buah</h3>
-  <p><strong>Founder & Project Lead</strong><br>
+  <img src="../images/1517467881997.jpeg" alt="Patrick B." class="profile-image">
+  <h3>Patrick B.</h3>
+  <p><strong>Founder and Tech Lead</strong><br>
   <em>London, United Kingdom</em></p>
+  <p>Patrick is a cryptography and AI security specialist with progressive leadership experience. Currently serving as Engineering Lead at Mastercard, he specializes in data protection and AI security architecture. His background includes extensive work in cryptographic architecture, secure software development, and homomorphic encryption applications. Patrick brings expertise in blockchain, encryption systems, and hardware security modules, with a focus on developing robust security solutions for enterprise environments.</p>
+  <h4>Skills:</h4>
+  <ul>
+    <li>Cryptography: Blockchain, Encryption, Cryptographic Key Management, HSM</li>
+    <li>Software Development: STL, Git, Regular Expressions, Software Testing</li>
+    <li>Security Infrastructure: Digital Certificates, Docker, Data Structures</li>
+    <li>Project Management: Jira, Technical Documentation, Research Coordination</li>
+  </ul>
+  <h4>Experience:</h4>
+  <ul>
+    <li>Engineering Lead at Mastercard (Jan 2025 - Present)</li>
+    <li>Lead - Enterprise Cryptography at Mastercard (Aug 2024 - Present)</li>
+    <li>Lead - Cryptographic Architecture & Engineering at Mastercard (Oct 2023 - Jul 2024)</li>
+    <li>Cryptographic Software Engineer at Secretarium (Oct 2020 - Oct 2023)</li>
+  </ul>
+  <h4>Education:</h4>
+  <ul>
+    <li>Master's degree, Cyber Security - City St George's, University of London</li>
+    <li>B.S., Computer Engineering - Howard University</li>
+  </ul>
+</div>
 
-  <p>Patrick leads the Artinet Project, guiding our vision to build an open infrastructure for AI agents. With expertise in cryptography and AI security, he brings a strong technical background from his work at Mastercard where he serves as Engineering Lead for Data Protection & AI Security.</p>
+<div class="team-member">
+  <img src="../images/1587632247700.jpeg" alt="Axel Oehmichen" class="profile-image">
+  <h3>Axel Oehmichen</h3>
+  <p><strong>Chief Data Science Officer</strong><br>
+  <em>London, United Kingdom</em></p>
+  <p>Axel is an experienced researcher and data scientist focused on developing analytics in a trustless environment for finance and life science applications. As Chief Data Science Officer at Secretarium and Honorary Research Associate at Imperial College London, he leads research on privacy applied to life science and public health, including the development of Honest Computing and confidential computing technologies. With expertise in AI, Infrastructure/DevOps, and central bank digital currencies, Axel brings a wealth of knowledge in privacy-preserving technologies.</p>
+  <h4>Skills:</h4>
+  <ul>
+    <li>Machine Learning & Data Science: Data Analysis, AI/ML models, Data Privacy</li>
+    <li>Infrastructure: MLOps, DevOps, Cloud Security, Kubernetes</li>
+    <li>Projects: MOAI, Privacy-Enhancing Technologies (PETs), CBDC implementation</li>
+    <li>Leadership: Project management, Team leadership, Research coordination</li>
+  </ul>
+  <h4>Experience:</h4>
+  <ul>
+    <li>Chief Data Science Officer at Secretarium (Apr 2019 - Present)</li>
+    <li>Honorary Research Associate at Imperial College London (Nov 2019 - Present)</li>
+    <li>Postdoctoral Research Associate, Data Science Institute at Imperial College London (Jan 2019 - Mar 2019)</li>
+  </ul>
+  <h4>Education:</h4>
+  <ul>
+    <li>Imperial College London</li>
+  </ul>
+</div>
+
+<div class="team-member">
+  <img src="../images/1602090519881.jpeg" alt="Pucheng Yang" class="profile-image">
+  <h3>Pucheng Yang</h3>
+  <p><strong>Head of Research</strong><br>
+  <em>Seattle Area</em></p>
+
+  <p>Pucheng leads our research efforts with his extensive experience in big data infrastructure and software engineering. At Pinterest, he architected platforms for data lakes, query processing, and analytics that power the company's data-driven decision making.</p>
 
   <h4>Experience:</h4>
   <ul>
-    <li>Engineering Lead - <em>Mastercard</em> (Jan 2025 - Present)</li>
-    <li>Lead - Enterprise Cryptography - <em>Mastercard</em> (Aug 2024 - Present)</li>
-    <li>Lead - Cryptographic Architecture & Engineering - <em>Mastercard</em> (Oct 2023 - Jul 2024)</li>
+    <li>Senior Software Engineer - <em>Pinterest</em> (Jul 2018 - Present)</li>
+    <li>Specialized in Big Data Query Platform/Big Data Storage Platform</li>
+    <li>Implemented innovations that saved millions in S3 storage costs</li>
+    <li>Presented at Trino Summit 2020 representing Pinterest</li>
+  </ul>
+
+  <h4>Education:</h4>
+  <ul>
+    <li>Carnegie Mellon University - Master's degree, Electrical and Computer Engineering (2017-2018)</li>
+    <li>Sun Yat-sen University - Master's degree, Electrical and Computer Engineering (2016-2017)</li>
   </ul>
 </div>
 
@@ -46,28 +105,6 @@ We're transitioning into a more research-focused organization with a mission to 
   </ul>
 </div>
 
-<div class="team-member">
-  <img src="../images/1602090519881.jpeg" alt="Pucheng Yang" class="profile-image">
-  <h3>Pucheng Yang</h3>
-  <p><strong>Head of Research</strong><br>
-  <em>Seattle Area</em></p>
-
-  <p>Pucheng leads our research efforts with his extensive experience in big data infrastructure and software engineering. At Pinterest, he architected platforms for data lakes, query processing, and analytics that power the company's data-driven decision making.</p>
-
-  <h4>Experience:</h4>
-  <ul>
-    <li>Senior Software Engineer - <em>Pinterest</em> (Jul 2018 - Present)</li>
-    <li>Specialized in Big Data Query Platform/Big Data Storage Platform</li>
-    <li>Implemented innovations that saved millions in S3 storage costs</li>
-    <li>Presented at Trino Summit 2020 representing Pinterest</li>
-  </ul>
-
-  <h4>Education:</h4>
-  <ul>
-    <li>Carnegie Mellon University - Master's degree, Electrical and Computer Engineering (2017-2018)</li>
-    <li>Sun Yat-sen University - Master's degree, Electrical and Computer Engineering (2016-2017)</li>
-  </ul>
-</div>
 
 ## Current Focus
 
