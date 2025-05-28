@@ -16,6 +16,7 @@
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./deployment/test-deployment.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./deployment/task-wrapper.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./deployment/bundler.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./deployment/full-deployment.js&quot;;</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/index.ts"/>
   </compounddef>

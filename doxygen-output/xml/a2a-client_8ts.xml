@@ -38,7 +38,7 @@
 <codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>logError,<sp/>INTERNAL_ERROR<sp/>}<sp/>from<sp/>&quot;../utils/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Client<sp/>}<sp/>from<sp/>&quot;./interfaces/client.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Client<sp/>}<sp/>from<sp/>&quot;../types/client.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>A2AClient<sp/>is<sp/>the<sp/>main<sp/>client<sp/>class<sp/>for<sp/>interacting<sp/>with<sp/>Agent2Agent<sp/>(A2A)<sp/>protocol-compliant<sp/>services.</highlight></codeline>
@@ -76,27 +76,37 @@
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Standard<sp/>location<sp/>for<sp/>agent<sp/>cards</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>wellKnownUrl<sp/>=<sp/>new<sp/>URL(&quot;/.well-known/agent.json&quot;,<sp/>this.baseUrl);</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>card<sp/>=<sp/>await<sp/>executeGetRequest&lt;AgentCard&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!URL.canParse(wellKnownUrl))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;Invalid<sp/>well-known<sp/>URL&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>card:<sp/>AgentCard<sp/>=<sp/>await<sp/>executeGetRequest&lt;AgentCard&gt;(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>wellKnownUrl,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;agent<sp/>card<sp/>(well-known)&quot;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!card.name<sp/>||<sp/>card.name<sp/>===<sp/>null<sp/>||<sp/>card.name<sp/>===<sp/>undefined)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;No<sp/>agent<sp/>card<sp/>found&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.cachedAgentCard<sp/>=<sp/>card;</highlight></codeline>
-<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.cachedAgentCard<sp/>=<sp/>card<sp/>as<sp/>AgentCard;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>this.cachedAgentCard;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>fallbackUrl<sp/>=<sp/>new<sp/>URL(this.fallbackPath,<sp/>this.baseUrl);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>fallbackCard<sp/>=<sp/>await<sp/>executeGetRequest&lt;AgentCard&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>fallbackCard:<sp/>AgentCard<sp/>=<sp/>await<sp/>executeGetRequest&lt;AgentCard&gt;(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fallbackUrl,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.customHeaders,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;agent<sp/>card<sp/>(fallback)&quot;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
 <codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>!fallbackCard.name<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fallbackCard.name<sp/>===<sp/>null<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fallbackCard.name<sp/>===<sp/>undefined</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;No<sp/>fallback<sp/>agent<sp/>card<sp/>found&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.cachedAgentCard<sp/>=<sp/>fallbackCard;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>this.cachedAgentCard;</highlight></codeline>

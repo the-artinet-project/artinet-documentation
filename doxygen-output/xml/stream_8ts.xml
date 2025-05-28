@@ -12,8 +12,7 @@
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskEvent<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>updateState<sp/>}<sp/>from<sp/>&quot;../../server/lib/state.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore,<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/context.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext,<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>FAILED_UPDATE,<sp/>INTERNAL_ERROR<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>isArtifactUpdate,</highlight></codeline>

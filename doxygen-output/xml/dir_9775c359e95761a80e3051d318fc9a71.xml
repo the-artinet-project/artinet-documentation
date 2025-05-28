@@ -2,7 +2,6 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
   <compounddef id="dir_9775c359e95761a80e3051d318fc9a71" kind="dir">
     <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces</compoundname>
-    <innerfile refid="context_8ts">context.ts</innerfile>
     <innerfile refid="params_8ts">params.ts</innerfile>
     <innerfile refid="server_8ts">server.ts</innerfile>
     <innerfile refid="store_8ts">store.ts</innerfile>

@@ -238,3 +238,5 @@ html {
 [data-md-color-scheme="slate"] .vision-section {
   background-color: rgba(255, 255, 255, 0.03);
 }
+
+img.profile-image { border-radius: 50%; width: 150px; height: 150px; object-fit: cover; }

@@ -37,8 +37,6 @@ extra:
 
 nav:
   - Home: index.md
-  - About: 
-    - Working Group: about/working-group.md
   - SDK:
     - Quickstart: sdk/quickstart.md
     - Core: sdk/core.md
@@ -70,6 +68,7 @@ nav:
       - Streaming: sdk/tests/streaming.test.md
   - Agents:
     - Quick Agents: agents/quick_agents.md
+    - Create Quick Agent: agents/create-quick-agent.md
   - API:
     - Overview: api/index.md
     - A2AClient: api/client.md

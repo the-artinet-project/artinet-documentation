@@ -9,7 +9,6 @@
     <programlisting>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./a2a-server.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./interfaces/params.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./interfaces/context.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./interfaces/store.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./lib/json-middleware.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./lib/express-server.js&quot;;</highlight></codeline>

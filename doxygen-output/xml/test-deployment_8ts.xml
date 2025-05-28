@@ -84,6 +84,7 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>deploymentEvent:<sp/>ServerDeploymentResponse<sp/>=</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>event<sp/>as<sp/>ServerDeploymentResponse;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent<sp/>&amp;&amp;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result<sp/>&amp;&amp;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result.deploymentId<sp/>&amp;&amp;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result.url</highlight></codeline>

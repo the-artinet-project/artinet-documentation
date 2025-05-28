@@ -42,7 +42,7 @@
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../transport/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore,<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;./interfaces/store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;./interfaces/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../types/context.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>A2AServerParams,<sp/>JSONRPCServerType<sp/>}<sp/>from<sp/>&quot;./interfaces/params.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>Server<sp/>}<sp/>from<sp/>&quot;./interfaces/server.js&quot;;</highlight></codeline>
 <codeline></codeline>

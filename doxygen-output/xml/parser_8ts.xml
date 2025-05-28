@@ -48,10 +48,11 @@
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>parsed;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}<sp/>catch<sp/>(error)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;parseResponse&quot;,<sp/>&quot;Error<sp/>parsing<sp/>response:&quot;,<sp/>data);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(error<sp/>instanceof<sp/>SystemError)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logError(&quot;parseResponse&quot;,<sp/>&quot;SystemError:&quot;,<sp/>error.message);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>error;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;parseResponse&quot;,<sp/>&quot;Error<sp/>parsing<sp/>response:&quot;,<sp/>data);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR(error);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>

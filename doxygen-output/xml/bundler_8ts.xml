@@ -49,7 +49,7 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>entryPoints:<sp/>[entryPath],</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bundle:<sp/>true,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>minify:<sp/>true,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sourcemap:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sourcemap:<sp/>false,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>platform:<sp/>&quot;node&quot;,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>format:<sp/>&quot;esm&quot;,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>write:<sp/>false,</highlight></codeline>

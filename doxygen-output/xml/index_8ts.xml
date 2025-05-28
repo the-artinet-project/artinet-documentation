@@ -7,11 +7,11 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./utils/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./server/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./client/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./transport/index.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./utils/index.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./types/index.js&quot;;</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/index.ts"/>
   </compounddef>

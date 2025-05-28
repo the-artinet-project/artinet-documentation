@@ -28,7 +28,7 @@
 <codeline><highlight class="normal"><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;./store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>jayson<sp/>from<sp/>&quot;jayson&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>ErrorHandler<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCError<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>

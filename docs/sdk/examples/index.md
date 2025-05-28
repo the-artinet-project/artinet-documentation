@@ -13,3 +13,4 @@ This section contains examples demonstrating how to use the Artinet SDK.
 - [streaming-updates](streaming-updates.md) - Example demonstrating streaming-updates
 - [task-resubscribe](task-resubscribe.md) - Example demonstrating task-resubscribe
 - [task-wrapper](task-wrapper.md) - Example demonstrating task-wrapper
+- [nested-deployment](nested-deployment.md) - Example demonstrating nested agent deployment using artinet.v0 utilities
