@@ -12,13 +12,13 @@
 <codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskIdParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskQueryParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskSendParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@interface<sp/>Client</highlight></codeline>
@@ -155,6 +155,6 @@
 <codeline><highlight class="normal"><sp/><sp/>clearHeaders():<sp/>void;</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
     </programlisting>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client/interfaces/client.ts"/>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/client.ts"/>
   </compounddef>
 </doxygen>

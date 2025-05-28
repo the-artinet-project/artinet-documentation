@@ -6,33 +6,9 @@ echo "Starting documentation build process..."
 # Make sure we're in the artinet-documentation directory
 cd "$(dirname "$0")"
 
-# Update the versions.md file with the latest CHANGELOG content
-echo "Updating version history from CHANGELOG.md..."
-if [ -f "../artinet-sdk/CHANGELOG.md" ]; then
-    # Extract content from CHANGELOG.md
-    CHANGELOG_CONTENT=$(cat "../artinet-sdk/CHANGELOG.md")
-    
-    # Create a temporary file with the updated content
-    cat > temp_changelog.md << EOF
-<!-- BEGIN CHANGELOG -->
-$CHANGELOG_CONTENT
-<!-- END CHANGELOG -->
-EOF
-    
-    # Use awk to replace the content between markers
-    awk '
-    /<!-- BEGIN CHANGELOG -->/ { print; system("cat temp_changelog.md"); skip=1; next }
-    /<!-- END CHANGELOG -->/ { skip=0 }
-    !skip { print }
-    ' docs/versions.md > docs/versions.md.new
-    
-    # Replace the original file with the new one
-    mv docs/versions.md.new docs/versions.md
-    rm temp_changelog.md
-    echo "Version history updated from CHANGELOG.md"
-else
-    echo "Warning: CHANGELOG.md not found. Skipping version history update."
-fi
+# Create about directory if it doesn't exist
+mkdir -p docs/about
+echo "Created about directory for Working Group page"
 
 # Generate API documentation from source code
 echo "Generating API documentation from source code..."
@@ -119,6 +95,7 @@ nav:
       - Streaming: sdk/tests/streaming.test.md
   - Agents:
     - Quick Agents: agents/quick_agents.md
+    - Create Quick Agent: agents/create-quick-agent.md
   - API:
     - Overview: api/index.md
     - A2AClient: api/client.md

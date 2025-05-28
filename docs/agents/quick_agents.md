@@ -19,11 +19,10 @@ This feature is ideal for:
 
 ## Key Components
 
-The Quick Agents feature includes several important utilities:
-
 - **`bundle`**: Packages your agent code and dependencies into a single distributable file
-- **`taskHandlerProxy`**: Simplifies running your agent logic in managed environments
-- **`fetchResponseProxy`**: Enables communication with other agents in the Artinet ecosystem
+- **`artinet.v0.taskManager`**: Manages execution of your agent logic in a managed environment, handling updates via host-provided proxies
+- **`artinet.v0.connect`**: Sends requests to other agents or services via a host-provided stub and returns their response
+- **`artinet.v0.agent`**: Creates a client proxy for communicating with other agents or services within the managed environment
 - **`testDeployment`**: Tests your bundled agent in a temporary sandboxed environment
 
 ## Bundling Your Agent
@@ -62,24 +61,21 @@ bundleMyAgent()
 
 ## Creating a Quick Agent
 
-When writing an agent for bundling, you can use the `taskHandlerProxy` to simplify the process:
+When writing an agent for bundling, you can use the `taskManager` utility provided by the `artinet.v0` namespace:
 
 ```typescript
-// my-agent.ts
-import { taskHandlerProxy, fetchResponseProxy, TaskContext } from "@artinet/sdk";
+-import { taskHandlerProxy, fetchResponseProxy, TaskContext } from "@artinet/sdk";
++import { artinet } from "@artinet/sdk/agents";
++import { TaskContext } from "@artinet/sdk";
 
 // Define your agent's core logic as an async function
 async function* myQuickAgent(context: TaskContext) {
-  // Extract the user's message
   const userInput = context.userMessage.parts[0]?.text || "";
-  
-  // Signal that we're working on the task
   yield { state: "working" };
 
-  // Do some processing...
+  // Your agent logic...
   const response = `You said: "${userInput}"`;
-  
-  // Complete the task
+
   yield {
     state: "completed",
     message: {
@@ -89,8 +85,8 @@ async function* myQuickAgent(context: TaskContext) {
   };
 }
 
-// Export the agent wrapped in taskHandlerProxy
-export default taskHandlerProxy(myQuickAgent);
+// Use artinet.v0.taskManager to execute your agent logic in a managed environment
+export default artinet.v0.taskManager({ taskHandler: myQuickAgent });
 ```
 
 ## Testing Your Quick Agent
@@ -167,35 +163,31 @@ async function testMyAgent(bundledCode: string) {
 
 ## Communication Between Agents
 
-Your Quick Agent can communicate with other agents in the Artinet ecosystem using the `fetchResponseProxy`:
+Your Quick Agent can communicate with other agents in the Artinet ecosystem via `artinet.v0.connect`:
 
 ```typescript
-import { taskHandlerProxy, fetchResponseProxy, TaskContext } from "@artinet/sdk";
+-import { taskHandlerProxy, fetchResponseProxy, TaskContext } from "@artinet/sdk";
++import { artinet } from "@artinet/sdk/agents";
++import { TaskContext } from "@artinet/sdk";
 
 async function* collaborativeAgent(context: TaskContext) {
   const userInput = context.userMessage.parts[0]?.text || "";
-  
   yield { state: "working" };
   
-  // Call another agent for assistance
+  // Call another agent for assistance using artinet.v0.connect
   try {
-    const helperResponse = await fetchResponseProxy(
-      "WeatherExpertAgent", // Name of another agent in the Artinet ecosystem
-      [
-        {
-          role: "user",
-          content: `What's the weather in ${userInput}?`
-        }
-      ]
-    );
-    
+    const helperResponse = await artinet.v0.connect({
+      agentID: "WeatherExpertAgent",
+      messages: [ { role: "user", content: `What's the weather in ${userInput}?` } ]
+    });
+     
     yield {
       state: "completed",
       message: {
         role: "agent",
         parts: [{ 
           type: "text", 
-          text: `I asked my colleague about the weather in ${userInput}. Here's what they said:\n\n${helperResponse}` 
+          text: `I asked my colleague about the weather in ${userInput}. Here's what they said:\n\n${helperResponse}`
         }]
       }
     };

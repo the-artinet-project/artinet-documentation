@@ -1150,6 +1150,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="agents/create-quick-agent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create Quick Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1607,13 +1630,70 @@
 <p>All notable changes to the @artinet/sdk package will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="050-2025-05-10">[0.5.0] - 2025-05-10</h2>
+<h2 id="052-2025-05-25">[0.5.2] - 2025-05-25</h2>
 <h3 id="added">Added</h3>
+<ul>
+<li>New <code>artinet.v0</code> namespace in <code>src/utils/deployment/agents.ts</code> providing <code>taskManager</code>, <code>connect</code>, and <code>agent</code> utilities. These are designed for agents running in sandboxed or managed environments, offering a standardized way to interact with the host system for task execution, inter-agent communication, and external API calls.</li>
+<li>Corresponding types for the new agent utilities in <code>src/types/proxy.ts</code>: <code>TaskProxy</code>, <code>TaskManagerProps</code>, <code>TaskManager</code>, <code>ConnectProps</code>, <code>ConnectAPICallback</code>, <code>ClientProxy</code>, <code>ClientProps</code>, <code>ClientFactory</code>.</li>
+<li>New <code>exports</code> path <code>./agents</code> in <code>package.json</code> to expose the <code>artinet.v0</code> utilities.</li>
+<li>New example file <code>examples/nested-deployment.ts</code> demonstrating how to use <code>artinet.v0.agent</code> for an agent to call another agent, and <code>artinet.v0.taskManager</code> for managing the agent's lifecycle.</li>
+<li>New <code>dev-pack</code> script in <code>package.json</code> for easier local development and packaging.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Refactoring</strong>:<ul>
+<li><code>src/client/interfaces/client.ts</code> has been moved to <code>src/types/client.ts</code>.</li>
+<li><code>src/server/interfaces/context.ts</code> has been moved to <code>src/types/context.ts</code>.</li>
+<li>Internal type imports throughout the codebase have been updated to reflect these changes.</li>
+</ul>
+</li>
+<li>Examples <code>examples/code-deployment.js</code> and <code>examples/code-deployment.ts</code> have been updated to use the new <code>artinet.v0.taskManager</code> and <code>artinet.v0.connect</code> utilities instead of the deprecated proxy functions.</li>
+<li>Updated <code>@types/node</code> dependency to <code>^20.17.50</code>.</li>
+</ul>
+<h3 id="deprecated">Deprecated</h3>
+<ul>
+<li>The <code>taskHandlerProxy</code> and <code>fetchResponseProxy</code> functions in <code>src/utils/deployment/task-wrapper.ts</code> are now deprecated. Developers should migrate to the new <code>artinet.v0.taskManager</code> and <code>artinet.v0.connect</code> utilities respectively.</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>Removed <code>json-schema-to-typescript</code> from <code>devDependencies</code> as it's no longer directly used.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Minor wording update in the "QUICK-AGENT FAQs" section of <code>README.md</code> for clarity on searching by <code>registrationId/agentId</code>.</li>
+</ul>
+<h2 id="051-2025-05-12">[0.5.1] - 2025-05-12</h2>
+<h3 id="added_1">Added</h3>
+<ul>
+<li><code>fullDeployment</code> utility (<code>src/utils/deployment/full-deployment.ts</code>): Enables direct deployment of bundled agent code and its <code>AgentCard</code> to the Artinet platform. Requires an <code>ARTINET_API_KEY</code>.</li>
+<li>New comprehensive test suite for deployment features (<code>tests/deployment.test.ts</code>), covering <code>testDeployment</code> and <code>fullDeployment</code>.</li>
+<li>Agents registered via <code>A2AServer.registerServer()</code> or <code>register: true</code> now include <code>tags: ["a2a"]</code> in their registration payload.</li>
+</ul>
+<h3 id="changed_1">Changed</h3>
+<ul>
+<li>The <code>handler</code> property in <code>A2AServerParams</code> (used to pass the agent's core logic) was previously documented and used in some examples as <code>taskHandler</code>. This has been corrected to <code>handler</code> consistently. While <code>taskHandler</code> might have worked due to object flexibility, <code>handler</code> is the intended property name.</li>
+<li>Clarified type description for <code>ServerDeploymentRequestParams.dependencies</code> to note it is "currently unsupported".</li>
+<li>Clarified type description for <code>BaseServerDeploymentResponseParams.deploymentId</code> regarding its value in full deployments.</li>
+</ul>
+<h3 id="fixed_1">Fixed</h3>
+<ul>
+<li>Improved error handling in <code>A2AClient</code> during <code>agentCard()</code> fetching:<ul>
+<li>Validates parsed URLs before use.</li>
+<li>Ensures <code>AgentCard</code> objects contain a <code>name</code> property.</li>
+</ul>
+</li>
+<li>Enhanced error logging in <code>src/transport/rpc/parser.ts</code> to include <code>error.message</code> for <code>SystemError</code> instances.</li>
+<li>Prevented agent registration via <code>register()</code> utility if the <code>AgentCard.url</code> is localhost, 127.0.0.1, or empty, returning an empty string instead of attempting registration.</li>
+<li>Corrected an issue in an example in <code>README.md</code> where <code>taskHandler</code> was used instead of <code>handler</code> for the <code>A2AServer</code> constructor (matches the breaking change clarification above).</li>
+<li>Minor stability improvement in <code>testDeployment</code> utility's event handling logic.</li>
+</ul>
+<h2 id="050-2025-05-10">[0.5.0] - 2025-05-10</h2>
+<h3 id="added_2">Added</h3>
 <ul>
 <li><code>A2AServer.getExpressApp()</code>: New method to access the underlying Express application instance, allowing for more flexible server customization and middleware integration.</li>
 <li>More specific error messages for various RPC errors (e.g., <code>TASK_NOT_FOUND</code>, <code>INVALID_PARAMS</code>, <code>PARSE_ERROR</code>), providing better debugging information and context.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed_2">Changed</h3>
 <ul>
 <li><strong>BREAKING</strong>: The <code>data</code> parameter in the <code>SystemError</code> constructor and all specific error factory functions (e.g., <code>PARSE_ERROR()</code>, <code>INVALID_PARAMS()</code>, <code>TASK_NOT_FOUND()</code>) is now mandatory. This change aims to enhance error reporting by ensuring contextual information is always provided with errors.</li>
 <li><strong>BREAKING</strong>: Refactored the <code>createExpressServer</code> utility (<code>src/server/lib/express-server.ts</code>):<ul>
@@ -1627,7 +1707,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>In <code>src/server/lib/state.ts</code>, when creating a new task object during <code>loadState</code>, <code>sessionId</code> and <code>metadata</code> properties are assigned directly if provided, without defaulting to <code>null</code> if they are undefined.</li>
 <li>Replaced generic <code>METHOD_NOT_FOUND()</code> errors with more specific <code>PUSH_NOTIFICATION_NOT_SUPPORTED()</code> errors in <code>defaultSetTaskPushNotificationMethod</code> and <code>defaultGetTaskPushNotificationMethod</code> when the agent's card indicates that push notifications are not supported.</li>
 </ul>
-<h3 id="removed">Removed</h3>
+<h3 id="removed_1">Removed</h3>
 <ul>
 <li>The test file <code>tests/deployment.test.ts</code> has been removed. The <code>testDeployment</code> utility and related "Quick-Agents" features remain.</li>
 </ul>
@@ -1637,7 +1717,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Server startup logging in <code>A2AServer</code> now consistently uses <code>logInfo</code> for messages like "A2A Server started and listening".</li>
 </ul>
 <h2 id="041-2025-05-08">[0.4.1] - 2025-05-08</h2>
-<h3 id="added_1">Added</h3>
+<h3 id="added_3">Added</h3>
 <ul>
 <li>Utility for bundling agent code using <code>esbuild</code> (<code>src/utils/deployment/bundler.ts</code>).</li>
 <li>Task handler wrapper (<code>taskHandlerProxy</code>) and <code>fetchResponseProxy</code> for streamlined agent deployment logic (<code>src/utils/deployment/task-wrapper.ts</code>, <code>examples/task-wrapper.js</code>).</li>
@@ -1647,7 +1727,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Example agents demonstrating code deployment: <code>examples/code-deployment.js</code> and <code>examples/code-deployment.ts</code>.</li>
 <li><code>esbuild</code> dependency for bundling.</li>
 </ul>
-<h3 id="changed_1">Changed</h3>
+<h3 id="changed_3">Changed</h3>
 <ul>
 <li><strong>BREAKING</strong>: Updated <code>rootDir</code> in <code>tsconfig.json</code> to <code>src</code> and <code>declarationDir</code> to <code>./dist/types</code>. This changes the output structure for type declarations.</li>
 <li>Type declaration paths in <code>package.json</code> updated to <code>dist/types/index.d.ts</code> to reflect <code>tsconfig.json</code> changes.</li>
@@ -1655,14 +1735,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Enhanced error logging in <code>src/transport/rpc/parser.ts</code> by adding response data to parse errors.</li>
 </ul>
 <h2 id="030-2025-04-28">[0.3.0] - 2025-04-28</h2>
-<h3 id="added_2">Added</h3>
+<h3 id="added_4">Added</h3>
 <ul>
 <li>Server option <code>register: boolean</code> in <code>A2AServerParams</code> to automatically register the agent with the <a href="https://artinet.io">A2A Registry</a> on startup (default: <code>false</code>).</li>
 <li><code>A2AServer.registerServer()</code> method to manually trigger agent registration.</li>
 <li>Server option <code>fallbackPath: string</code> in <code>A2AServerParams</code> to customize the fallback endpoint for serving the Agent Card (defaults to <code>/agent-card</code>). The standard <code>/.well-known/agent.json</code> endpoint remains.</li>
 <li>Client constructor option <code>fallbackPath: string</code> in <code>A2AClient</code> to specify a custom path when fetching the Agent Card if the standard paths fail.</li>
 </ul>
-<h3 id="changed_2">Changed</h3>
+<h3 id="changed_4">Changed</h3>
 <ul>
 <li><strong>BREAKING:</strong> Renamed server configuration type from <code>A2AServerOptions</code> to <code>A2AServerParams</code> for consistency.</li>
 <li>Updated dependencies to latest versions:<ul>
@@ -1692,7 +1772,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Updated test suite to incorporate tests for new server registration and fallback path functionalities.</li>
 </ul>
 <h2 id="020-2025-04-25"><a href="https://github.com/the-artinet-project/artinet-sdk/commit/e0b908327e0251d6f6241f9b0294e16bc07fa527">0.2.0</a> - 2025-04-25</h2>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed_2">Fixed</h3>
 <ul>
 <li>Fixed TypeScript errors related to the <code>eventsource-parser</code> package imports</li>
 <li>Updated imports to use the correct types from <code>eventsource-parser</code> v1.1.1</li>
@@ -1700,7 +1780,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Refactored <code>createParser</code> implementation to match the package's API</li>
 <li>Fixed streaming response handler to use the correct event type checking</li>
 </ul>
-<h3 id="changed_3">Changed</h3>
+<h3 id="changed_5">Changed</h3>
 <ul>
 <li>Updated <code>tsconfig.json</code> to add <code>isolatedModules: true</code> for better compatibility with <code>ts-jest</code></li>
 <li>Modified <code>package.json</code> test scripts to include <code>NODE_OPTIONS=--experimental-vm-modules</code> flag to support ES modules in Jest tests</li>
@@ -1715,7 +1795,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Added tests for edge cases in agent card fetching and capability detection</li>
 </ul>
 <h2 id="010-2025-04-22"><a href="https://github.com/the-artinet-project/artinet-sdk/commit/c07bd01a225b09de65b70144e8963b8a1143d324">0.1.0</a> - 2025-04-22</h2>
-<h3 id="added_3">Added</h3>
+<h3 id="added_5">Added</h3>
 <ul>
 <li>Initial release of the @artinet/sdk package</li>
 <li>Implementation of the Agent2Agent (A2A) Protocol client</li>

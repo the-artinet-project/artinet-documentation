@@ -17,7 +17,7 @@ The Artinet SDK is a robust implementation of the [Agent2Agent (A2A) Protocol](h
 
 ```bash
 # Install the SDK
-npm install @artinet/sdk
+npm install @artinet/sdk@0.5.2
 ```
 
 Create your first agent in just a few lines of code:
@@ -70,6 +70,8 @@ console.log("Agent running at http://localhost:3000/a2a");
 * **Comprehensive Testing**: Includes a robust test suite to ensure reliability and maintainability.
 * **Agent Discovery**: Support for registering agents with the A2A registry for discovery.
 
+## Development Tools
+
 ## Next Steps
 
 Ready to dive deeper? Check out these resources:
@@ -78,5 +80,5 @@ Ready to dive deeper? Check out these resources:
 - [Core Components](./sdk/core.md) - Understand the fundamental building blocks of the SDK
 - [Examples](./sdk/examples/index.md) - Explore common usage patterns and scenarios
 - [API Reference](./api/index.md) - Detailed documentation of all classes and methods
-- [Quick Agents](./agents/quick_agents.md) - Learn about bundling and testing agent deployments
+
 

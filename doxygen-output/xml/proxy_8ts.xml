@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="proxy_8ts" kind="file" language="C++">
+    <compoundname>proxy.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskYieldUpdate<sp/>}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Client<sp/>}<sp/>from<sp/>&quot;./client.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>proxy<sp/>function<sp/>for<sp/>sending<sp/>task<sp/>yield<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>function<sp/>is<sp/>typically<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment<sp/>to<sp/>allow</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>an<sp/>agent<sp/>to<sp/>communicate<sp/>updates<sp/>about<sp/>its<sp/>task<sp/>execution.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskYieldUpdate<sp/>-<sp/>The<sp/>update<sp/>object<sp/>yielded<sp/>by<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>update<sp/>has<sp/>been<sp/>processed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskProxy<sp/>=<sp/>(taskYieldUpdate:<sp/>TaskYieldUpdate)<sp/>=&gt;<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Properties<sp/>for<sp/>the<sp/>TaskManager<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskManagerProps<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>core<sp/>task-handling<sp/>generator<sp/>function<sp/>of<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>function<sp/>takes<sp/>a<sp/>`TaskContext`<sp/>and<sp/>yields<sp/>`TaskYieldUpdate`<sp/>objects,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>eventually<sp/>returning<sp/>a<sp/>`Task`<sp/>or<sp/>void.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskHandler:<sp/>TaskHandler;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>signature<sp/>for<sp/>a<sp/>TaskManager<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>A<sp/>TaskManager<sp/>is<sp/>responsible<sp/>for<sp/>orchestrating<sp/>the<sp/>execution<sp/>of<sp/>an<sp/>agent&apos;s<sp/>task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>typically<sp/>by<sp/>interfacing<sp/>with<sp/>a<sp/>host<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>props<sp/>-<sp/>The<sp/>properties<sp/>for<sp/>the<sp/>task<sp/>manager,<sp/>including<sp/>the<sp/>taskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>task<sp/>handler<sp/>has<sp/>completed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskManager<sp/>=<sp/>(props:<sp/>TaskManagerProps)<sp/>=&gt;<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Properties<sp/>for<sp/>the<sp/>Connect<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>These<sp/>properties<sp/>are<sp/>used<sp/>when<sp/>an<sp/>agent<sp/>needs<sp/>to<sp/>establish<sp/>a<sp/>connection</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>send<sp/>a<sp/>request<sp/>to<sp/>another<sp/>agent<sp/>or<sp/>an<sp/>external<sp/>service<sp/>(e.g.,<sp/>an<sp/>LLM).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ConnectProps<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>identifier<sp/>of<sp/>the<sp/>target<sp/>agent<sp/>or<sp/>LLM<sp/>to<sp/>which<sp/>the<sp/>request<sp/>is<sp/>directed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>agentId:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>An<sp/>array<sp/>of<sp/>messages<sp/>forming<sp/>the<sp/>conversation<sp/>history<sp/>or<sp/>prompt.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Each<sp/>message<sp/>should<sp/>have<sp/>a<sp/>`role`<sp/>(e.g.,<sp/>&quot;user&quot;,<sp/>&quot;assistant&quot;)<sp/>and<sp/>`content`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>messages:<sp/>{<sp/>role:<sp/>string;<sp/>content:<sp/>string<sp/>}[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>signature<sp/>for<sp/>a<sp/>Connect<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>function<sp/>is<sp/>used<sp/>by<sp/>agents<sp/>to<sp/>make<sp/>external<sp/>calls,<sp/>such<sp/>as<sp/>to<sp/>LLMs<sp/>or<sp/>other<sp/>agents,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>often<sp/>proxied<sp/>by<sp/>a<sp/>host<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>props<sp/>-<sp/>The<sp/>properties<sp/>for<sp/>the<sp/>connect<sp/>call,<sp/>including<sp/>agentID<sp/>and<sp/>messages.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>a<sp/>string,<sp/>which<sp/>could<sp/>be<sp/>a<sp/>response<sp/>from<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>target<sp/>or<sp/>a<sp/>connection<sp/>identifier.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ConnectAPICallback<sp/>=<sp/>(props:<sp/>ConnectProps)<sp/>=&gt;<sp/>Promise&lt;string&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>proxy<sp/>for<sp/>a<sp/>client,<sp/>providing<sp/>a<sp/>subset<sp/>of<sp/>`Client`<sp/>functionalities.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>interface<sp/>omits<sp/>methods<sp/>related<sp/>to<sp/>direct<sp/>task<sp/>management<sp/>and<sp/>header<sp/>manipulation,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>focusing<sp/>on<sp/>core<sp/>interaction<sp/>capabilities<sp/>suitable<sp/>for<sp/>a<sp/>proxied<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>eslint-disable-next-line<sp/>@typescript-eslint/no-empty-object-type</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ClientProxy</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>Omit&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>Client,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;sendTaskSubscribe&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;getTask&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;cancelTask&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;getTaskPushNotification&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;setTaskPushNotification&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;resubscribeTask&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;refreshAgentCard&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;setHeaders&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;addHeader&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;removeHeader&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>|<sp/>&quot;clearHeaders&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&gt;<sp/>{}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Properties<sp/>for<sp/>the<sp/>ClientFactory<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>These<sp/>properties<sp/>are<sp/>used<sp/>to<sp/>configure<sp/>and<sp/>create<sp/>a<sp/>`ClientProxy`<sp/>instance.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ClientProps<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>base<sp/>URL<sp/>for<sp/>the<sp/>client<sp/>to<sp/>connect<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Can<sp/>be<sp/>a<sp/>URL<sp/>object<sp/>or<sp/>a<sp/>string.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>baseUrl:<sp/>URL<sp/>|<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>record<sp/>of<sp/>headers<sp/>to<sp/>be<sp/>included<sp/>in<sp/>client<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>headers?:<sp/>Record&lt;string,<sp/>string&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>fallback<sp/>path<sp/>for<sp/>client<sp/>requests.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>fallbackPath?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>signature<sp/>for<sp/>a<sp/>ClientFactory<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>A<sp/>ClientFactory<sp/>is<sp/>responsible<sp/>for<sp/>creating<sp/>`ClientProxy`<sp/>instances,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>allowing<sp/>agents<sp/>to<sp/>interact<sp/>with<sp/>services<sp/>or<sp/>other<sp/>agents.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>props<sp/>-<sp/>The<sp/>properties<sp/>required<sp/>to<sp/>configure<sp/>the<sp/>client.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>`ClientProxy`<sp/>instance.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ClientFactory<sp/>=<sp/>(props:<sp/>ClientProps)<sp/>=&gt;<sp/>ClientProxy;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/proxy.ts"/>
+  </compounddef>
+</doxygen>

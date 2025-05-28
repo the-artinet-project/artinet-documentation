@@ -7,11 +7,7 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskYieldUpdate,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Task,<sp/>Message,<sp/>TaskYieldUpdate<sp/>}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Context<sp/>object<sp/>provided<sp/>to<sp/>the<sp/>TaskHandler.</highlight></codeline>
@@ -59,6 +55,6 @@
 <codeline><highlight class="normal"><sp/><sp/>context:<sp/>TaskContext</highlight></codeline>
 <codeline><highlight class="normal">)<sp/>=&gt;<sp/>AsyncGenerator&lt;TaskYieldUpdate,<sp/>Task<sp/>|<sp/>void,<sp/>unknown&gt;;</highlight></codeline>
     </programlisting>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces/context.ts"/>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/context.ts"/>
   </compounddef>
 </doxygen>

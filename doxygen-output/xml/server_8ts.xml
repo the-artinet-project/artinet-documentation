@@ -20,10 +20,9 @@
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;./store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCServerType<sp/>}<sp/>from<sp/>&quot;./params.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;./store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext,<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">export<sp/>interface<sp/>Server<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>start():<sp/>express.Express;</highlight></codeline>

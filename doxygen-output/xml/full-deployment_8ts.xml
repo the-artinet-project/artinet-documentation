@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="full-deployment_8ts" kind="file" language="C++">
+    <compoundname>full-deployment.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ServerDeploymentRequestParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ServerDeploymentResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ServerDeploymentRequest,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>executeJsonRpcRequest<sp/>}<sp/>from<sp/>&quot;../../transport/index.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>base<sp/>URL<sp/>of<sp/>the<sp/>deployment<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">const<sp/>FULL_DEPLOYMENT_URL<sp/>=<sp/>new<sp/>URL(&quot;https://agents.artinet.io/deploy&quot;);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>API<sp/>key<sp/>to<sp/>use<sp/>for<sp/>the<sp/>deployment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">const<sp/>API_KEY<sp/>=<sp/>process.env.ARTINET_API_KEY;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>type<sp/>of<sp/>the<sp/>full<sp/>deployment<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">type<sp/>FullDeploymentRequest<sp/>=<sp/>A2ARequest<sp/>|<sp/>ServerDeploymentRequest;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Sends<sp/>a<sp/>full<sp/>deployment<sp/>request<sp/>to<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>baseUrl<sp/>The<sp/>base<sp/>URL<sp/>of<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>method<sp/>The<sp/>method<sp/>to<sp/>call.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>to<sp/>pass<sp/>to<sp/>the<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>headers<sp/>The<sp/>headers<sp/>to<sp/>send<sp/>with<sp/>the<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>acceptHeader<sp/>The<sp/>accept<sp/>header<sp/>to<sp/>send<sp/>with<sp/>the<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>The<sp/>response<sp/>from<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">const<sp/>executeFullDeploymentRequest<sp/>=<sp/>executeJsonRpcRequest<sp/>as<sp/>&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Req<sp/>extends<sp/>FullDeploymentRequest,</highlight></codeline>
+<codeline><highlight class="normal">&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>baseUrl:<sp/>URL,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>Req[&quot;method&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>Req[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>headers:<sp/>Record&lt;string,<sp/>string&gt;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>acceptHeader:<sp/>&quot;application/json&quot;</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>Promise&lt;ServerDeploymentResponse&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Sends<sp/>a<sp/>full<sp/>deployment<sp/>request<sp/>to<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>to<sp/>pass<sp/>to<sp/>the<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>The<sp/>response<sp/>from<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>async<sp/>function<sp/>fullDeployment(params:<sp/>ServerDeploymentRequestParams)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!API_KEY)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;ARTINET_API_KEY<sp/>is<sp/>not<sp/>set&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>await<sp/>executeFullDeploymentRequest(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>FULL_DEPLOYMENT_URL,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;/deploy&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>{<sp/>Authorization:<sp/>`Bearer<sp/>${API_KEY}`<sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;application/json&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment/full-deployment.ts"/>
+  </compounddef>
+</doxygen>

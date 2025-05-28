@@ -40,7 +40,7 @@ It's designed to prepare agent code for deployment by packaging it and its local
       entryPoints: [entryPath],
       bundle: true,
       minify: true,
-      sourcemap: true,
+      sourcemap: false,
       platform: "node",
       format: "esm",
       write: false,

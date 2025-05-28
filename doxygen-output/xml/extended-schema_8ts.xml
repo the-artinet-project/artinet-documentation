@@ -97,14 +97,14 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>code:<sp/>string;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>NPM<sp/>dependencies<sp/>of<sp/>the<sp/>server</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>NPM<sp/>dependencies<sp/>of<sp/>the<sp/>server(currently<sp/>unsupported)</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>dependencies?:<sp/>string[];</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">export<sp/>interface<sp/>BaseServerDeploymentResponseParams<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>deployment<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>deployment<sp/>ID(for<sp/>full<sp/>deployments<sp/>the<sp/>deployment<sp/>ID<sp/>is<sp/>the<sp/>same<sp/>as<sp/>the<sp/>agent/registration<sp/>ID)</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>deploymentId:<sp/>string;</highlight></codeline>
 <codeline></codeline>

@@ -8,6 +8,9 @@
     </detaileddescription>
     <programlisting>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./proxy.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./client.js&quot;;</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/index.ts"/>
   </compounddef>

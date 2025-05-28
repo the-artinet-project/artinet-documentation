@@ -2,11 +2,7 @@
 <doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.13.2" xml:lang="en-US">
   <compound refid="a2a-client_8ts" kind="file"><name>a2a-client.ts</name>
   </compound>
-  <compound refid="client_8ts" kind="file"><name>client.ts</name>
-  </compound>
   <compound refid="a2a-server_8ts" kind="file"><name>a2a-server.ts</name>
-  </compound>
-  <compound refid="context_8ts" kind="file"><name>context.ts</name>
   </compound>
   <compound refid="params_8ts" kind="file"><name>params.ts</name>
   </compound>
@@ -36,6 +32,10 @@
   </compound>
   <compound refid="stream_8ts" kind="file"><name>stream.ts</name>
   </compound>
+  <compound refid="client_8ts" kind="file"><name>client.ts</name>
+  </compound>
+  <compound refid="context_8ts" kind="file"><name>context.ts</name>
+  </compound>
   <compound refid="extended-schema_8ts" kind="file"><name>extended-schema.ts</name>
   </compound>
   <compound refid="client_2index_8ts" kind="file"><name>index.ts</name>
@@ -50,6 +50,8 @@
   </compound>
   <compound refid="utils_2index_8ts" kind="file"><name>index.ts</name>
   </compound>
+  <compound refid="proxy_8ts" kind="file"><name>proxy.ts</name>
+  </compound>
   <compound refid="schema_8ts" kind="file"><name>schema.ts</name>
   </compound>
   <compound refid="register_8ts" kind="file"><name>register.ts</name>
@@ -60,7 +62,11 @@
   </compound>
   <compound refid="utils_8ts" kind="file"><name>utils.ts</name>
   </compound>
+  <compound refid="agents_8ts" kind="file"><name>agents.ts</name>
+  </compound>
   <compound refid="bundler_8ts" kind="file"><name>bundler.ts</name>
+  </compound>
+  <compound refid="full-deployment_8ts" kind="file"><name>full-deployment.ts</name>
   </compound>
   <compound refid="task-wrapper_8ts" kind="file"><name>task-wrapper.ts</name>
   </compound>
@@ -79,8 +85,6 @@
   <compound refid="dir_9e03bd545a38b6dc614690d4e85afa46" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common</name>
   </compound>
   <compound refid="dir_d2d18170283abb3771c45cc071a7fcf3" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment</name>
-  </compound>
-  <compound refid="dir_cd83db7a681f39e901a951cbdd50a070" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client/interfaces</name>
   </compound>
   <compound refid="dir_9775c359e95761a80e3051d318fc9a71" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces</name>
   </compound>

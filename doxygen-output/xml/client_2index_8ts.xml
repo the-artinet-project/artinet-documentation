@@ -8,7 +8,6 @@
     </detaileddescription>
     <programlisting>
 <codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./a2a-client.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./interfaces/client.js&quot;;</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client/index.ts"/>
   </compounddef>

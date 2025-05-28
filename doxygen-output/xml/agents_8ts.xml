@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="agents_8ts" kind="file" language="C++">
+    <compoundname>agents.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ClientFactory,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ClientProps,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ClientProxy,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ConnectAPICallback,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ConnectProps,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskManager,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskManagerProps,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskProxy,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/proxy.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">const<sp/>env<sp/>=<sp/>process.env;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>eslint-disable-next-line<sp/>@typescript-eslint/no-namespace</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>namespace<sp/>artinet<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>eslint-disable-next-line<sp/>@typescript-eslint/no-namespace</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>export<sp/>namespace<sp/>v0<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>Manages<sp/>the<sp/>execution<sp/>of<sp/>an<sp/>agent&apos;s<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>This<sp/>function<sp/>is<sp/>intended<sp/>to<sp/>be<sp/>used<sp/>within<sp/>an<sp/>agent&apos;s<sp/>code<sp/>when<sp/>deployed<sp/>to<sp/>a</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>managed<sp/>environment.<sp/>It<sp/>takes<sp/>the<sp/>agent&apos;s<sp/>core<sp/>task-handling<sp/>generator<sp/>function</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>and<sp/>iterates<sp/>over<sp/>its<sp/>yielded<sp/>updates,<sp/>passing<sp/>them<sp/>to<sp/>a<sp/>proxy<sp/>function</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>made<sp/>available<sp/>by<sp/>the<sp/>host<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>The<sp/>`TaskContext`<sp/>and<sp/>the<sp/>`TaskProxy`<sp/>(for<sp/>yielding<sp/>updates)<sp/>are<sp/>expected</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>to<sp/>be<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment<sp/>via<sp/>`process.env`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskManagerProps}<sp/>props<sp/>-<sp/>The<sp/>properties<sp/>for<sp/>the<sp/>task<sp/>manager,<sp/>including<sp/>the<sp/>taskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@param<sp/>{function(TaskContext):<sp/>AsyncGenerator&lt;any,<sp/>any,<sp/>unknown&gt;}<sp/>props.taskHandler<sp/>-<sp/>An<sp/>asynchronous<sp/>generator<sp/>function<sp/>that<sp/>takes<sp/>a<sp/>`TaskContext`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>and<sp/>yields<sp/>updates,<sp/>eventually<sp/>returning<sp/>a<sp/>`Task`<sp/>or<sp/>void.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;void&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>task<sp/>handler<sp/>has<sp/>completed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@throws<sp/>An<sp/>error<sp/>if<sp/>the<sp/>`taskManagerStub`<sp/>or<sp/>`context`<sp/>is<sp/>not<sp/>set<sp/>in<sp/>`process.env`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>indicating<sp/>an<sp/>invalid<sp/>runtime<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>export<sp/>const<sp/>taskManager:<sp/>TaskManager<sp/>=<sp/>async<sp/>(props:<sp/>TaskManagerProps)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>{<sp/>taskHandler<sp/>}<sp/>=<sp/>props;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!env.taskManagerStub<sp/>&amp;&amp;<sp/>!env.context)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>console.warn(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;taskManager:<sp/>taskManagerStub<sp/>or<sp/>context<sp/>is<sp/>not<sp/>set&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;task-manager&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>context<sp/>=<sp/>env.context<sp/>as<sp/>unknown<sp/>as<sp/>TaskContext;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>taskManagerProxy<sp/>=<sp/>env.taskManagerStub<sp/>as<sp/>unknown<sp/>as<sp/>TaskProxy;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!taskManagerProxy<sp/>||<sp/>!context)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>console.warn(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;taskManager:<sp/>taskManagerStub<sp/>or<sp/>context<sp/>is<sp/>not<sp/>set&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;task-manager&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>generator<sp/>=<sp/>taskHandler(context);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>await<sp/>(const<sp/>yieldValue<sp/>of<sp/>generator)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>console.info(&quot;taskManager:<sp/>yieldValue&quot;,<sp/>&quot;task-manager&quot;,<sp/>yieldValue);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskManagerProxy(yieldValue);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>Establishes<sp/>a<sp/>connection<sp/>or<sp/>sends<sp/>a<sp/>request<sp/>to<sp/>another<sp/>agent<sp/>or<sp/>service.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>This<sp/>function<sp/>proxies<sp/>requests<sp/>to<sp/>a<sp/>host-provided<sp/>implementation,<sp/>enabling</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>agents<sp/>in<sp/>a<sp/>managed<sp/>environment<sp/>to<sp/>make<sp/>external<sp/>calls<sp/>(e.g.,<sp/>to<sp/>an<sp/>LLM<sp/>or<sp/>another<sp/>agent)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>without<sp/>needing<sp/>direct<sp/>network<sp/>access<sp/>or<sp/>credentials.<sp/>The<sp/>actual<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>is<sp/>delegated<sp/>to<sp/>`env.connectStub`,<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@param<sp/>{ConnectProps}<sp/>props<sp/>-<sp/>The<sp/>properties<sp/>for<sp/>the<sp/>connect<sp/>call,<sp/>including<sp/>the<sp/>target<sp/>agentID<sp/>and<sp/>messages.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@param<sp/>{string}<sp/>props.agentID<sp/>-<sp/>The<sp/>identifier<sp/>of<sp/>the<sp/>target<sp/>agent<sp/>or<sp/>LLM<sp/>to<sp/>which<sp/>the<sp/>request<sp/>is<sp/>directed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@param<sp/>{object[]}<sp/>props.messages<sp/>-<sp/>An<sp/>array<sp/>of<sp/>messages<sp/>forming<sp/>the<sp/>conversation<sp/>history<sp/>or<sp/>prompt.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;string&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>the<sp/>string<sp/>response<sp/>from<sp/>the<sp/>target<sp/>agent/LLM<sp/>or<sp/>a<sp/>connection<sp/>identifier.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@throws<sp/>An<sp/>error<sp/>if<sp/>`env.connectStub`<sp/>is<sp/>not<sp/>found,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>indicating<sp/>an<sp/>invalid<sp/>runtime<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>export<sp/>const<sp/>connect:<sp/>ConnectAPICallback<sp/>=<sp/>async<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>props:<sp/>ConnectProps</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>):<sp/>Promise&lt;string&gt;<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!env.connectStub)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;connectStub<sp/>is<sp/>not<sp/>set&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>connectProxy<sp/>=<sp/>env.connectStub<sp/>as<sp/>unknown<sp/>as<sp/>ConnectAPICallback;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!connectProxy)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;connectStub<sp/>is<sp/>not<sp/>set&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>connectProxy(props);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>Creates<sp/>a<sp/>client<sp/>proxy<sp/>for<sp/>interacting<sp/>with<sp/>other<sp/>agents<sp/>or<sp/>services.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>This<sp/>function<sp/>acts<sp/>as<sp/>a<sp/>factory<sp/>to<sp/>obtain<sp/>a<sp/>`ClientProxy`<sp/>instance.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>The<sp/>actual<sp/>implementation<sp/>of<sp/>the<sp/>client<sp/>factory<sp/>is<sp/>delegated<sp/>to<sp/>`env.clientStub`,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment.<sp/>This<sp/>allows<sp/>agents<sp/>to<sp/>communicate<sp/>with</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>other<sp/>entities<sp/>in<sp/>a<sp/>managed<sp/>environment<sp/>without<sp/>direct<sp/>awareness<sp/>of<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>underlying<sp/>communication<sp/>mechanisms.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@param<sp/>{ClientProps}<sp/>props<sp/>-<sp/>The<sp/>properties<sp/>for<sp/>creating<sp/>the<sp/>client.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@returns<sp/>{ClientProxy}<sp/>A<sp/>proxy<sp/>object<sp/>for<sp/>interacting<sp/>with<sp/>a<sp/>client<sp/>service<sp/>or<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/>@throws<sp/>An<sp/>error<sp/>if<sp/>`env.clientStub`<sp/>is<sp/>not<sp/>found,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>indicating<sp/>an<sp/>invalid<sp/>runtime<sp/>environment.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>export<sp/>const<sp/>agent:<sp/>ClientFactory<sp/>=<sp/>(props:<sp/>ClientProps):<sp/>ClientProxy<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!env.clientStub)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;clientStub<sp/>is<sp/>not<sp/>set&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>clientProxy<sp/>=<sp/>env.clientStub<sp/>as<sp/>unknown<sp/>as<sp/>ClientFactory;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!clientProxy)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;clientStub<sp/>is<sp/>not<sp/>set&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>clientProxy(props);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/deployment/agents.ts"/>
+  </compounddef>
+</doxygen>
