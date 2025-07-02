@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="notification_8ts" kind="file" language="C++">
+    <compoundname>notification.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCErrorResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCRequestWithParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCSuccessResponse,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./rpc.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskIdParams<sp/>}<sp/>from<sp/>&quot;./task.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Information<sp/>required<sp/>for<sp/>setting<sp/>up<sp/>push<sp/>notifications.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>schemes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>credentials</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>PushNotificationAuthenticationInfo<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Supported<sp/>authentication<sp/>schemes<sp/>-<sp/>e.g.<sp/>Basic,<sp/>Bearer<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>schemes:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>credentials</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>credentials?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Configuration<sp/>for<sp/>setting<sp/>up<sp/>push<sp/>notifications<sp/>for<sp/>task<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>url</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>token</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>authentication</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>PushNotificationConfig<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Push<sp/>Notification<sp/>ID<sp/>-<sp/>created<sp/>by<sp/>server<sp/>to<sp/>support<sp/>multiple<sp/>callbacks.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>URL<sp/>endpoint<sp/>where<sp/>the<sp/>agent<sp/>should<sp/>send<sp/>notifications.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>A<sp/>token<sp/>to<sp/>be<sp/>included<sp/>in<sp/>push<sp/>notification<sp/>requests<sp/>for<sp/>verification/authentication.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>token?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>authentication<sp/>details<sp/>needed<sp/>by<sp/>the<sp/>agent<sp/>to<sp/>call<sp/>the<sp/>notification<sp/>URL.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>authentication?:<sp/>PushNotificationAuthenticationInfo;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>push<sp/>notification<sp/>information<sp/>associated<sp/>with<sp/>a<sp/>specific<sp/>task<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>as<sp/>parameters<sp/>for<sp/>`tasks/pushNotificationConfig/set`<sp/>and<sp/>as<sp/>a<sp/>result<sp/>type.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>taskId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>pushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskPushNotificationConfig<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>the<sp/>notification<sp/>config<sp/>is<sp/>associated<sp/>with.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>push<sp/>notification<sp/>configuration<sp/>details.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushNotificationConfig:<sp/>PushNotificationConfig;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Request<sp/>to<sp/>set<sp/>or<sp/>update<sp/>the<sp/>push<sp/>notification<sp/>config<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>TaskPushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SetTaskPushNotificationConfigRequest<sp/>=<sp/>JSONRPCRequestWithParams&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&quot;tasks/pushNotificationConfig/set&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskPushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>JSON-RPC<sp/>success<sp/>response<sp/>model<sp/>for<sp/>the<sp/>&apos;tasks/pushNotificationConfig/set&apos;<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>TaskPushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SetTaskPushNotificationConfigSuccessResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCSuccessResponse&lt;TaskPushNotificationConfig&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Response<sp/>to<sp/>a<sp/>`tasks/pushNotificationConfig/set`<sp/>request.<sp/>Contains<sp/>the<sp/>confirmed<sp/>TaskPushNotificationConfig<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@oneOf<sp/>SetTaskPushNotificationConfigSuccessResponse<sp/>|<sp/>JSONRPCErrorResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SetTaskPushNotificationConfigResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SetTaskPushNotificationConfigSuccessResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCErrorResponse;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Request<sp/>to<sp/>retrieve<sp/>the<sp/>currently<sp/>configured<sp/>push<sp/>notification<sp/>configuration<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>TaskIdParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskPushNotificationConfigRequest<sp/>=<sp/>JSONRPCRequestWithParams&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&quot;tasks/pushNotificationConfig/get&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskIdParams</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>JSON-RPC<sp/>success<sp/>response<sp/>model<sp/>for<sp/>the<sp/>&apos;tasks/pushNotificationConfig/get&apos;<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>TaskPushNotificationConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskPushNotificationConfigSuccessResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCSuccessResponse&lt;TaskPushNotificationConfig&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Response<sp/>to<sp/>a<sp/>`tasks/pushNotificationConfig/get`<sp/>request.<sp/>Contains<sp/>the<sp/>TaskPushNotificationConfig<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@oneOf<sp/>GetTaskPushNotificationConfigSuccessResponse<sp/>|<sp/>JSONRPCErrorResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskPushNotificationConfigResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskPushNotificationConfigSuccessResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCErrorResponse;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/notification.ts"/>
+  </compounddef>
+</doxygen>

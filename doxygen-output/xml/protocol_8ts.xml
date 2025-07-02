@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="protocol_8ts" kind="file" language="C++">
+    <compoundname>protocol.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>protocol<sp/>enum.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>enum<sp/>Protocol<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2A<sp/>=<sp/>&quot;a2a&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>MCP<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MCP<sp/>=<sp/>&quot;mcp&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>ACP<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ACP<sp/>=<sp/>&quot;acp&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>CHAT<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CHAT<sp/>=<sp/>&quot;chat&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>NLWeb<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>NLWEB<sp/>=<sp/>&quot;nlweb&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>custom<sp/>protocol<sp/>for<sp/>user-defined<sp/>services.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CUSTOM<sp/>=<sp/>&quot;custom&quot;,</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/protocol.ts"/>
+  </compounddef>
+</doxygen>

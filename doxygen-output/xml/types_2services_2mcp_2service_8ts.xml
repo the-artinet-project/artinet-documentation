@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="types_2services_2mcp_2service_8ts" kind="file" language="C++">
+    <compoundname>service.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>ToolCallback<sp/>}<sp/>from<sp/>&quot;@modelcontextprotocol/sdk/server/mcp.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CallToolResult,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ToolAnnotations,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;@modelcontextprotocol/sdk/types.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>z,<sp/>{<sp/>ZodRawShape<sp/>}<sp/>from<sp/>&quot;zod&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Service<sp/>}<sp/>from<sp/>&quot;../service.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>AgentSkill<sp/>}<sp/>from<sp/>&quot;../../schemas/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>MCPExecutionContext<sp/>}<sp/>from<sp/>&quot;../context.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>MCPRequestParamsSchema.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>MCPRequestParamsSchema<sp/>=<sp/>z.object({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>z.string(),</highlight></codeline>
+<codeline><highlight class="normal">});</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>zodCallBack<sp/>type.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">type<sp/>zodCallBack&lt;Args<sp/>extends<sp/>ZodRawShape<sp/>=<sp/>ZodRawShape&gt;<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>...args:<sp/>Parameters&lt;ToolCallback&lt;Args&gt;&gt;</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>Promise&lt;CallToolResult&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>MCPTool<sp/>interface.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>MCPTool&lt;Args<sp/>extends<sp/>ZodRawShape<sp/>=<sp/>ZodRawShape&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>name<sp/>of<sp/>the<sp/>tool.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>description<sp/>of<sp/>the<sp/>tool.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>params<sp/>schema<sp/>or<sp/>annotations<sp/>of<sp/>the<sp/>tool.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Args<sp/>|<sp/>ToolAnnotations}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>paramsSchemaOrAnnotations:<sp/>Args<sp/>|<sp/>ToolAnnotations;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>callback<sp/>of<sp/>the<sp/>tool.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{zodCallBack&lt;Args&gt;}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>cb:<sp/>zodCallBack&lt;Args&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>MCPServiceInterface<sp/>interface.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>MCPServiceInterface<sp/>extends<sp/>Service&lt;MCPExecutionContext&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Initializes<sp/>the<sp/>service.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{AgentSkill[]}<sp/>skills<sp/>The<sp/>skills.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>initialize(skills:<sp/>AgentSkill[]):<sp/>void;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/mcp/service.ts"/>
+  </compounddef>
+</doxygen>

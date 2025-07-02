@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="transform_8ts" kind="file" language="C++">
+    <compoundname>transform.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Type-safe<sp/>object<sp/>key<sp/>transformation<sp/>utilities<sp/>using<sp/>built-in<sp/>TypeScript<sp/>utility<sp/>types</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Forces<sp/>TypeScript<sp/>to<sp/>evaluate<sp/>and<sp/>flatten<sp/>intersection<sp/>types<sp/>into<sp/>a<sp/>single<sp/>object<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>makes<sp/>IDE<sp/>tooltips<sp/>and<sp/>type<sp/>displays<sp/>much<sp/>cleaner</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">type<sp/>Simplify&lt;T&gt;<sp/>=<sp/>{<sp/>[K<sp/>in<sp/>keyof<sp/>T]:<sp/>T[K]<sp/>}<sp/>&amp;<sp/>{};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Configuration<sp/>for<sp/>renaming<sp/>keys<sp/>-<sp/>maps<sp/>old<sp/>key<sp/>names<sp/>to<sp/>new<sp/>key<sp/>names</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>For<sp/>best<sp/>results,<sp/>use<sp/>`as<sp/>const`<sp/>to<sp/>preserve<sp/>literal<sp/>string<sp/>types</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>RenameConfig&lt;T<sp/>extends<sp/>object&gt;<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>readonly<sp/>[K<sp/>in<sp/>keyof<sp/>T]?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Transform<sp/>object<sp/>type<sp/>by<sp/>renaming<sp/>specified<sp/>keys<sp/>using<sp/>built-in<sp/>utility<sp/>types</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>combines<sp/>Pick/Omit<sp/>patterns<sp/>with<sp/>Record<sp/>to<sp/>achieve<sp/>key<sp/>renaming</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Uses<sp/>Simplify<sp/>to<sp/>flatten<sp/>the<sp/>final<sp/>type<sp/>for<sp/>cleaner<sp/>IDE<sp/>display</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TransformKeys&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>T<sp/>extends<sp/>object,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Config<sp/>extends<sp/>RenameConfig&lt;T&gt;,</highlight></codeline>
+<codeline><highlight class="normal">&gt;<sp/>=<sp/>Simplify&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Keep<sp/>all<sp/>properties<sp/>that<sp/>are<sp/>NOT<sp/>being<sp/>renamed</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Omit&lt;T,<sp/>keyof<sp/>Config&gt;<sp/>&amp;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Create<sp/>new<sp/>properties<sp/>with<sp/>renamed<sp/>keys</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>[OriginalKey<sp/>in<sp/>keyof<sp/>Config<sp/>&amp;<sp/>keyof<sp/>T<sp/>as<sp/>Config[OriginalKey]<sp/>extends<sp/>string</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>?<sp/>Config[OriginalKey]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/>OriginalKey]:<sp/>T[OriginalKey];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Runtime<sp/>function<sp/>to<sp/>transform<sp/>object<sp/>keys<sp/>based<sp/>on<sp/>configuration</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Uses<sp/>the<sp/>TransformKeys<sp/>utility<sp/>type<sp/>for<sp/>return<sp/>type<sp/>inference</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>transformKeys&lt;T<sp/>extends<sp/>object,<sp/>Config<sp/>extends<sp/>RenameConfig&lt;T&gt;&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>obj:<sp/>T,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>config:<sp/>Config</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>TransformKeys&lt;T,<sp/>Config&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>result:<sp/>any<sp/>=<sp/>{};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>Process<sp/>each<sp/>property<sp/>in<sp/>the<sp/>original<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>for<sp/>(const<sp/>key<sp/>in<sp/>obj)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(Object.prototype.hasOwnProperty.call(obj,<sp/>key))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>newKeyName<sp/>=<sp/>config[key<sp/>as<sp/>keyof<sp/>Config];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(typeof<sp/>newKeyName<sp/>===<sp/>&quot;string&quot;)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Rename<sp/>the<sp/>key</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>result[newKeyName]<sp/>=<sp/>obj[key];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>else<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Keep<sp/>original<sp/>key</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>result[key]<sp/>=<sp/>obj[key];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>result<sp/>as<sp/>TransformKeys&lt;T,<sp/>Config&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Helper<sp/>type<sp/>to<sp/>extract<sp/>the<sp/>transformed<sp/>type<sp/>for<sp/>a<sp/>given<sp/>object<sp/>and<sp/>config</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Useful<sp/>for<sp/>declaring<sp/>variables<sp/>with<sp/>the<sp/>expected<sp/>transformed<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Uses<sp/>Simplify<sp/>to<sp/>show<sp/>clean,<sp/>flattened<sp/>types<sp/>in<sp/>IDE</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>Transformed&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>T<sp/>extends<sp/>object,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Config<sp/>extends<sp/>RenameConfig&lt;T&gt;,</highlight></codeline>
+<codeline><highlight class="normal">&gt;<sp/>=<sp/>Simplify&lt;TransformKeys&lt;T,<sp/>Config&gt;&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Utility<sp/>to<sp/>create<sp/>a<sp/>type-safe<sp/>rename<sp/>configuration<sp/>with<sp/>better<sp/>intellisense</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>returned<sp/>function<sp/>preserves<sp/>literal<sp/>string<sp/>types</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>createRenameConfig&lt;T<sp/>extends<sp/>object&gt;()<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>function<sp/>&lt;Config<sp/>extends<sp/>RenameConfig&lt;T&gt;&gt;(config:<sp/>Config):<sp/>Config<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>config;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Common<sp/>transformation<sp/>patterns<sp/>using<sp/>built-in<sp/>utility<sp/>types</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>eslint-disable-next-line<sp/>@typescript-eslint/no-namespace</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>namespace<sp/>TransformPatterns<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Convert<sp/>snake_case<sp/>keys<sp/>to<sp/>camelCase</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>is<sp/>a<sp/>type-level<sp/>template<sp/>but<sp/>would<sp/>need<sp/>runtime<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>export<sp/>type<sp/>SnakeToCamel&lt;T<sp/>extends<sp/>string&gt;<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>T<sp/>extends<sp/>`${infer<sp/>First}_${infer<sp/>Rest}`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>?<sp/>`${First}${Capitalize&lt;SnakeToCamel&lt;Rest&gt;&gt;}`</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/>T;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Pick<sp/>specific<sp/>keys<sp/>and<sp/>optionally<sp/>rename<sp/>them</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>export<sp/>type<sp/>PickAndRename&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>T<sp/>extends<sp/>object,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>Keys<sp/>extends<sp/>keyof<sp/>T,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>Config<sp/>extends<sp/>Partial&lt;Record&lt;Keys,<sp/>string&gt;&gt;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&gt;<sp/>=<sp/>Simplify&lt;TransformKeys&lt;Pick&lt;T,<sp/>Keys&gt;,<sp/>Config&gt;&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Omit<sp/>specific<sp/>keys<sp/>and<sp/>optionally<sp/>rename<sp/>remaining<sp/>ones</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>export<sp/>type<sp/>OmitAndRename&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>T<sp/>extends<sp/>object,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>OmitKeys<sp/>extends<sp/>keyof<sp/>T,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>Config<sp/>extends<sp/>RenameConfig&lt;Omit&lt;T,<sp/>OmitKeys&gt;&gt;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&gt;<sp/>=<sp/>Simplify&lt;TransformKeys&lt;Omit&lt;T,<sp/>OmitKeys&gt;,<sp/>Config&gt;&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/transform.ts"/>
+  </compounddef>
+</doxygen>

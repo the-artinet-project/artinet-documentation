@@ -18,7 +18,7 @@ const DOCS_API_DIR = path.resolve(__dirname, 'docs/api');
 const MODULES = [
   { src: 'client/a2a-client.ts', dest: 'client.md', title: 'A2AClient' },
   { src: 'server/a2a-server.ts', dest: 'server.md', title: 'A2AServer' },
-  { src: 'server/interfaces/context.ts', dest: 'task-context.md', title: 'Task Context' },
+  { src: 'types/services/context.ts', dest: 'task-context.md', title: 'Task Context' },
   { src: 'utils/deployment/bundler.ts', dest: 'bundler.md', title: 'Agent Bundler' },
 ];
 

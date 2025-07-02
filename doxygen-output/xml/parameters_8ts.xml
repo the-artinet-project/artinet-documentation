@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="parameters_8ts" kind="file" language="C++">
+    <compoundname>parameters.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>base<sp/>entity<sp/>for<sp/>FileParts</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>name</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>mimeType</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>FileBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>name<sp/>of<sp/>the<sp/>file.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>MIME<sp/>type<sp/>of<sp/>the<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>mimeType?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>file<sp/>with<sp/>its<sp/>content<sp/>encoded<sp/>as<sp/>a<sp/>Base64<sp/>string.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>bytes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>uri</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>FileWithBytes<sp/>extends<sp/>FileBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>File<sp/>content<sp/>encoded<sp/>as<sp/>a<sp/>Base64<sp/>string.<sp/>Use<sp/>this<sp/>OR<sp/>`uri`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>bytes:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>URI<sp/>pointing<sp/>to<sp/>the<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>uri?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>file<sp/>with<sp/>its<sp/>content<sp/>encoded<sp/>as<sp/>a<sp/>Base64<sp/>string.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>uri</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>bytes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>FileWithUri<sp/>extends<sp/>FileBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>URI<sp/>pointing<sp/>to<sp/>the<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>uri:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>File<sp/>content<sp/>encoded<sp/>as<sp/>a<sp/>Base64<sp/>string.<sp/>Use<sp/>this<sp/>OR<sp/>`uri`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>bytes?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>base<sp/>entity<sp/>for<sp/>Parts</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>PartBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>part<sp/>of<sp/>a<sp/>message<sp/>containing<sp/>text<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>kind</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>text</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TextPart<sp/>extends<sp/>PartBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Type<sp/>identifier<sp/>for<sp/>this<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;text&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>text<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>text:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>part<sp/>of<sp/>a<sp/>message<sp/>containing<sp/>file<sp/>content.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>kind</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>file</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>FilePart<sp/>extends<sp/>PartBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Type<sp/>identifier<sp/>for<sp/>this<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;file&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>file<sp/>content,<sp/>provided<sp/>either<sp/>inline<sp/>or<sp/>via<sp/>URI.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>file:<sp/>FileWithBytes<sp/>|<sp/>FileWithUri;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>part<sp/>of<sp/>a<sp/>message<sp/>containing<sp/>structured<sp/>data<sp/>(JSON).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>kind</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>DataPart<sp/>extends<sp/>PartBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Type<sp/>identifier<sp/>for<sp/>this<sp/>part.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;data&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>structured<sp/>data<sp/>content<sp/>as<sp/>a<sp/>JSON<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>single<sp/>part<sp/>of<sp/>a<sp/>multi-part<sp/>message.<sp/>Can<sp/>be<sp/>text,<sp/>file,<sp/>or<sp/>data.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>Part<sp/>=<sp/>TextPart<sp/>|<sp/>FilePart<sp/>|<sp/>DataPart;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>an<sp/>artifact<sp/>generated<sp/>or<sp/>used<sp/>by<sp/>a<sp/>task,<sp/>potentially<sp/>composed<sp/>of<sp/>multiple<sp/>parts.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>artifactId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>name</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>description</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>parts</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>extensions</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Artifact<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Unique<sp/>identifier<sp/>for<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifactId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>name<sp/>for<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>description<sp/>of<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>constituent<sp/>parts<sp/>of<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>parts:<sp/>Part[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URIs<sp/>of<sp/>extensions<sp/>that<sp/>are<sp/>present<sp/>or<sp/>contributed<sp/>to<sp/>this<sp/>Artifact.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extension?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>message<sp/>exchanged<sp/>between<sp/>a<sp/>user<sp/>and<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>role</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>parts</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>extensions</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>referenceTaskIds</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>messageId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>taskId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Message<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>role<sp/>of<sp/>the<sp/>sender<sp/>(user<sp/>or<sp/>agent).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>role:<sp/>&quot;user&quot;<sp/>|<sp/>&quot;agent&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>content<sp/>of<sp/>the<sp/>message,<sp/>composed<sp/>of<sp/>one<sp/>or<sp/>more<sp/>parts.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>parts:<sp/>Part[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URIs<sp/>of<sp/>extensions<sp/>that<sp/>are<sp/>present<sp/>or<sp/>contributed<sp/>to<sp/>this<sp/>Message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extensions?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>List<sp/>of<sp/>tasks<sp/>referenced<sp/>as<sp/>context<sp/>by<sp/>this<sp/>message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>referenceTaskIds?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Identifier<sp/>created<sp/>by<sp/>the<sp/>message<sp/>creator</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>messageId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Identifier<sp/>of<sp/>task<sp/>the<sp/>message<sp/>is<sp/>related<sp/>to</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>context<sp/>the<sp/>message<sp/>is<sp/>associated<sp/>with</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Event<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;message&quot;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/parameters.ts"/>
+  </compounddef>
+</doxygen>

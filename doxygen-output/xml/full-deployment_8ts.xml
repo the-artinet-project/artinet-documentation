@@ -10,7 +10,7 @@
 <codeline><highlight class="normal">import<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>ServerDeploymentRequestParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>ServerDeploymentResponse,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AExecutionContext,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>ServerDeploymentRequest,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>executeJsonRpcRequest<sp/>}<sp/>from<sp/>&quot;../../transport/index.js&quot;;</highlight></codeline>
@@ -28,7 +28,7 @@
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>type<sp/>of<sp/>the<sp/>full<sp/>deployment<sp/>request.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">type<sp/>FullDeploymentRequest<sp/>=<sp/>A2ARequest<sp/>|<sp/>ServerDeploymentRequest;</highlight></codeline>
+<codeline><highlight class="normal">type<sp/>FullDeploymentRequest<sp/>=<sp/>A2AExecutionContext<sp/>|<sp/>ServerDeploymentRequest;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Sends<sp/>a<sp/>full<sp/>deployment<sp/>request<sp/>to<sp/>the<sp/>server.</highlight></codeline>

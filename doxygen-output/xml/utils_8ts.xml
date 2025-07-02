@@ -7,14 +7,7 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Artifact,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>ExtendedTaskStatusUpdate,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskYieldUpdate,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskSendParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskQueryParams,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
-<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>MessageSendParams,<sp/>Part<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>INVALID_PARAMS<sp/>}<sp/>from<sp/>&quot;./errors.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -35,58 +28,25 @@
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Type<sp/>guard<sp/>to<sp/>check<sp/>if<sp/>an<sp/>object<sp/>is<sp/>a<sp/>TaskStatus<sp/>update<sp/>(lacks<sp/>&apos;parts&apos;).</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>to<sp/>differentiate<sp/>yielded<sp/>updates<sp/>from<sp/>the<sp/>handler.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>function<sp/>isTaskStatusUpdate(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>update:<sp/>TaskYieldUpdate</highlight></codeline>
-<codeline><highlight class="normal">):<sp/>update<sp/>is<sp/>ExtendedTaskStatusUpdate<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>return<sp/>isObject(update)<sp/>&amp;&amp;<sp/>&quot;state&quot;<sp/>in<sp/>update<sp/>&amp;&amp;<sp/>!(&quot;parts&quot;<sp/>in<sp/>update);</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Type<sp/>guard<sp/>to<sp/>check<sp/>if<sp/>an<sp/>object<sp/>is<sp/>an<sp/>Artifact<sp/>update<sp/>(has<sp/>&apos;parts&apos;).</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>to<sp/>differentiate<sp/>yielded<sp/>updates<sp/>from<sp/>the<sp/>handler.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>function<sp/>isArtifactUpdate(update:<sp/>TaskYieldUpdate):<sp/>update<sp/>is<sp/>Artifact<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>return<sp/>isObject(update)<sp/>&amp;&amp;<sp/>&quot;parts&quot;<sp/>in<sp/>update<sp/>&amp;&amp;<sp/>!(&quot;state&quot;<sp/>in<sp/>update);</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">export<sp/>function<sp/>validateTaskResubscribeParams(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>params:<sp/>any</highlight></codeline>
-<codeline><highlight class="normal">):<sp/>asserts<sp/>params<sp/>is<sp/>TaskQueryParams<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>//<sp/>Structure<sp/>validation</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!params<sp/>||<sp/>typeof<sp/>params<sp/>!==<sp/>&quot;object&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>parameters&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>if<sp/>(typeof<sp/>params.id<sp/>!==<sp/>&quot;string&quot;<sp/>||<sp/>params.id<sp/>===<sp/>&quot;&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>task<sp/>ID&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Validates<sp/>a<sp/>task<sp/>send<sp/>parameters<sp/>object.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>params<sp/>The<sp/>parameters<sp/>to<sp/>validate</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@throws<sp/>INVALID_PARAMS<sp/>if<sp/>the<sp/>parameters<sp/>are<sp/>invalid</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>function<sp/>validateTaskSendParams(</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>function<sp/>validateSendMessageParams(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>params:<sp/>any</highlight></codeline>
-<codeline><highlight class="normal">):<sp/>asserts<sp/>params<sp/>is<sp/>TaskSendParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>asserts<sp/>params<sp/>is<sp/>MessageSendParams<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>//<sp/>Structure<sp/>validation</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>if<sp/>(!params<sp/>||<sp/>typeof<sp/>params<sp/>!==<sp/>&quot;object&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>parameters&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Invalid<sp/>parameters&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>if<sp/>(typeof<sp/>params.id<sp/>!==<sp/>&quot;string&quot;<sp/>||<sp/>params.id<sp/>===<sp/>&quot;&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>task<sp/>ID&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>//<sp/>Message<sp/>validation</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>if<sp/>(!params.message<sp/>||<sp/>typeof<sp/>params.message<sp/>!==<sp/>&quot;object&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>message&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Invalid<sp/>message&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>//<sp/>Role<sp/>validation</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>if<sp/>(params.message.role<sp/>!==<sp/>&quot;user&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>message<sp/>role&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Invalid<sp/>message<sp/>role&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>//<sp/>Parts<sp/>validation</highlight></codeline>
@@ -94,13 +54,22 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>!Array.isArray(params.message.parts)<sp/>||</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params.message.parts.length<sp/>===<sp/>0</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Invalid<sp/>message<sp/>parts&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Invalid<sp/>message<sp/>parts&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params.message.parts.some(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>(part:<sp/>Part)<sp/>=&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>!part.kind<sp/>||</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(part.kind<sp/>!==<sp/>&quot;text&quot;<sp/>&amp;&amp;<sp/>part.kind<sp/>!==<sp/>&quot;data&quot;<sp/>&amp;&amp;<sp/>part.kind<sp/>!==<sp/>&quot;file&quot;)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Message<sp/>parts<sp/>must<sp/>be<sp/>text,<sp/>data,<sp/>or<sp/>file&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">export<sp/>function<sp/>extractTaskId(id:<sp/>number<sp/>|<sp/>string<sp/>|<sp/>null<sp/>|<sp/>undefined):<sp/>string<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>if<sp/>(!id)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS&lt;string&gt;(&quot;Missing<sp/>task<sp/>ID&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Missing<sp/>task<sp/>ID&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>if<sp/>(typeof<sp/>id<sp/>===<sp/>&quot;number&quot;)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>id.toString();</highlight></codeline>

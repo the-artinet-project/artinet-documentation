@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_f2a831cbd434c88935aa819b62bf834f" kind="dir">
+    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/a2a</compoundname>
+    <innerfile refid="services_2a2a_2index_8ts">index.ts</innerfile>
+    <innerfile refid="services_2a2a_2repository_8ts">repository.ts</innerfile>
+    <innerfile refid="services_2a2a_2service_8ts">service.ts</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/a2a/"/>
+  </compounddef>
+</doxygen>

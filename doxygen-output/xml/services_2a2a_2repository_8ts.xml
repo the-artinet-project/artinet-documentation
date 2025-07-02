@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="services_2a2a_2repository_8ts" kind="file" language="C++">
+    <compoundname>repository.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskAndHistory,<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;../../server/interfaces/store.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MessageSendConfiguration,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>CANCEL_UPDATE<sp/>}<sp/>from<sp/>&quot;../../utils/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>processUpdate<sp/>}<sp/>from<sp/>&quot;../../server/lib/state.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>sendSSEEvent<sp/>}<sp/>from<sp/>&quot;../../transport/streaming/stream.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logDebug<sp/>}<sp/>from<sp/>&quot;../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>InMemoryTaskStore<sp/>}<sp/>from<sp/>&quot;../../server/lib/storage/memory.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARepositoryInterface,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARepositoryOptions,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/services/a2a/repository.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>v4<sp/>as<sp/>uuidv4<sp/>}<sp/>from<sp/>&quot;uuid&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Response<sp/>}<sp/>from<sp/>&quot;express&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>A2ARepository<sp/>class.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>class<sp/>A2ARepository<sp/>implements<sp/>A2ARepositoryInterface<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protected<sp/>taskStore:<sp/>TaskStore;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protected<sp/>_activeCancellations:<sp/>Set&lt;string&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protected<sp/>_activeStreams:<sp/>Map&lt;string,<sp/>Response[]&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protected<sp/>card:<sp/>AgentCard;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>constructor(params:<sp/>A2ARepositoryOptions)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.taskStore<sp/>=<sp/>params.taskStore<sp/>??<sp/>new<sp/>InMemoryTaskStore();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.card<sp/>=<sp/>params.card;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeCancellations<sp/>=<sp/>new<sp/>Set();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeStreams<sp/>=<sp/>new<sp/>Map();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>the<sp/>agent<sp/>card.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AgentCard}<sp/>The<sp/>agent<sp/>card.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>getCard():<sp/>AgentCard<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.card;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>the<sp/>active<sp/>streams.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Map&lt;string,<sp/>Response[]&gt;}<sp/>The<sp/>active<sp/>streams.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>get<sp/>activeStreams():<sp/>Map&lt;string,<sp/>Response[]&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this._activeStreams;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>the<sp/>active<sp/>cancellations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Set&lt;string&gt;}<sp/>The<sp/>active<sp/>cancellations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>get<sp/>activeCancellations():<sp/>Set&lt;string&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this._activeCancellations;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>the<sp/>task<sp/>store.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{TaskStore}<sp/>The<sp/>task<sp/>store.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>getTaskStore():<sp/>TaskStore<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.taskStore;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Creates<sp/>a<sp/>TaskContext<sp/>object<sp/>for<sp/>a<sp/>task<sp/>handler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>task<sp/>The<sp/>task</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>userMessage<sp/>The<sp/>user<sp/>message</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>history<sp/>The<sp/>message<sp/>history</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>TaskContext<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>createTaskContext(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>task:<sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>userMessage:<sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>history:<sp/>Message[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>configuration?:<sp/>MessageSendConfiguration</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>TaskContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>contextId:<sp/>task.contextId<sp/>??<sp/>userMessage.contextId<sp/>??<sp/>uuidv4(),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>userMessage,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>history,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>configuration,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>isCancelled:<sp/>()<sp/>=&gt;<sp/>this._activeCancellations.has(task.id),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handles<sp/>task<sp/>cancellation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>data<sp/>Task<sp/>and<sp/>history<sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>Response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>onCancel(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>context:<sp/>TaskContext,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data:<sp/>TaskAndHistory,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>cancelUpdate<sp/>=<sp/>CANCEL_UPDATE(data.task.id,<sp/>context.contextId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>currentData<sp/>=<sp/>await<sp/>processUpdate(this.taskStore,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>context:<sp/>context,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>current:<sp/>data,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>update:<sp/>cancelUpdate,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Send<sp/>the<sp/>canceled<sp/>status</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>currentData.task.id,<sp/>cancelUpdate);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.closeStreamsForTask(currentData.task.id);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Adds<sp/>a<sp/>response<sp/>stream<sp/>to<sp/>the<sp/>tracking<sp/>map<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>response<sp/>stream</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>addStreamForTask(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!this._activeStreams.has(taskId))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this._activeStreams.set(taskId,<sp/>[]);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Adding<sp/>stream<sp/>for<sp/>task&quot;,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>activeStreams:<sp/>this._activeStreams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeStreams.get(taskId)?.push(res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Removes<sp/>a<sp/>response<sp/>stream<sp/>from<sp/>the<sp/>tracking<sp/>map<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>response<sp/>stream</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>removeStreamForTask(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>streams<sp/>=<sp/>this._activeStreams.get(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(streams)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>index<sp/>=<sp/>streams.indexOf(res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(index<sp/>!==<sp/>-1)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>streams.splice(index,<sp/>1);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(streams.length<sp/>===<sp/>0)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Removing<sp/>stream<sp/>for<sp/>task&quot;,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>activeStreams:<sp/>this._activeStreams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this._activeStreams.delete(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Closes<sp/>any<sp/>active<sp/>streams<sp/>for<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>closeStreamsForTask(taskId:<sp/>string):<sp/>void<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>streams<sp/>=<sp/>this._activeStreams.get(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(streams)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Send<sp/>close<sp/>event<sp/>to<sp/>all<sp/>streams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>(const<sp/>stream<sp/>of<sp/>streams)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(stream.writable)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stream.write(&quot;event:<sp/>close\ndata:<sp/>{}\n\n&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stream.end();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this._activeStreams.delete(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handles<sp/>cleanup<sp/>when<sp/>a<sp/>task<sp/>stream<sp/>ends</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>Response<sp/>object</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>onEnd(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeCancellations.delete(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.removeStreamForTask(taskId,<sp/>res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Destroys<sp/>the<sp/>repository.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>destroy():<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeStreams.forEach((streams,<sp/>taskId)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(streams.length<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2ARepository&quot;,<sp/>&quot;Closing<sp/>streams<sp/>for<sp/>task<sp/>during<sp/>stop&quot;,<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.closeStreamsForTask(taskId);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeStreams.clear();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this._activeCancellations.clear();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/a2a/repository.ts"/>
+  </compounddef>
+</doxygen>

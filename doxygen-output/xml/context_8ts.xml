@@ -7,54 +7,219 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Task,<sp/>Message,<sp/>TaskYieldUpdate<sp/>}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>type<sp/>{<sp/>Task,<sp/>A2AContext,<sp/>AgentSkill<sp/>}<sp/>from<sp/>&quot;../extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Protocol<sp/>}<sp/>from<sp/>&quot;./protocol.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Context<sp/>object<sp/>provided<sp/>to<sp/>the<sp/>TaskHandler.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Contains<sp/>the<sp/>information<sp/>needed<sp/>for<sp/>the<sp/>handler<sp/>to<sp/>process<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>base<sp/>context.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>interface<sp/>TaskContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>BaseContext<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>current<sp/>state<sp/>of<sp/>the<sp/>task<sp/>when<sp/>the<sp/>handler<sp/>is<sp/>invoked<sp/>or<sp/>resumed.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>is<sp/>a<sp/>snapshot<sp/>-<sp/>the<sp/>latest<sp/>state<sp/>may<sp/>need<sp/>to<sp/>be<sp/>reloaded<sp/>during<sp/>async<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>id.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task;</highlight></codeline>
-<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>specific<sp/>user<sp/>message<sp/>that<sp/>triggered<sp/>this<sp/>handler<sp/>invocation<sp/>or<sp/>resumption.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Protocol}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>userMessage:<sp/>Message;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Function<sp/>to<sp/>check<sp/>if<sp/>cancellation<sp/>has<sp/>been<sp/>requested<sp/>for<sp/>this<sp/>task.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handlers<sp/>should<sp/>check<sp/>this<sp/>periodically<sp/>during<sp/>long-running<sp/>operations.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>True<sp/>if<sp/>cancellation<sp/>has<sp/>been<sp/>requested,<sp/>false<sp/>otherwise.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>isCancelled():<sp/>boolean;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>message<sp/>history<sp/>associated<sp/>with<sp/>the<sp/>task<sp/>up<sp/>to<sp/>the<sp/>point<sp/>the<sp/>handler<sp/>is<sp/>invoked.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>history:<sp/>Message[];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol;</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>signature<sp/>for<sp/>a<sp/>task<sp/>handler<sp/>function.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Handlers<sp/>are<sp/>implemented<sp/>as<sp/>async<sp/>generators.<sp/>They<sp/>receive<sp/>context<sp/>about<sp/>the</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>task<sp/>and<sp/>the<sp/>triggering<sp/>message.<sp/>They<sp/>perform<sp/>work<sp/>and<sp/>yield<sp/>status</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>artifact<sp/>updates<sp/>(TaskYieldUpdate).<sp/>The<sp/>server<sp/>consumes<sp/>these<sp/>yields,</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>updates<sp/>the<sp/>task<sp/>state<sp/>in<sp/>the<sp/>store,<sp/>and<sp/>streams<sp/>events<sp/>if<sp/>applicable.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>TaskContext<sp/>object<sp/>containing<sp/>task<sp/>details<sp/>and<sp/>state.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@yields<sp/>Updates<sp/>to<sp/>the<sp/>task&apos;s<sp/>status<sp/>or<sp/>artifacts.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>Optionally<sp/>returns<sp/>the<sp/>final<sp/>complete<sp/>Task<sp/>object<sp/>(needed<sp/>for<sp/>non-streaming<sp/>&apos;tasks/send&apos;).</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/>If<sp/>void<sp/>is<sp/>returned,<sp/>the<sp/>server<sp/>uses<sp/>the<sp/>last<sp/>known<sp/>state<sp/>after<sp/>processing<sp/>all<sp/>yields.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>MCP<sp/>context.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>TaskHandler<sp/>=<sp/>(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>context:<sp/>TaskContext</highlight></codeline>
-<codeline><highlight class="normal">)<sp/>=&gt;<sp/>AsyncGenerator&lt;TaskYieldUpdate,<sp/>Task<sp/>|<sp/>void,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>MCPContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>message.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>context<sp/>params.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@type<sp/>{A2AContext[&quot;params&quot;]<sp/>|<sp/>MCPContext}</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ContextParams<sp/>=<sp/>A2AContext[&quot;params&quot;]<sp/>|<sp/>MCPContext;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>base<sp/>execution<sp/>context.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>BaseExecutionContext&lt;T<sp/>extends<sp/>ContextParams<sp/>=<sp/>ContextParams&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>BaseContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>params.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{T}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>T;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>request<sp/>specific<sp/>to<sp/>the<sp/>A2A<sp/>(Agent-to-Agent)<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`protocol`<sp/>field<sp/>is<sp/>narrowed<sp/>to<sp/>`Protocol.A2A`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>A2AExecutionContext&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>RequestType<sp/>extends<sp/>A2AContext<sp/>=<sp/>A2AContext,</highlight></codeline>
+<codeline><highlight class="normal">&gt;<sp/>extends<sp/>BaseExecutionContext&lt;RequestType[&quot;params&quot;]&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol.A2A;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Task}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{any}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>request:<sp/>any;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>response.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{any}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>response:<sp/>any;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>request<sp/>specific<sp/>to<sp/>the<sp/>MCP<sp/>(Model<sp/>Context<sp/>Protocol)<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`protocol`<sp/>field<sp/>is<sp/>narrowed<sp/>to<sp/>`Protocol.MCP`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>MCPExecutionContext<sp/>extends<sp/>BaseExecutionContext&lt;MCPContext&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol.MCP;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{any}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>request:<sp/>any;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>response.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{any}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>response:<sp/>any;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>transport.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{any}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>transport:<sp/>any;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>skills.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{AgentSkill[]}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>skills?:<sp/>AgentSkill[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>request<sp/>specific<sp/>to<sp/>the<sp/>NLWeb<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`protocol`<sp/>field<sp/>is<sp/>narrowed<sp/>to<sp/>`Protocol.NLWEB`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>NLWebExecutionContext</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>Omit&lt;MCPExecutionContext,<sp/>&quot;protocol&quot;&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol.NLWEB;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>request<sp/>specific<sp/>to<sp/>the<sp/>ACP<sp/>(Agent<sp/>Communication<sp/>Protocol).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`protocol`<sp/>field<sp/>is<sp/>narrowed<sp/>to<sp/>`Protocol.ACP`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ACPExecutionContext<sp/>extends<sp/>BaseExecutionContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol.ACP;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>request<sp/>specific<sp/>to<sp/>the<sp/>CHAT<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`protocol`<sp/>field<sp/>is<sp/>narrowed<sp/>to<sp/>`Protocol.CHAT`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ChatExecutionContext<sp/>extends<sp/>BaseExecutionContext<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol.CHAT;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>A<sp/>discriminated<sp/>union<sp/>of<sp/>all<sp/>protocol-specific<sp/>request<sp/>types.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>allows<sp/>functions<sp/>to<sp/>accept<sp/>any<sp/>request<sp/>and<sp/>use<sp/>the<sp/>`protocol`</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>field<sp/>to<sp/>determine<sp/>the<sp/>specific<sp/>type<sp/>of<sp/>request,<sp/>enabling<sp/>type-safe</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>handling<sp/>based<sp/>on<sp/>the<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>SupportedContext<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>A2AExecutionContext</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>MCPExecutionContext</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>ACPExecutionContext</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>ChatExecutionContext;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>execution<sp/>context.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ExecutionContext&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ContextType<sp/>extends<sp/>BaseExecutionContext<sp/>=<sp/>SupportedContext,</highlight></codeline>
+<codeline><highlight class="normal">&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>id.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protocol:<sp/>Protocol;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>get<sp/>request<sp/>params.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{()<sp/>=&gt;<sp/>ContextType[&quot;params&quot;]<sp/>|<sp/>undefined}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getRequestParams:<sp/>()<sp/>=&gt;<sp/>ContextType[&quot;params&quot;]<sp/>|<sp/>undefined;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>is<sp/>cancelled.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{()<sp/>=&gt;<sp/>boolean}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isCancelled:<sp/>()<sp/>=&gt;<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>request<sp/>context.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{ContextType}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>requestContext?:<sp/>ContextType;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>agent<sp/>engine.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@type<sp/>{AgentEngine}</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>AgentEngine&lt;Context<sp/>extends<sp/>ExecutionContext<sp/>=<sp/>ExecutionContext&gt;<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>Context</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>AsyncGenerator&lt;any,<sp/>void,<sp/>undefined&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>execution<sp/>context<sp/>config.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@type<sp/>{const}</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>executionContextConfig<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>&quot;contextId&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>&quot;userMessage&quot;,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>as<sp/>const;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//todo<sp/>move<sp/>to<sp/>utils</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>export<sp/>function<sp/>getParams(context:<sp/>ExecutionContext)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>console.log(&quot;getParams&quot;,<sp/>context);</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>switch<sp/>(context.protocol)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>case<sp/>Protocol.A2A:</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>a2aRequestParams<sp/>=<sp/>context.getRequestParams();</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!a2aRequestParams)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;No<sp/>request<sp/>params<sp/>provided&quot;);</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>a2aRequestParams;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>case<sp/>Protocol.MCP:</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>mcpRequestParams<sp/>=<sp/>context.getRequestParams();</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!mcpRequestParams)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;No<sp/>request<sp/>params<sp/>provided&quot;);</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>mcpRequestParams;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>default:</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;Invalid<sp/>protocol&quot;);</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>}</highlight></codeline>
     </programlisting>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/context.ts"/>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/context.ts"/>
   </compounddef>
 </doxygen>

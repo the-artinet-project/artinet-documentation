@@ -49,6 +49,7 @@
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>logger.error(logData,<sp/>message);</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Logger<sp/>utility<sp/>for<sp/>server<sp/>warnings</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>context<sp/>of<sp/>the<sp/>log<sp/>(e.g.,<sp/>&quot;A2AServer&quot;,<sp/>&quot;TaskStore&quot;)</highlight></codeline>

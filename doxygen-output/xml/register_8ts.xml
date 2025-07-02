@@ -47,9 +47,7 @@
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>capabilities<sp/>=<sp/>skillNames.slice(0,<sp/>5)<sp/>as<sp/>IRegistration[&quot;capabilities&quot;];<sp/>//<sp/>Type<sp/>assertion<sp/>based<sp/>on<sp/>slice<sp/>limit</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>//<sp/>Determine<sp/>if<sp/>authentication<sp/>is<sp/>required<sp/>based<sp/>on<sp/>the<sp/>agent<sp/>card,<sp/>ensuring<sp/>type<sp/>is<sp/>boolean<sp/>|<sp/>undefined</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>const<sp/>requiresAuth<sp/>=<sp/>card.authentication</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>?<sp/>card.authentication.schemes.length<sp/>&gt;<sp/>0</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/>undefined;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>requiresAuth:<sp/>boolean<sp/>=<sp/>!!card.security?.length;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>registration:<sp/>IRegistration<sp/>=<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>schemaVersion:<sp/>&quot;1.0.0&quot;,</highlight></codeline>

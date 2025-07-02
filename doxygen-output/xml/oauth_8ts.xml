@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="oauth_8ts" kind="file" language="C++">
+    <compoundname>oauth.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Configuration<sp/>details<sp/>for<sp/>a<sp/>supported<sp/>Authorization<sp/>Code<sp/>OAuth<sp/>Flow</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>authorizationUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>tokenUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>refreshUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>scopes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AuthorizationCodeOAuthFlow<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>authorization<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>this<sp/>flow.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>standard<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>authorizationUrl:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>token<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>this<sp/>flow.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2<sp/>standard</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>tokenUrl:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>obtaining<sp/>refresh<sp/>tokens.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>standard<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>refreshUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>available<sp/>scopes<sp/>for<sp/>the<sp/>OAuth2<sp/>security<sp/>scheme.<sp/>A<sp/>map<sp/>between<sp/>the<sp/>scope<sp/>name<sp/>and<sp/>a<sp/>short</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>description<sp/>for<sp/>it.<sp/>The<sp/>map<sp/>MAY<sp/>be<sp/>empty.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>scopes:<sp/>Record&lt;string,<sp/>string&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Configuration<sp/>details<sp/>for<sp/>a<sp/>supported<sp/>Client<sp/>Credentials<sp/>OAuth<sp/>Flow</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>tokenUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>refreshUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>scopes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ClientCredentialsOAuthFlow<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>token<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>this<sp/>flow.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2<sp/>standard</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>tokenUrl:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>obtaining<sp/>refresh<sp/>tokens.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>standard<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>refreshUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>available<sp/>scopes<sp/>for<sp/>the<sp/>OAuth2<sp/>security<sp/>scheme.<sp/>A<sp/>map<sp/>between<sp/>the<sp/>scope<sp/>name<sp/>and<sp/>a<sp/>short</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>description<sp/>for<sp/>it.<sp/>The<sp/>map<sp/>MAY<sp/>be<sp/>empty.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>scopes:<sp/>Record&lt;string,<sp/>string&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Configuration<sp/>details<sp/>for<sp/>a<sp/>supported<sp/>Implicit<sp/>OAuth<sp/>Flow</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>authorizationUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>refreshUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>scopes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ImplicitOAuthFlow<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>authorization<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>this<sp/>flow.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>standard<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>authorizationUrl:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>obtaining<sp/>refresh<sp/>tokens.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>standard<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>refreshUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>available<sp/>scopes<sp/>for<sp/>the<sp/>OAuth2<sp/>security<sp/>scheme.<sp/>A<sp/>map<sp/>between<sp/>the<sp/>scope<sp/>name<sp/>and<sp/>a<sp/>short</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>description<sp/>for<sp/>it.<sp/>The<sp/>map<sp/>MAY<sp/>be<sp/>empty.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>scopes:<sp/>Record&lt;string,<sp/>string&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Configuration<sp/>details<sp/>for<sp/>a<sp/>supported<sp/>Password<sp/>OAuth<sp/>Flow</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>tokenUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>refreshUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>scopes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>PasswordOAuthFlow<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>token<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>this<sp/>flow.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2<sp/>standard</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>tokenUrl:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URL<sp/>to<sp/>be<sp/>used<sp/>for<sp/>obtaining<sp/>refresh<sp/>tokens.<sp/>This<sp/>MUST<sp/>be<sp/>in<sp/>the<sp/>form<sp/>of<sp/>a<sp/>URL.<sp/>The<sp/>OAuth2</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>standard<sp/>requires<sp/>the<sp/>use<sp/>of<sp/>TLS.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>refreshUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>available<sp/>scopes<sp/>for<sp/>the<sp/>OAuth2<sp/>security<sp/>scheme.<sp/>A<sp/>map<sp/>between<sp/>the<sp/>scope<sp/>name<sp/>and<sp/>a<sp/>short</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>description<sp/>for<sp/>it.<sp/>The<sp/>map<sp/>MAY<sp/>be<sp/>empty.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>scopes:<sp/>Record&lt;string,<sp/>string&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>configuration<sp/>of<sp/>supported<sp/>OAuth<sp/>Flows</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>authorizationCode</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>clientCredentials</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>implicit</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>password</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>OAuthFlows<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Configuration<sp/>for<sp/>the<sp/>OAuth<sp/>Authorization<sp/>Code<sp/>flow.<sp/>Previously<sp/>called<sp/>accessCode<sp/>in<sp/>OpenAPI<sp/>2.0.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>authorizationCode?:<sp/>AuthorizationCodeOAuthFlow;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Configuration<sp/>for<sp/>the<sp/>OAuth<sp/>Client<sp/>Credentials<sp/>flow.<sp/>Previously<sp/>called<sp/>application<sp/>in<sp/>OpenAPI<sp/>2.0</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>clientCredentials?:<sp/>ClientCredentialsOAuthFlow;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Configuration<sp/>for<sp/>the<sp/>OAuth<sp/>Implicit<sp/>flow</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>implicit?:<sp/>ImplicitOAuthFlow;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Configuration<sp/>for<sp/>the<sp/>OAuth<sp/>Resource<sp/>Owner<sp/>Password<sp/>flow</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>password?:<sp/>PasswordOAuthFlow;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/auth/oauth.ts"/>
+  </compounddef>
+</doxygen>

@@ -7,18 +7,17 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskYieldUpdate<sp/>}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>UpdateEvent,<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>Client<sp/>}<sp/>from<sp/>&quot;./client.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>proxy<sp/>function<sp/>for<sp/>sending<sp/>task<sp/>yield<sp/>updates.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>This<sp/>function<sp/>is<sp/>typically<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment<sp/>to<sp/>allow</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>an<sp/>agent<sp/>to<sp/>communicate<sp/>updates<sp/>about<sp/>its<sp/>task<sp/>execution.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskYieldUpdate<sp/>-<sp/>The<sp/>update<sp/>object<sp/>yielded<sp/>by<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>updateEvent<sp/>-<sp/>The<sp/>update<sp/>object<sp/>yielded<sp/>by<sp/>the<sp/>task.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>update<sp/>has<sp/>been<sp/>processed.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>TaskProxy<sp/>=<sp/>(taskYieldUpdate:<sp/>TaskYieldUpdate)<sp/>=&gt;<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskProxy<sp/>=<sp/>(updateEvent:<sp/>UpdateEvent)<sp/>=&gt;<sp/>Promise&lt;void&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Properties<sp/>for<sp/>the<sp/>TaskManager<sp/>function.</highlight></codeline>
@@ -26,7 +25,7 @@
 <codeline><highlight class="normal">export<sp/>interface<sp/>TaskManagerProps<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>core<sp/>task-handling<sp/>generator<sp/>function<sp/>of<sp/>an<sp/>agent.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>function<sp/>takes<sp/>a<sp/>`TaskContext`<sp/>and<sp/>yields<sp/>`TaskYieldUpdate`<sp/>objects,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>function<sp/>takes<sp/>a<sp/>`TaskContext`<sp/>and<sp/>yields<sp/>`UpdateEvent`<sp/>objects,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>eventually<sp/>returning<sp/>a<sp/>`Task`<sp/>or<sp/>void.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>taskHandler:<sp/>TaskHandler;</highlight></codeline>

@@ -34,9 +34,17 @@
   </compound>
   <compound refid="client_8ts" kind="file"><name>client.ts</name>
   </compound>
-  <compound refid="context_8ts" kind="file"><name>context.ts</name>
+  <compound refid="express_8ts" kind="file"><name>express.ts</name>
   </compound>
   <compound refid="extended-schema_8ts" kind="file"><name>extended-schema.ts</name>
+  </compound>
+  <compound refid="proxy_8ts" kind="file"><name>proxy.ts</name>
+  </compound>
+  <compound refid="auth_8ts" kind="file"><name>auth.ts</name>
+  </compound>
+  <compound refid="server_2lib_2update_2base_8ts" kind="file"><name>base.ts</name>
+  </compound>
+  <compound refid="types_2schemas_2a2a_2auth_2base_8ts" kind="file"><name>base.ts</name>
   </compound>
   <compound refid="client_2index_8ts" kind="file"><name>index.ts</name>
   </compound>
@@ -44,15 +52,67 @@
   </compound>
   <compound refid="server_2index_8ts" kind="file"><name>index.ts</name>
   </compound>
+  <compound refid="services_2a2a_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="services_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="services_2mcp_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
   <compound refid="transport_2index_8ts" kind="file"><name>index.ts</name>
   </compound>
   <compound refid="types_2index_8ts" kind="file"><name>index.ts</name>
   </compound>
+  <compound refid="types_2schemas_2a2a_2auth_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="types_2schemas_2a2a_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="types_2schemas_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
+  <compound refid="types_2services_2index_8ts" kind="file"><name>index.ts</name>
+  </compound>
   <compound refid="utils_2index_8ts" kind="file"><name>index.ts</name>
   </compound>
-  <compound refid="proxy_8ts" kind="file"><name>proxy.ts</name>
+  <compound refid="oauth_8ts" kind="file"><name>oauth.ts</name>
   </compound>
-  <compound refid="schema_8ts" kind="file"><name>schema.ts</name>
+  <compound refid="error_8ts" kind="file"><name>error.ts</name>
+  </compound>
+  <compound refid="message_8ts" kind="file"><name>message.ts</name>
+  </compound>
+  <compound refid="notification_8ts" kind="file"><name>notification.ts</name>
+  </compound>
+  <compound refid="parameters_8ts" kind="file"><name>parameters.ts</name>
+  </compound>
+  <compound refid="ref_8ts" kind="file"><name>ref.ts</name>
+  </compound>
+  <compound refid="rpc_8ts" kind="file"><name>rpc.ts</name>
+  </compound>
+  <compound refid="task_8ts" kind="file"><name>task.ts</name>
+  </compound>
+  <compound refid="services_2a2a_2repository_8ts" kind="file"><name>repository.ts</name>
+  </compound>
+  <compound refid="types_2services_2a2a_2repository_8ts" kind="file"><name>repository.ts</name>
+  </compound>
+  <compound refid="services_2a2a_2service_8ts" kind="file"><name>service.ts</name>
+  </compound>
+  <compound refid="services_2mcp_2service_8ts" kind="file"><name>service.ts</name>
+  </compound>
+  <compound refid="types_2services_2a2a_2service_8ts" kind="file"><name>service.ts</name>
+  </compound>
+  <compound refid="types_2services_2mcp_2service_8ts" kind="file"><name>service.ts</name>
+  </compound>
+  <compound refid="types_2services_2service_8ts" kind="file"><name>service.ts</name>
+  </compound>
+  <compound refid="context_8ts" kind="file"><name>context.ts</name>
+  </compound>
+  <compound refid="dispatcher_8ts" kind="file"><name>dispatcher.ts</name>
+  </compound>
+  <compound refid="services_2manager_8ts" kind="file"><name>manager.ts</name>
+  </compound>
+  <compound refid="types_2services_2manager_8ts" kind="file"><name>manager.ts</name>
+  </compound>
+  <compound refid="protocol_8ts" kind="file"><name>protocol.ts</name>
+  </compound>
+  <compound refid="transform_8ts" kind="file"><name>transform.ts</name>
   </compound>
   <compound refid="register_8ts" kind="file"><name>register.ts</name>
   </compound>
@@ -76,9 +136,17 @@
   </compound>
   <compound refid="logger_8ts" kind="file"><name>logger.ts</name>
   </compound>
+  <compound refid="dir_f2a831cbd434c88935aa819b62bf834f" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/a2a</name>
+  </compound>
+  <compound refid="dir_a1d8dac068a74d26a7f1a2d0dc3b2912" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a</name>
+  </compound>
+  <compound refid="dir_0794c5caba61de4768678926ee798af2" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/a2a</name>
+  </compound>
   <compound refid="dir_11f533693b406a6f60c7c568e8c03064" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/api</name>
   </compound>
   <compound refid="dir_d6a36fb36cad4b4f3dc4b9bcbe4231c5" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk</name>
+  </compound>
+  <compound refid="dir_5bbe7e6bc2cd01ce8b27f2770638872e" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/auth</name>
   </compound>
   <compound refid="dir_d99d95f99ba554b9fa257e22b0b049a6" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client</name>
   </compound>
@@ -92,11 +160,21 @@
   </compound>
   <compound refid="dir_82f1aee3e6062712936b5351f55a5c0a" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/logging</name>
   </compound>
+  <compound refid="dir_c6d4ee948d0800f29fa32befa906d610" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/mcp</name>
+  </compound>
+  <compound refid="dir_ff552cab3c5c76062d55091ea04c83e4" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/mcp</name>
+  </compound>
   <compound refid="dir_cbd972c4bc07f0a81a16f2f93c1ebce6" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/middleware</name>
   </compound>
   <compound refid="dir_1a71bd6eb39c83dd4f55da886b3c598b" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/rpc</name>
   </compound>
+  <compound refid="dir_8c7fc3ea0284ffdf8d4376a161970813" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas</name>
+  </compound>
   <compound refid="dir_1eedc1b0248a44ec7ac7a29e048f4082" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server</name>
+  </compound>
+  <compound refid="dir_0fe43b3980a10b7eca7178805e9170b0" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services</name>
+  </compound>
+  <compound refid="dir_edd946a3b78057e4c678e73e2739e433" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services</name>
   </compound>
   <compound refid="dir_11d4b6bc4b47a464143cdb4c4b810e9e" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src</name>
   </compound>
@@ -107,6 +185,8 @@
   <compound refid="dir_7a2c89cf85c87e71af29da720dcbaaf8" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport</name>
   </compound>
   <compound refid="dir_4ae32042f0a0622e2a0f05c0172ff336" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types</name>
+  </compound>
+  <compound refid="dir_c7443388784e7453dc3456f9e6aedfc5" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/update</name>
   </compound>
   <compound refid="dir_5cacdd47e5fc42c1cde4a2af35b0a573" kind="dir"><name>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils</name>
   </compound>

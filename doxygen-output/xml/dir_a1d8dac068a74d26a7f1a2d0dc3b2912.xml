@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_a1d8dac068a74d26a7f1a2d0dc3b2912" kind="dir">
+    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a</compoundname>
+    <innerdir refid="dir_5bbe7e6bc2cd01ce8b27f2770638872e">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/auth</innerdir>
+    <innerfile refid="error_8ts">error.ts</innerfile>
+    <innerfile refid="types_2schemas_2a2a_2index_8ts">index.ts</innerfile>
+    <innerfile refid="message_8ts">message.ts</innerfile>
+    <innerfile refid="notification_8ts">notification.ts</innerfile>
+    <innerfile refid="parameters_8ts">parameters.ts</innerfile>
+    <innerfile refid="ref_8ts">ref.ts</innerfile>
+    <innerfile refid="rpc_8ts">rpc.ts</innerfile>
+    <innerfile refid="task_8ts">task.ts</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/"/>
+  </compounddef>
+</doxygen>

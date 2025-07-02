@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="services_2manager_8ts" kind="file" language="C++">
+    <compoundname>manager.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>BaseExecutionContext<sp/>}<sp/>from<sp/>&quot;../types/services/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>AgentCard<sp/>}<sp/>from<sp/>&quot;../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>ServiceDispatcher<sp/>}<sp/>from<sp/>&quot;../types/services/dispatcher.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Protocol<sp/>}<sp/>from<sp/>&quot;../types/services/protocol.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Service<sp/>}<sp/>from<sp/>&quot;../types/services/service.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>v4<sp/>as<sp/>uuidv4<sp/>}<sp/>from<sp/>&quot;uuid&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>ManagerInterface,<sp/>ManagerOptions<sp/>}<sp/>from<sp/>&quot;../types/services/manager.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>service<sp/>manager<sp/>class.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>class<sp/>ServiceManager</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>ServiceDispatcher</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>implements<sp/>ManagerInterface</highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>agent<sp/>card.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{AgentCard}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>readonly<sp/>card:<sp/>AgentCard;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>constructor.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{ManagerOptions}<sp/>params<sp/>The<sp/>service<sp/>manager<sp/>params.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>constructor(params:<sp/>ManagerOptions)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>super(params);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.card<sp/>=<sp/>params.card;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Creates<sp/>a<sp/>request<sp/>context.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{T}<sp/>req<sp/>The<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{T}<sp/>The<sp/>request<sp/>context.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>createRequestContext&lt;T<sp/>extends<sp/>BaseExecutionContext&gt;(req:<sp/>T):<sp/>T<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!req.protocol<sp/>||<sp/>!req.method<sp/>||<sp/>!req.params)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;Invalid<sp/>request<sp/>parameters&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>context:<sp/>T<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>...req,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>req.id<sp/>??<sp/>uuidv4(),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>protocol:<sp/>req.protocol,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>method:<sp/>req.method,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>params:<sp/>req.params,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>as<sp/>T;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>context;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>the<sp/>agent<sp/>card.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AgentCard}<sp/>The<sp/>agent<sp/>card.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getCard():<sp/>AgentCard<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.card;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>a<sp/>service<sp/>by<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{Protocol}<sp/>protocol<sp/>The<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Service}<sp/>The<sp/>service.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getService(protocol:<sp/>Protocol):<sp/>Service<sp/>|<sp/>undefined<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.services[protocol];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Stops<sp/>the<sp/>manager.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;void&gt;}<sp/>The<sp/>promise.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>async<sp/>destroy():<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>Promise.all(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>Object.values(this.services).map((service)<sp/>=&gt;<sp/>service.stop())</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/manager.ts"/>
+  </compounddef>
+</doxygen>

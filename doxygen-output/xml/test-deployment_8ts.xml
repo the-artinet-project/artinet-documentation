@@ -11,10 +11,11 @@
 <codeline><highlight class="normal"><sp/><sp/>ServerDeploymentRequestParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>ServerDeploymentResponse,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TestServerDeploymentRequest,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AExecutionContext,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>JSONRPCResponse,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>A2AClient<sp/>}<sp/>from<sp/>&quot;../../client/a2a-client.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>executeStreamEvents<sp/>}<sp/>from<sp/>&quot;../../transport/index.js&quot;;</highlight></codeline>
@@ -27,7 +28,7 @@
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">const<sp/>testExecuteStreamEvents<sp/>=<sp/>executeStreamEvents<sp/>as<sp/>&lt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Req<sp/>extends<sp/>A2ARequest<sp/>|<sp/>TestServerDeploymentRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Req<sp/>extends<sp/>A2AExecutionContext<sp/>|<sp/>TestServerDeploymentRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>StreamRes<sp/>extends<sp/>JSONRPCResponse<sp/>|<sp/>ServerDeploymentResponse,</highlight></codeline>
 <codeline><highlight class="normal">&gt;(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>baseUrl:<sp/>URL,</highlight></codeline>
@@ -58,8 +59,8 @@
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>async<sp/>function*<sp/>testDeployment(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>params:<sp/>ServerDeploymentRequestParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>requests:<sp/>SendTaskRequest[]</highlight></codeline>
-<codeline><highlight class="normal">):<sp/>AsyncIterable&lt;Task<sp/>|<sp/>ServerDeploymentResponse<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>requests:<sp/>SendMessageRequest[]</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>AsyncIterable&lt;Message<sp/>|<sp/>Task<sp/>|<sp/>ServerDeploymentResponse<sp/>|<sp/>null&gt;<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>generator<sp/>=<sp/>await<sp/>testExecuteStreamEvents(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>new<sp/>URL(&quot;https://agents.artinet.io/test/deploy&quot;),</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;/test/deploy&quot;<sp/>as<sp/>any,</highlight></codeline>
@@ -72,7 +73,6 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>testClient<sp/>=<sp/>new<sp/>A2AClient(url);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>(const<sp/>request<sp/>of<sp/>requests)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>task<sp/>=<sp/>await<sp/>testClient.sendTask({</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>request.params.id,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>message:<sp/>request.params.message,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;testDeployment&quot;,<sp/>&quot;task:<sp/>&quot;,<sp/>task);</highlight></codeline>
@@ -90,13 +90,13 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>deploymentEvent.result.url</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;testDeployment&quot;,<sp/>&quot;deployment-event:<sp/>&quot;,<sp/>deploymentEvent);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>event;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>deploymentEvent;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>innerGenerator<sp/>=<sp/>await<sp/>requestExecutor(deploymentEvent.result.url);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>await<sp/>(const<sp/>task<sp/>of<sp/>innerGenerator())<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>task;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>await<sp/>(const<sp/>updateEvent<sp/>of<sp/>innerGenerator())<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>updateEvent;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>else<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>event;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>yield<sp/>event<sp/>as<sp/>any;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;testDeployment&quot;,<sp/>&quot;event-received:<sp/>&quot;,<sp/>event);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>

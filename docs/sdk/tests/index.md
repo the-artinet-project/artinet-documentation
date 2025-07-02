@@ -4,10 +4,12 @@ This section contains documentation for the test suite of the Artinet SDK.
 
 ## Available Tests
 
+- [a2a-mcp.test](a2a-mcp.test.md) - Tests for a2a mcp.test
 - [a2a-protocol.test](a2a-protocol.test.md) - Tests for a2a protocol.test
 - [bundler.test](bundler.test.md) - Tests for bundler.test
 - [client.test](client.test.md) - Tests for client.test
 - [common-errors.test](common-errors.test.md) - Tests for common errors.test
+- [deployment.xx](deployment.xx.md) - Tests for deployment.xx
 - [file-storage.test](file-storage.test.md) - Tests for file storage.test
 - [http-utils.test](http-utils.test.md) - Tests for http utils.test
 - [integration.test](integration.test.md) - Tests for integration.test

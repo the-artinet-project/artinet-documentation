@@ -7,8 +7,7 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>{<sp/>Task,<sp/>TaskYieldUpdate<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>UpdateEvent,<sp/>ExecutionContext<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>artinet<sp/>}<sp/>from<sp/>&quot;./agents.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -25,17 +24,17 @@
 <codeline><highlight class="normal"><sp/>*<sp/>and<sp/>iterates<sp/>over<sp/>its<sp/>yielded<sp/>updates,<sp/>passing<sp/>them<sp/>to<sp/>a<sp/>`hostOnYield`<sp/>function</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>made<sp/>available<sp/>in<sp/>the<sp/>`env`<sp/>by<sp/>the<sp/>host<sp/>environment.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`Context`<sp/>(TaskContext)<sp/>is<sp/>also<sp/>expected<sp/>to<sp/>be<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment<sp/>via<sp/>`env`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>The<sp/>`Context`<sp/>(ExecutionContext)<sp/>is<sp/>also<sp/>expected<sp/>to<sp/>be<sp/>provided<sp/>by<sp/>the<sp/>host<sp/>environment<sp/>via<sp/>`env`.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>This<sp/>function<sp/>is<sp/>deprecated<sp/>and<sp/>will<sp/>be<sp/>removed<sp/>in<sp/>a<sp/>future<sp/>version.<sp/>Use<sp/>the<sp/>`Artinet.v0.taskManager`<sp/>function<sp/>instead.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskHandler<sp/>-<sp/>An<sp/>asynchronous<sp/>generator<sp/>function<sp/>that<sp/>takes<sp/>a<sp/>`TaskContext`</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>and<sp/>yields<sp/>`TaskYieldUpdate`<sp/>objects,<sp/>eventually<sp/>returning<sp/>a<sp/>`Task`<sp/>or<sp/>void.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>taskHandler<sp/>-<sp/>An<sp/>asynchronous<sp/>generator<sp/>function<sp/>that<sp/>takes<sp/>a<sp/>`ExecutionContext`</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>and<sp/>yields<sp/>`UpdateEvent`<sp/>objects,<sp/>eventually<sp/>returning<sp/>a<sp/>`Task`<sp/>or<sp/>void.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>@throws<sp/>An<sp/>error<sp/>if<sp/>the<sp/>required<sp/>`env.hostOnYield`<sp/>or<sp/>`env.Context`<sp/>are<sp/>not<sp/>found,</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>indicating<sp/>an<sp/>invalid<sp/>runtime<sp/>environment.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>const<sp/>taskHandlerProxy<sp/>=<sp/>async<sp/>(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>taskHandler:<sp/>(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>context:<sp/>TaskContext</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>)<sp/>=&gt;<sp/>AsyncGenerator&lt;TaskYieldUpdate,<sp/>Task<sp/>|<sp/>void,<sp/>unknown&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>context:<sp/>ExecutionContext</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>)<sp/>=&gt;<sp/>AsyncGenerator&lt;UpdateEvent,<sp/>void,<sp/>unknown&gt;</highlight></codeline>
 <codeline><highlight class="normal">)<sp/>=&gt;<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>return<sp/>await<sp/>artinet.v0.taskManager({<sp/>taskHandler<sp/>});</highlight></codeline>
 <codeline><highlight class="normal">};</highlight></codeline>

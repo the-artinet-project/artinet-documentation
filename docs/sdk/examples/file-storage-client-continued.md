@@ -36,7 +36,7 @@ async function main() {
     console.log(`Message: "${message}"`);
 
     // Send a task
-    const task = await client.sendTask({
+    const task = await client.sendMessage({
       id: taskId,
       message: {
         role: "user",

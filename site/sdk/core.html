@@ -848,6 +848,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/nested-deployment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nested Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -917,6 +940,29 @@
   
   <span class="md-ellipsis">
     Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests/a2a-mcp.test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A2A MCP
     
   </span>
   
@@ -1009,6 +1055,29 @@
   
   <span class="md-ellipsis">
     Common Errors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests/deployment.xx.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
     
   </span>
   
@@ -1772,11 +1841,11 @@
 <hr />
 <h2 id="a2aclient">A2AClient</h2>
 <ul>
-<li>The client class used to connect to an <code>A2AServer</code> instance. It allows you to send tasks (using <code>sendTask</code> for single responses or <code>sendTaskSubscribe</code> for streaming updates) and manage communication headers. Features refined error handling via <code>RpcError</code>, flexible header management for authentication, and clear separation of concerns.</li>
+<li>The client class used to connect to an <code>A2AServer</code> instance. It allows you to send messages (using <code>sendMessage</code> for single responses or <code>sendStreamingMessage</code> for streaming updates) and manage communication headers. Features refined error handling via <code>RpcError</code>, flexible header management for authentication, and clear separation of concerns.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Key methods</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">async</span><span class="w"> </span><span class="nx">sendTask</span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">TaskSendParams</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Task</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">sendTaskSubscribe</span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">TaskSendParams</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">AsyncIterable</span><span class="o">&lt;</span><span class="nx">TaskStatusUpdateEvent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">TaskArtifactUpdateEvent</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">async</span><span class="w"> </span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">MessageSendParams</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Task</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">sendStreamingMessage</span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">MessageSendParams</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">AsyncIterable</span><span class="o">&lt;</span><span class="nx">TaskStatusUpdateEvent</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">TaskArtifactUpdateEvent</span><span class="o">&gt;</span><span class="p">;</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">async</span><span class="w"> </span><span class="nx">getTask</span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">TaskQueryParams</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Task</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">async</span><span class="w"> </span><span class="nx">cancelTask</span><span class="p">(</span><span class="nx">params</span><span class="o">:</span><span class="w"> </span><span class="kt">TaskIdParams</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Task</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">async</span><span class="w"> </span><span class="nx">supports</span><span class="p">(</span><span class="nx">capability</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;streaming&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;pushNotifications&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;stateTransitionHistory&quot;</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kt">boolean</span><span class="o">&gt;</span><span class="p">;</span>

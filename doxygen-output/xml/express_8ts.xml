@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="express_8ts" kind="file" language="C++">
+    <compoundname>express.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>express<sp/>from<sp/>&quot;express&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>http<sp/>from<sp/>&quot;http&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>CorsOptions<sp/>}<sp/>from<sp/>&quot;cors&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>ManagerOptions<sp/>}<sp/>from<sp/>&quot;./services/manager.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Protocol<sp/>}<sp/>from<sp/>&quot;./services/protocol.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Service<sp/>}<sp/>from<sp/>&quot;./services/service.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>express<sp/>server<sp/>options.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ExpressServerOptions<sp/>extends<sp/>Omit&lt;ManagerOptions,<sp/>&quot;services&quot;&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>services.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Partial&lt;Record&lt;Protocol,<sp/>Service&gt;&gt;}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>services?:<sp/>Partial&lt;Record&lt;Protocol,<sp/>Service&gt;&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>app.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{express.Express}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>app?:<sp/>express.Express;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>cors<sp/>options.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{CorsOptions}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>corsOptions?:<sp/>CorsOptions;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>base<sp/>path.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>basePath?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>fallback<sp/>path.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>fallbackPath?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>register.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{boolean}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>register?:<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>port.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{number}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>port?:<sp/>number;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>express<sp/>server<sp/>interface.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>ExpressServerInterface<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Gets<sp/>the<sp/>app.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{express.Express}<sp/>The<sp/>app.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>getApp():<sp/>express.Express;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Starts<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;http.Server&gt;}<sp/>The<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>start():<sp/>Promise&lt;http.Server&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Stops<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>stop():<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/express.ts"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_0fe43b3980a10b7eca7178805e9170b0" kind="dir">
+    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services</compoundname>
+    <innerdir refid="dir_f2a831cbd434c88935aa819b62bf834f">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/a2a</innerdir>
+    <innerdir refid="dir_c6d4ee948d0800f29fa32befa906d610">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/mcp</innerdir>
+    <innerfile refid="services_2index_8ts">index.ts</innerfile>
+    <innerfile refid="services_2manager_8ts">manager.ts</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services/"/>
+  </compounddef>
+</doxygen>

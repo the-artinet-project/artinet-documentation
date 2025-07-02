@@ -1,76 +1,378 @@
 # Task Context
 
-## TaskContext
+## BaseContext
 
-Context object provided to the TaskHandler.
-Contains the information needed for the handler to process the task.
+@description The base context.
 
 ```typescript
 {
   /**
-   * The current state of the task when the handler is invoked or resumed.
-   * This is a snapshot - the latest state may need to be reloaded during async operations.
+   * @description The id.
+   * @type {string}
    */
-  task: Task;
-
+  id: string;
   /**
-   * The specific user message that triggered this handler invocation or resumption.
+   * @description The protocol.
+   * @type {Protocol}
    */
-  userMessage: Message;
-
-  /**
-   * Function to check if cancellation has been requested for this task.
-   * Handlers should check this periodically during long-running operations.
-   * @returns True if cancellation has been requested, false otherwise.
-   */
-  isCancelled(): boolean;
-
-  /**
-   * The message history associated with the task up to the point the handler is invoked.
-   */
-  history: Message[];
+  protocol: Protocol;
 }
 ```
 
-## TaskHandler
+## MCPContext
 
-The current state of the task when the handler is invoked or resumed.
-This is a snapshot - the latest state may need to be reloaded during async operations.
+@description The id.
+@type {string}
 /
-  task: Task;
-
+  id: string;
   /**
-The specific user message that triggered this handler invocation or resumption.
+@description The protocol.
+@type {Protocol}
 /
-  userMessage: Message;
-
-  /**
-Function to check if cancellation has been requested for this task.
-Handlers should check this periodically during long-running operations.
-@returns True if cancellation has been requested, false otherwise.
-/
-  isCancelled(): boolean;
-
-  /**
-The message history associated with the task up to the point the handler is invoked.
-/
-  history: Message[];
+  protocol: Protocol;
 }
 
 /**
-Defines the signature for a task handler function.
-
-Handlers are implemented as async generators. They receive context about the
-task and the triggering message. They perform work and yield status
-or artifact updates (TaskYieldUpdate). The server consumes these yields,
-updates the task state in the store, and streams events if applicable.
-
-@param context The TaskContext object containing task details and state.
-@yields Updates to the task's status or artifacts.
-@returns Optionally returns the final complete Task object (needed for non-streaming 'tasks/send').
-  If void is returned, the server uses the last known state after processing all yields.
+@description The MCP context.
 
 ```typescript
-task: Task;
+{
+  /**
+   * @description The message.
+   * @type {string}
+   */
+  message: string;
+}
+```
+
+## ContextParams
+
+@description The message.
+@type {string}
+/
+  message: string;
+}
+
+/**
+@description The context params.
+@type {A2AContext["params"] | MCPContext}
+
+```typescript
+= A2AContext["params"] | MCPContext;
+
+/**
+ * @description The base execution context.
+ */
+export interface BaseExecutionContext<T extends ContextParams = ContextParams>
+  extends BaseContext {
+  /**
+   * @description The method.
+   * @type {string}
+   */
+  method: string;
+  /**
+   * @description The params.
+   * @type {T}
+   */
+  params: T;
+}
+```
+
+## BaseExecutionContext
+
+@description The base execution context.
+
+```typescript
+<T extends ContextParams = ContextParams>
+  extends BaseContext {
+  /**
+   * @description The method.
+   * @type {string}
+   */
+  method: string;
+  /**
+   * @description The params.
+   * @type {T}
+   */
+  params: T;
+}
+```
+
+## A2AExecutionContext
+
+@description The method.
+@type {string}
+/
+  method: string;
+  /**
+@description The params.
+@type {T}
+/
+  params: T;
+}
+
+/**
+Represents a request specific to the A2A (Agent-to-Agent) protocol.
+The `protocol` field is narrowed to `Protocol.A2A`.
+
+```typescript
+<
+  RequestType extends A2AContext = A2AContext,
+> extends BaseExecutionContext<RequestType["params"]> {
+  protocol: Protocol.A2A;
+  /**
+   * @description The task.
+   * @type {Task}
+   */
+  task: Task;
+  /**
+   * @description The request.
+   * @type {any}
+   */
+  request: any;
+  /**
+   * @description The response.
+   * @type {any}
+   */
+  response: any;
+}
+```
+
+## MCPExecutionContext
+
+@description The task.
+@type {Task}
+/
+  task: Task;
+  /**
+@description The request.
+@type {any}
+/
+  request: any;
+  /**
+@description The response.
+@type {any}
+/
+  response: any;
+}
+
+/**
+@description Represents a request specific to the MCP (Model Context Protocol) protocol.
+The `protocol` field is narrowed to `Protocol.MCP`.
+
+```typescript
+extends BaseExecutionContext<MCPContext> {
+  protocol: Protocol.MCP;
+  /**
+   * @description The request.
+   * @type {any}
+   */
+  request: any;
+  /**
+   * @description The response.
+   * @type {any}
+   */
+  response: any;
+  /**
+   * @description The transport.
+   * @type {any}
+   */
+  transport: any;
+  /**
+   * @description The skills.
+   * @type {AgentSkill[]}
+   */
+  skills?: AgentSkill[];
+}
+```
+
+## NLWebExecutionContext
+
+@description The request.
+@type {any}
+/
+  request: any;
+  /**
+@description The response.
+@type {any}
+/
+  response: any;
+  /**
+@description The transport.
+@type {any}
+/
+  transport: any;
+  /**
+@description The skills.
+@type {AgentSkill[]}
+/
+  skills?: AgentSkill[];
+}
+
+/**
+@description Represents a request specific to the NLWeb protocol.
+The `protocol` field is narrowed to `Protocol.NLWEB`.
+
+```typescript
+extends Omit<MCPExecutionContext, "protocol"> {
+  protocol: Protocol.NLWEB;
+}
+```
+
+## ACPExecutionContext
+
+@description Represents a request specific to the ACP (Agent Communication Protocol).
+The `protocol` field is narrowed to `Protocol.ACP`.
+
+```typescript
+extends BaseExecutionContext {
+  protocol: Protocol.ACP;
+}
+```
+
+## ChatExecutionContext
+
+@description Represents a request specific to the CHAT protocol.
+The `protocol` field is narrowed to `Protocol.CHAT`.
+
+```typescript
+extends BaseExecutionContext {
+  protocol: Protocol.CHAT;
+}
+```
+
+## SupportedContext
+
+@description A discriminated union of all protocol-specific request types.
+This allows functions to accept any request and use the `protocol`
+field to determine the specific type of request, enabling type-safe
+handling based on the protocol.
+
+```typescript
+=
+  | A2AExecutionContext
+  | MCPExecutionContext
+  | ACPExecutionContext
+  | ChatExecutionContext;
+
+/**
+ * @description The execution context.
+ */
+export interface ExecutionContext<
+  ContextType extends BaseExecutionContext = SupportedContext,
+> {
+  /**
+   * @description The id.
+   * @type {string}
+   */
+  id: string;
+  /**
+   * @description The protocol.
+   */
+  protocol: Protocol;
+  /**
+   * @description The get request params.
+   * @type {() => ContextType["params"] | undefined}
+   */
+  getRequestParams: () => ContextType["params"] | undefined;
+  /**
+   * @description The is cancelled.
+   * @type {() => boolean}
+   */
+  isCancelled: () => boolean;
+  /**
+   * @description The request context.
+   * @type {ContextType}
+   */
+  requestContext?: ContextType;
+}
+```
+
+## ExecutionContext
+
+@description The execution context.
+
+```typescript
+<
+  ContextType extends BaseExecutionContext = SupportedContext,
+> {
+  /**
+   * @description The id.
+   * @type {string}
+   */
+  id: string;
+  /**
+   * @description The protocol.
+   */
+  protocol: Protocol;
+  /**
+   * @description The get request params.
+   * @type {() => ContextType["params"] | undefined}
+   */
+  getRequestParams: () => ContextType["params"] | undefined;
+  /**
+   * @description The is cancelled.
+   * @type {() => boolean}
+   */
+  isCancelled: () => boolean;
+  /**
+   * @description The request context.
+   * @type {ContextType}
+   */
+  requestContext?: ContextType;
+}
+```
+
+## AgentEngine
+
+@description The id.
+@type {string}
+/
+  id: string;
+  /**
+@description The protocol.
+/
+  protocol: Protocol;
+  /**
+@description The get request params.
+@type {() => ContextType["params"] | undefined}
+/
+  getRequestParams: () => ContextType["params"] | undefined;
+  /**
+@description The is cancelled.
+@type {() => boolean}
+/
+  isCancelled: () => boolean;
+  /**
+@description The request context.
+@type {ContextType}
+/
+  requestContext?: ContextType;
+}
+
+/**
+@description The agent engine.
+@type {AgentEngine}
+
+```typescript
+<Context extends ExecutionContext = ExecutionContext> = (
+  context: Context
+) => AsyncGenerator<any, void, undefined>;
+
+/**
+ * @description The execution context config.
+ * @type {const}
+```
+
+## executionContextConfig
+
+@description The execution context config.
+@type {const}
+
+```typescript
+= {
+  id: "contextId",
+  message: "userMessage",
+}
 ```
 

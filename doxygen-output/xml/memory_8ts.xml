@@ -42,7 +42,6 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>async<sp/>save(data:<sp/>TaskAndHistory):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;InMemoryTaskStore&quot;,<sp/>`Saving<sp/>task:<sp/>${data.task.id}`);</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Store<sp/>copies<sp/>to<sp/>prevent<sp/>internal<sp/>mutation<sp/>if<sp/>caller<sp/>reuses<sp/>objects</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.store.set(data.task.id,<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>task:<sp/>{<sp/>...data.task<sp/>},</highlight></codeline>

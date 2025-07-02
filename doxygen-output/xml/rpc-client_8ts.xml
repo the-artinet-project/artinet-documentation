@@ -249,7 +249,6 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>headers,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>acceptHeader</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>return<sp/>handleJsonRpcResponse&lt;Res&gt;(response,<sp/>method);</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>

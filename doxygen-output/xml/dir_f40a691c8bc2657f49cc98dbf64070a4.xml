@@ -4,6 +4,7 @@
     <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib</compoundname>
     <innerdir refid="dir_cbd972c4bc07f0a81a16f2f93c1ebce6">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/middleware</innerdir>
     <innerdir refid="dir_5abc11739bc841bac941cd04ad54f287">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/storage</innerdir>
+    <innerdir refid="dir_c7443388784e7453dc3456f9e6aedfc5">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/update</innerdir>
     <innerfile refid="express-server_8ts">express-server.ts</innerfile>
     <innerfile refid="json-middleware_8ts">json-middleware.ts</innerfile>
     <innerfile refid="state_8ts">state.ts</innerfile>

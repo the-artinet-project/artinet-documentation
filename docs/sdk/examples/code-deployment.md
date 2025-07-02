@@ -6,10 +6,7 @@ Example demonstrating code-deployment
 
 ```typescript
 import { TaskYieldUpdate, TaskContext, Task, TextPart } from "@artinet/sdk";
-import {
-  taskHandlerProxy,
-  fetchResponseProxy,
-} from "../src/utils/deployment/task-wrapper";
+import { artinet } from "@artinet/sdk/agents";
 
 console.log("[CoderAgent] Starting");
 export async function* coderAgent({
@@ -47,16 +44,19 @@ export async function* coderAgent({
     },
   };
 
-  const response = await fetchResponseProxy("Qwen/Qwen2.5-Coder-32B-Instruct", [
-    {
-      role: "system",
-      content:
-        "You are an expert coding assistant. Provide a high-quality code sample according to the output instructions provided below. You may generate multiple files as needed.",
-    },
-    ...messages,
-  ]);
+  const response = await artinet.v0.connect({
+    agentId: "Qwen/Qwen2.5-Coder-32B-Instruct",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are an expert coding assistant. Provide a high-quality code sample according to the output instructions provided below. You may generate multiple files as needed.",
+      },
+      ...messages,
+    ],
+  });
 
-  console.log("response: ", response);
+  console.log("coderAgent", "response: ", response);
   yield {
     state: "completed",
     message: {
@@ -71,7 +71,7 @@ export async function* coderAgent({
   };
 }
 
-await taskHandlerProxy(coderAgent);
+await artinet.v0.taskManager({ taskHandler: coderAgent });
 console.log("[CoderAgent] Finished");
 
 ```

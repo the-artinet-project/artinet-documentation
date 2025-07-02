@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="types_2services_2service_8ts" kind="file" language="C++">
+    <compoundname>service.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>Protocol<sp/>}<sp/>from<sp/>&quot;./protocol.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>BaseExecutionContext,<sp/>ExecutionContext<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>AgentEngine<sp/>}<sp/>from<sp/>&quot;./context.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>The<sp/>service<sp/>interface.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@template<sp/>ContextType<sp/>The<sp/>context<sp/>type.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Service&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ContextType<sp/>extends<sp/>BaseExecutionContext<sp/>=<sp/>BaseExecutionContext,</highlight></codeline>
+<codeline><highlight class="normal">&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>name.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{string}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>readonly<sp/>name:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Protocol}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>readonly<sp/>protocol:<sp/>Protocol;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>execute<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{ExecutionContext&lt;ContextType&gt;}<sp/>executionContext<sp/>The<sp/>execution<sp/>context.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{AgentEngine}<sp/>engine<sp/>The<sp/>engine.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;void&gt;}<sp/>The<sp/>promise.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>execute({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>executionContext,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>engine,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>executionContext:<sp/>ExecutionContext&lt;ContextType&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>engine:<sp/>AgentEngine;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}):<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>stop<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;void&gt;}<sp/>The<sp/>promise.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>stop():<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>description.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Promise&lt;string&gt;}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>description:<sp/>Promise&lt;string&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Promise&lt;string&gt;}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>request:<sp/>Promise&lt;string&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>response.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Promise&lt;string&gt;}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>response:<sp/>Promise&lt;string&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>fault.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@type<sp/>{Promise&lt;string&gt;}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//<sp/>fault:<sp/>Promise&lt;string&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/service.ts"/>
+  </compounddef>
+</doxygen>

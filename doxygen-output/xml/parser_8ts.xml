@@ -7,9 +7,10 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCResponse<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCError,<sp/>JSONRPCResponse<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>SystemError,<sp/>PARSE_ERROR<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>logError<sp/>}<sp/>from<sp/>&quot;../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Parses<sp/>a<sp/>JSON-RPC<sp/>response<sp/>string<sp/>and<sp/>validates<sp/>its<sp/>structure.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>If<sp/>the<sp/>response<sp/>contains<sp/>an<sp/>error,<sp/>it<sp/>is<sp/>thrown<sp/>as<sp/>an<sp/>A2AError.</highlight></codeline>
@@ -27,10 +28,11 @@
 <codeline><highlight class="normal"><sp/><sp/>try<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>parsed<sp/>=<sp/>JSON.parse(data)<sp/>as<sp/>Res;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(parsed.error)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>SystemError(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsed.error.message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsed.error.code,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsed.error.data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>parsedError<sp/>=<sp/>parsed.error<sp/>as<sp/>JSONRPCError&lt;number,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>SystemError&lt;JSONRPCError&lt;number,<sp/>unknown&gt;&gt;(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsedError.message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsedError.code,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parsedError.data</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
@@ -39,7 +41,7 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>parsed<sp/>===<sp/>null<sp/>||</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>parsed.jsonrpc<sp/>!==<sp/>&quot;2.0&quot;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR&lt;string&gt;(&quot;invalid<sp/>jsonrpc&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>PARSE_ERROR(&quot;invalid<sp/>jsonrpc&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(parsed.result<sp/>===<sp/>undefined)<sp/>{</highlight></codeline>

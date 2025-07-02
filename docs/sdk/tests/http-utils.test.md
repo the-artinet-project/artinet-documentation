@@ -408,7 +408,7 @@ describe("HTTP Utils", () => {
       } catch (error) {
         // Verify it's an A2AError with the right code
         expect(error instanceof SystemError).toBe(true);
-        expect((error as SystemError).code).toBe(ErrorCodeParseError);
+        expect((error as SystemError<any>).code).toBe(ErrorCodeParseError);
       }
     });
   });
@@ -806,7 +806,7 @@ describe("HTTP Utils", () => {
         parseResponse("invalid json");
       } catch (error) {
         expect(error).toBeInstanceOf(SystemError);
-        expect((error as SystemError).code).toBe(ErrorCodeParseError);
+        expect((error as SystemError<any>).code).toBe(ErrorCodeParseError);
       }
     });
   });

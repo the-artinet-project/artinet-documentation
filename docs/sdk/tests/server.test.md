@@ -6,7 +6,7 @@ Tests for server.test functionality in the Artinet SDK.
 
 - A2AServer
 - Agent Card
-- tasks/send
+- message/send
 - tasks/get
 - tasks/cancel
 - Method not found
@@ -14,16 +14,27 @@ Tests for server.test functionality in the Artinet SDK.
 ## Source Code
 
 ```typescript
-import { jest } from "@jest/globals";
+import {
+  describe,
+  beforeEach,
+  afterEach,
+  it,
+  expect,
+  jest,
+} from "@jest/globals";
 import express from "express";
 import request from "supertest";
 import {
   A2AServer,
   InMemoryTaskStore,
-  TaskContext,
-  TaskYieldUpdate,
   TaskStore,
   configureLogger,
+  TaskState,
+  ExecutionContext,
+  AgentEngine,
+  MessageSendParams,
+  logInfo,
+  SendMessageRequest,
 } from "../src/index.js";
 
 // Set a reasonable timeout for all tests
@@ -31,16 +42,27 @@ jest.setTimeout(10000);
 configureLogger({ level: "silent" });
 
 // Define test task handler
-async function* basicTaskHandler(
-  context: TaskContext
-): AsyncGenerator<TaskYieldUpdate, void, unknown> {
+const basicTaskHandler: AgentEngine = async function* (
+  context: ExecutionContext
+) {
+  const params = context.getRequestParams() as MessageSendParams;
+  const taskId = params.message.taskId ?? context.id;
+  const contextId = context.id;
   // Check if task already has status, if not, use "working"
   yield {
-    state: "working",
-    message: {
-      role: "agent",
-      parts: [{ type: "text", text: "Working on it..." }],
+    taskId: taskId,
+    contextId: contextId,
+    kind: "status-update",
+    status: {
+      state: TaskState.Working,
+      message: {
+        messageId: "test-message-id",
+        kind: "message",
+        role: "agent",
+        parts: [{ kind: "text", text: "Working on it..." }],
+      },
     },
+    final: false,
   };
 
   // Simulate some work
@@ -48,27 +70,49 @@ async function* basicTaskHandler(
 
   // Check for cancellation
   if (context.isCancelled()) {
-    yield { state: "canceled" };
+    yield {
+      taskId: taskId,
+      contextId: contextId,
+      kind: "status-update",
+      status: { state: TaskState.Canceled },
+      final: true,
+    };
     return;
   }
-
   // Generate a result artifact
   yield {
-    name: "result.txt",
-    parts: [
-      { type: "text", text: `Task ${context.task.id} completed successfully.` },
-    ],
+    taskId: taskId,
+    contextId: contextId,
+    kind: "artifact-update",
+    artifact: {
+      artifactId: "test-artifact-id",
+      name: "result.txt",
+      parts: [
+        {
+          kind: "text",
+          text: `Task ${contextId} completed successfully.`,
+        },
+      ],
+    },
+    lastChunk: true,
   };
-
   // Final completion status
   yield {
-    state: "completed",
-    message: {
-      role: "agent",
-      parts: [{ type: "text", text: "Task completed successfully!" }],
+    taskId: taskId,
+    contextId: contextId,
+    kind: "status-update",
+    status: {
+      state: TaskState.Completed,
+      message: {
+        messageId: "test-message-id",
+        kind: "message",
+        role: "agent",
+        parts: [{ kind: "text", text: "Task completed successfully!" }],
+      },
     },
+    final: true,
   };
-}
+};
 
 describe("A2AServer", () => {
   let server: A2AServer;
@@ -130,17 +174,17 @@ describe("A2AServer", () => {
     });
   });
 
-  describe("tasks/send", () => {
+  describe("message/send", () => {
     it("handles a valid task send request", async () => {
       const requestBody = {
         jsonrpc: "2.0",
         id: "test-request-1",
-        method: "tasks/send",
+        method: "message/send",
         params: {
-          id: "test-task-1",
           message: {
+            taskId: "test-task-1",
             role: "user",
-            parts: [{ type: "text", text: "Hello, world!" }],
+            parts: [{ kind: "text", text: "Hello, world!" }],
           },
         },
       };
@@ -163,12 +207,12 @@ describe("A2AServer", () => {
       const invalidRequest = {
         // Missing required jsonrpc field
         id: "invalid-req",
-        method: "tasks/send",
+        method: "message/send",
         params: {
           id: "task-id",
           message: {
             role: "user",
-            parts: [{ type: "text", text: "Test" }],
+            parts: [{ kind: "text", text: "Test" }],
           },
         },
       };
@@ -176,23 +220,24 @@ describe("A2AServer", () => {
       const response = await trackRequest(
         request(app).post("/").send(invalidRequest)
       );
-
       expect(response.status).toBe(200);
       expect(response.body.error).toBeDefined();
       expect(response.body.error.code).toBe(-32600); // Invalid request error
-      expect(response.body.error.message).toBe("Invalid request"); //todo expected "Request payload validation error" but may be caused by the jsonrpc middleware
+      expect(response.body.error.message).toBe(
+        "Request payload validation error"
+      ); //todo expected "Request payload validation error" but may be caused by the jsonrpc middleware
     });
 
     it("returns an error for missing task ID", async () => {
       const requestWithoutId = {
         jsonrpc: "2.0",
         id: "missing-id-req",
-        method: "tasks/send",
+        method: "message/send",
         params: {
           // Missing id field
           message: {
-            role: "user",
-            parts: [{ type: "text", text: "Test" }],
+            // role: "user",
+            parts: [{ kind: "text", text: "Test" }],
           },
         },
       };
@@ -214,17 +259,20 @@ describe("A2AServer", () => {
       const createRequest = {
         jsonrpc: "2.0",
         id: "create-req",
-        method: "tasks/send",
+        method: "message/send",
         params: {
-          id: "retrieve-task",
           message: {
+            taskId: "retrieve-task",
             role: "user",
-            parts: [{ type: "text", text: "Task to retrieve" }],
+            parts: [{ kind: "text", text: "Task to retrieve" }],
           },
         },
       };
 
-      await trackRequest(request(app).post("/").send(createRequest));
+      const createResponse = await trackRequest(
+        request(app).post("/").send(createRequest)
+      );
+      logInfo("createResponse", createResponse.body);
 
       // Now try to retrieve it
       const getRequest = {
@@ -273,12 +321,12 @@ describe("A2AServer", () => {
       const createRequest = {
         jsonrpc: "2.0",
         id: "create-cancel-req",
-        method: "tasks/send",
+        method: "message/send",
         params: {
-          id: "cancel-task",
           message: {
+            taskId: "cancel-task",
             role: "user",
-            parts: [{ type: "text", text: "Task to cancel" }],
+            parts: [{ kind: "text", text: "Task to cancel" }],
           },
         },
       };

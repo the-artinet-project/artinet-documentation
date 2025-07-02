@@ -1,6 +1,6 @@
 # nested-deployment
 
-Example demonstrating nested agent deployment using artinet.v0 utilities
+Example demonstrating nested-deployment
 
 ## Source Code
 
@@ -49,11 +49,11 @@ export async function* simpleEchoAgent(
       parts: [
         {
           type: "text",
-          text: "Write a python function to share files remotely. Please be concise and respond with code only. Please use the following format: def share_files(files: list[string]) -> string: ...",
+          text: "Write a python function to share files remotely. Please be concise and respond with code only. Please use the following format: def share_files(files: list[str]) -> str: ...",
         },
       ],
     };
-    const task = await agentClient.sendTask({
+    const task = await agentClient.sendMessage({
       id: "111",
       message: message,
     });
@@ -83,7 +83,7 @@ export async function* simpleEchoAgent(
       },
     };
   }
-
+  // Check for task cancellation
   if (context.isCancelled()) {
     console.log("Task was cancelled");
     yield {
@@ -96,13 +96,16 @@ export async function* simpleEchoAgent(
     return;
   }
 
+  // Create a response
   const response = `You said: "${userText}". This is an echo server example.`;
 
+  // Yield an artifact (optional)
   yield {
     name: "response.txt",
     parts: [{ text: response, type: "text" }],
   };
 
+  // Yield a completed status with response message
   yield {
     state: "completed",
     message: {
@@ -114,6 +117,7 @@ export async function* simpleEchoAgent(
 
 await artinet.v0.taskManager({ taskHandler: simpleEchoAgent });
 console.log("[SimpleEchoAgent] Finished");
+
 ```
 
 ## Usage
@@ -127,3 +131,4 @@ To run this example:
 ## Expected Output
 
 <!-- Expected output will be filled in after testing -->
+

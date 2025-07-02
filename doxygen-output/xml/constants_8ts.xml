@@ -7,38 +7,62 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskState,<sp/>TaskYieldUpdate<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskState,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/schemas/a2a/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">export<sp/>const<sp/>WORKING_UPDATE:<sp/>TaskYieldUpdate<sp/>=<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>state:<sp/>&quot;working&quot;,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>message:<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>role:<sp/>&quot;agent&quot;<sp/>as<sp/>const,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>parts:<sp/>[{<sp/>type:<sp/>&quot;text&quot;<sp/>as<sp/>const,<sp/>text:<sp/>&quot;Processing...&quot;<sp/>}],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>WORKING_UPDATE<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId:<sp/>string</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>TaskStatusUpdateEvent<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>taskId:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>contextId:<sp/>contextId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>kind:<sp/>&quot;status-update&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>status:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>state:<sp/>TaskState.Working,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>final:<sp/>false,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
 <codeline><highlight class="normal">};</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">export<sp/>const<sp/>CANCEL_UPDATE:<sp/>TaskYieldUpdate<sp/>=<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>state:<sp/>&quot;canceled&quot;,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>message:<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>role:<sp/>&quot;agent&quot;<sp/>as<sp/>const,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>parts:<sp/>[</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>type:<sp/>&quot;text&quot;<sp/>as<sp/>const,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>text:<sp/>&quot;Task<sp/>was<sp/>canceled<sp/>during<sp/>execution.&quot;,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>CANCEL_UPDATE<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId:<sp/>string</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>TaskStatusUpdateEvent<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>taskId:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>contextId:<sp/>contextId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>kind:<sp/>&quot;status-update&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>status:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>state:<sp/>TaskState.Canceled,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>final:<sp/>true,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
 <codeline><highlight class="normal">};</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">export<sp/>const<sp/>SUBMITTED_UPDATE:<sp/>TaskYieldUpdate<sp/>=<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>state:<sp/>&quot;submitted&quot;,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>message:<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>role:<sp/>&quot;agent&quot;<sp/>as<sp/>const,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>parts:<sp/>[{<sp/>type:<sp/>&quot;text&quot;<sp/>as<sp/>const,<sp/>text:<sp/>&quot;Task<sp/>was<sp/>submitted.&quot;<sp/>}],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>SUBMITTED_UPDATE<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId:<sp/>string</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>TaskStatusUpdateEvent<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>taskId:<sp/>taskId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>contextId:<sp/>contextId,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>kind:<sp/>&quot;status-update&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>status:<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>state:<sp/>TaskState.Submitted,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>final:<sp/>false,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>};</highlight></codeline>
 <codeline><highlight class="normal">};</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">export<sp/>const<sp/>FINAL_STATES:<sp/>TaskState[]<sp/>=<sp/>[&quot;completed&quot;,<sp/>&quot;failed&quot;,<sp/>&quot;canceled&quot;];</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>FINAL_STATES:<sp/>TaskState[]<sp/>=<sp/>[</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskState.Completed,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskState.Failed,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskState.Canceled,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskState.Rejected,</highlight></codeline>
+<codeline><highlight class="normal">];</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common/constants.ts"/>
   </compounddef>

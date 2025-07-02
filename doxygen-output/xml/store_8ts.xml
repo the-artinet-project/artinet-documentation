@@ -21,7 +21,8 @@
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Interface<sp/>for<sp/>task<sp/>storage<sp/>providers.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>the<sp/>Store<sp/>interface<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Interface<sp/>for<sp/>task<sp/>storage<sp/>providers.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Abstracts<sp/>the<sp/>storage<sp/>mechanism<sp/>for<sp/>tasks<sp/>and<sp/>their<sp/>message<sp/>history.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>interface<sp/>TaskStore<sp/>{</highlight></codeline>
@@ -40,6 +41,29 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>load(taskId:<sp/>string):<sp/>Promise&lt;TaskAndHistory<sp/>|<sp/>null&gt;;</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Store&lt;T&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>set(data:<sp/>T,<sp/>id?:<sp/>string):<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>get(id:<sp/>string):<sp/>Promise&lt;T<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>type<sp/>newTaskStore<sp/>=<sp/>Transformed&lt;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>Store&lt;TaskAndHistory&gt;,</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>set:<sp/>&quot;save&quot;;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>get:<sp/>&quot;load&quot;;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">//<sp/>const<sp/>newTaskStoreTest:<sp/>newTaskStore<sp/>=<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>save:<sp/>async<sp/>(data,<sp/>id)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>console.log(&quot;save&quot;,<sp/>data,<sp/>id);</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>load:<sp/>async<sp/>(id)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>console.log(&quot;load&quot;,<sp/>id);</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/><sp/><sp/>return<sp/>null;</highlight></codeline>
+<codeline><highlight class="normal">//<sp/><sp/><sp/>},</highlight></codeline>
+<codeline><highlight class="normal">//<sp/>};</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces/store.ts"/>
   </compounddef>

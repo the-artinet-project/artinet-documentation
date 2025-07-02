@@ -767,6 +767,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nested-deployment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nested Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -836,6 +859,29 @@
   
   <span class="md-ellipsis">
     Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/a2a-mcp.test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A2A MCP
     
   </span>
   
@@ -928,6 +974,29 @@
   
   <span class="md-ellipsis">
     Common Errors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/deployment.xx.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
     
   </span>
   
@@ -1649,7 +1718,7 @@
 <a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Sending streaming task with ID: </span><span class="si">${</span><span class="nx">taskId</span><span class="si">}</span><span class="sb">...`</span><span class="p">);</span>
 <a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
 <a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">      </span><span class="c1">// Send the task and subscribe to updates</span>
-<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">sendTaskSubscribe</span><span class="p">({</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">sendStreamingMessage</span><span class="p">({</span>
 <a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">taskId</span><span class="p">,</span>
 <a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">        </span><span class="nx">message</span><span class="p">,</span>
 <a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">      </span><span class="p">});</span>

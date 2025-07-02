@@ -10,144 +10,114 @@
 <codeline><highlight class="normal">import<sp/>express,<sp/>{<sp/>Response<sp/>}<sp/>from<sp/>&quot;express&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>CorsOptions<sp/>}<sp/>from<sp/>&quot;cors&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>http<sp/>from<sp/>&quot;http&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>util<sp/>from<sp/>&quot;util&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendStreamingMessageRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MessageSendConfiguration,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../types/index.js&quot;;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>getCurrentTimestamp,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>validateTaskSendParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>INVALID_PARAMS,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TASK_NOT_FOUND,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>INVALID_REQUEST,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>errorHandler,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>CANCEL_UPDATE,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>FINAL_STATES,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>WORKING_UPDATE,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>logDebug,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>register,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>logInfo,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../utils/index.js&quot;;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>sendSSEEvent,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>setupSseStream,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>processTaskStream,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../transport/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logDebug,<sp/>register<sp/>}<sp/>from<sp/>&quot;../utils/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore,<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;./interfaces/store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../types/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../types/index.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>A2AServerParams,<sp/>JSONRPCServerType<sp/>}<sp/>from<sp/>&quot;./interfaces/params.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>Server<sp/>}<sp/>from<sp/>&quot;./interfaces/server.js&quot;;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>defaultCreateJSONRPCServer<sp/>}<sp/>from<sp/>&quot;./lib/json-middleware.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>createExpressServer<sp/>}<sp/>from<sp/>&quot;./lib/express-server.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>updateState,<sp/>loadState<sp/>}<sp/>from<sp/>&quot;./lib/state.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>ExpressServer<sp/>}<sp/>from<sp/>&quot;./lib/express-server.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>InMemoryTaskStore<sp/>}<sp/>from<sp/>&quot;./lib/storage/memory.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Protocol<sp/>}<sp/>from<sp/>&quot;../types/services/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>A2AService<sp/>}<sp/>from<sp/>&quot;../services/a2a/service.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>ExpressServer<sp/>instead.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Implements<sp/>an<sp/>A2A<sp/>protocol<sp/>compliant<sp/>server<sp/>using<sp/>Express.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Handles<sp/>task<sp/>creation,<sp/>streaming,<sp/>cancellation<sp/>and<sp/>more.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Uses<sp/>Jayson<sp/>for<sp/>JSON-RPC<sp/>handling.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>class<sp/>A2AServer<sp/>implements<sp/>Server<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>taskHandler:<sp/>TaskHandler;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>taskStore:<sp/>TaskStore;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>corsOptions:<sp/>CorsOptions;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>basePath:<sp/>string;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>port:<sp/>number;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>rpcServer:<sp/>JSONRPCServerType;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>serverInstance:<sp/>http.Server<sp/>|<sp/>undefined;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>app:<sp/>express.Express;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>fallbackPath:<sp/>string;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>register:<sp/>boolean;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>activeCancellations:<sp/>Set&lt;string&gt;<sp/>=<sp/>new<sp/>Set();</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>private<sp/>activeStreams:<sp/>Map&lt;string,<sp/>Response[]&gt;<sp/>=<sp/>new<sp/>Map();</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**<sp/>The<sp/>agent<sp/>card<sp/>representing<sp/>this<sp/>server<sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>public<sp/>card!:<sp/>AgentCard;</highlight></codeline>
-<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>protected<sp/>expressServer:<sp/>ExpressServer;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>base<sp/>path<sp/>for<sp/>the<sp/>server</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getBasePath():<sp/>string<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.basePath;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.basePath;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>CORS<sp/>options<sp/>for<sp/>the<sp/>server</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getCorsOptions():<sp/>CorsOptions<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.corsOptions;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.corsOptions;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>agent<sp/>card<sp/>for<sp/>the<sp/>server</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getCard():<sp/>AgentCard<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.card;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.card;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>task<sp/>store</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getTaskStore():<sp/>TaskStore<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.taskStore;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.getTaskStore();</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>task<sp/>handler</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getTaskHandler():<sp/>TaskHandler<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.taskHandler;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.engine;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>set<sp/>of<sp/>active<sp/>cancellations</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getActiveCancellations():<sp/>Set&lt;string&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.activeCancellations;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>(this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService)?.state</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>.activeCancellations;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>map<sp/>of<sp/>active<sp/>streams</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getActiveStreams():<sp/>Map&lt;string,<sp/>Response[]&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.activeStreams;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>(this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService)?.state</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>.activeStreams;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>port<sp/>number</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getPort():<sp/>number<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.port;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.port;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>JSON-RPC<sp/>server</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getRpcServer():<sp/>JSONRPCServerType<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.rpcServer;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;Not<sp/>implemented&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>server<sp/>instance</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getServerInstance():<sp/>http.Server<sp/>|<sp/>undefined<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.serverInstance;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.serverInstance;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Returns<sp/>the<sp/>Express<sp/>app</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>getExpressApp():<sp/>express.Express<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.app;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.getApp();</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -174,72 +144,21 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>options<sp/>Options<sp/>for<sp/>configuring<sp/>the<sp/>server</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>constructor(params:<sp/>A2AServerParams)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Store<sp/>the<sp/>handler</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.taskHandler<sp/>=<sp/>params.handler;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Set<sp/>up<sp/>store</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.taskStore<sp/>=<sp/>params.taskStore<sp/>??<sp/>new<sp/>InMemoryTaskStore();</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Configure<sp/>CORS</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.corsOptions<sp/>=<sp/>params.corsOptions<sp/>??<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>origin:<sp/>&quot;*&quot;,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>methods:<sp/>[&quot;GET&quot;,<sp/>&quot;POST&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>allowedHeaders:<sp/>[&quot;Content-Type&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Set<sp/>port</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.port<sp/>=<sp/>params.port<sp/>??<sp/>41241;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>let<sp/>basePath<sp/>=<sp/>params.basePath<sp/>??<sp/>&quot;/&quot;;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(basePath<sp/>!==<sp/>&quot;/&quot;)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>basePath<sp/>=<sp/>`/${basePath.replace(/^\/|\/$/g,<sp/>&quot;&quot;)}/`;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.basePath<sp/>=<sp/>basePath;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Set<sp/>up<sp/>default<sp/>agent<sp/>card<sp/>if<sp/>not<sp/>provided</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.card<sp/>=<sp/>params.card<sp/>??<sp/>A2AServer.defaultAgentCard();</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Initialize<sp/>the<sp/>Jayson<sp/>server</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.rpcServer<sp/>=<sp/>params.createJSONRPCServer</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>?<sp/>params.createJSONRPCServer({</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskStore:<sp/>this.taskStore,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>card:<sp/>this.card,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskHandler:<sp/>this.taskHandler,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>activeCancellations:<sp/>this.activeCancellations,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>createTaskContext:<sp/>this.createTaskContext.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>closeStreamsForTask:<sp/>this.closeStreamsForTask.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>})</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/>defaultCreateJSONRPCServer({</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskStore:<sp/>this.taskStore,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>card:<sp/>this.card,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskHandler:<sp/>this.taskHandler,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>activeCancellations:<sp/>this.activeCancellations,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>createTaskContext:<sp/>this.createTaskContext.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>closeStreamsForTask:<sp/>this.closeStreamsForTask.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.fallbackPath<sp/>=<sp/>params.fallbackPath<sp/>??<sp/>&quot;/agent-card&quot;;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>{<sp/>app<sp/>}<sp/>=<sp/>createExpressServer({</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>card:<sp/>this.card,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>corsOptions:<sp/>this.corsOptions,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>basePath:<sp/>this.basePath,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>port:<sp/>this.port,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>rpcServer:<sp/>this.rpcServer,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fallbackPath:<sp/>this.fallbackPath,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>errorHandler:<sp/>errorHandler,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>onTaskSendSubscribe:<sp/>this.handleTaskSendSubscribe.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>onTaskResubscribe:<sp/>this.handleTaskResubscribe.bind(this),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.expressServer<sp/>=<sp/>new<sp/>ExpressServer({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>card:<sp/>params.card<sp/>??<sp/>A2AServer.defaultAgentCard(),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>storage:<sp/>params.taskStore<sp/>??<sp/>new<sp/>InMemoryTaskStore(),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>corsOptions:<sp/>params.corsOptions,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>basePath:<sp/>params.basePath,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>port:<sp/>params.port,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fallbackPath:<sp/>params.fallbackPath,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>register:<sp/>params.register,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>engine:<sp/>params.handler,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.app<sp/>=<sp/>app;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//register<sp/>your<sp/>server<sp/>with<sp/>the<sp/>A2A<sp/>registry<sp/>on<sp/>startup</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.register<sp/>=<sp/>params.register<sp/>??<sp/>false;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Server<sp/>initialized&quot;,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>basePath:<sp/>this.basePath,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>port:<sp/>this.port,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>corsEnabled:<sp/>!!this.corsOptions,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>basePath:<sp/>this.expressServer.basePath,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>port:<sp/>this.expressServer.port,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>corsEnabled:<sp/>!!this.expressServer.corsOptions,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
@@ -248,25 +167,19 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>The<sp/>running<sp/>Express<sp/>application<sp/>instance.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>start():<sp/>express.Express<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.serverInstance)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.expressServer.serverInstance)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>new<sp/>Error(&quot;Server<sp/>already<sp/>started&quot;);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>server<sp/>=<sp/>this.app.listen(this.port,<sp/>()<sp/>=&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logInfo(&quot;A2AServer&quot;,<sp/>`A2A<sp/>Server<sp/>started<sp/>and<sp/>listening`,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>port:<sp/>this.port,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>path:<sp/>this.basePath,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.expressServer.start();</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.serverInstance<sp/>=<sp/>server;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//lazily<sp/>register<sp/>your<sp/>server<sp/>with<sp/>the<sp/>A2A<sp/>registry<sp/>on<sp/>startup</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//this<sp/>is<sp/>so<sp/>that<sp/>you<sp/>can<sp/>start<sp/>the<sp/>server<sp/>without<sp/>having<sp/>to<sp/>wait<sp/>for<sp/>registration</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//you<sp/>can<sp/>call<sp/>also<sp/>call<sp/>this.registerServer()<sp/>later<sp/>to<sp/>register<sp/>your<sp/>server</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.register)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.expressServer.register)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.registerServer();</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.app;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>this.expressServer.getApp();</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -274,34 +187,11 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>when<sp/>the<sp/>server<sp/>is<sp/>stopped.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>async<sp/>stop():<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!this.serverInstance)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!this.expressServer.serverInstance)<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Close<sp/>all<sp/>active<sp/>streams<sp/>first</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.activeStreams.forEach((streams,<sp/>taskId)<sp/>=&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(streams.length<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Closing<sp/>streams<sp/>for<sp/>task<sp/>during<sp/>stop&quot;,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.closeStreamsForTask(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.activeStreams.clear();</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>closeServer<sp/>=<sp/>util</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>.promisify(this.serverInstance.close)</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>.bind(this.serverInstance);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>await<sp/>closeServer();</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Server<sp/>stopped<sp/>successfully.&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.serverInstance<sp/>=<sp/>undefined;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>catch<sp/>(err)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Error<sp/>stopping<sp/>server:&quot;,<sp/>err);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.serverInstance<sp/>=<sp/>undefined;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>err;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>this.expressServer.stop();</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -309,8 +199,8 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>to<sp/>the<sp/>registration<sp/>ID<sp/>or<sp/>an<sp/>empty<sp/>string<sp/>if<sp/>registration<sp/>fails.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>registerServer():<sp/>Promise&lt;string&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.card)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>await<sp/>register(this.card);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(this.expressServer.card)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>await<sp/>register(this.expressServer.card);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>&quot;&quot;;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
@@ -320,17 +210,14 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>data<sp/>Task<sp/>and<sp/>history<sp/>data</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>Response<sp/>object</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>onCancel(data:<sp/>TaskAndHistory,<sp/>res:<sp/>Response):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>currentData<sp/>=<sp/>await<sp/>updateState(this.taskStore,<sp/>data,<sp/>CANCEL_UPDATE);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Send<sp/>the<sp/>canceled<sp/>status</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>currentData.task.id,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>status:<sp/>currentData.task.status,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>final:<sp/>true,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.closeStreamsForTask(currentData.task.id);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>onCancel(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>context:<sp/>TaskContext,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data:<sp/>TaskAndHistory,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.onCancel(context,<sp/>data,<sp/>res);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -339,76 +226,23 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>Response<sp/>object</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>onEnd(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.activeCancellations.delete(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.removeStreamForTask(taskId,<sp/>res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.onEnd(taskId,<sp/>res);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handles<sp/>the<sp/>tasks/sendSubscribe<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handles<sp/>the<sp/>message/stream<sp/>method.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>req<sp/>The<sp/>SendTaskRequest<sp/>object</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>Express<sp/>Response<sp/>object</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>async<sp/>handleTaskSendSubscribe(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>req:<sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>req:<sp/>SendStreamingMessageRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>validateTaskSendParams(req.params);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>{<sp/>id:<sp/>taskId,<sp/>message,<sp/>sessionId,<sp/>metadata<sp/>}<sp/>=<sp/>req.params;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Set<sp/>up<sp/>SSE<sp/>stream<sp/>with<sp/>initial<sp/>status</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>setupSseStream(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>status:<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>state:<sp/>&quot;submitted&quot;,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>timestamp:<sp/>getCurrentTimestamp(),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.addStreamForTask.bind(this)</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Load<sp/>or<sp/>create<sp/>task</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>let<sp/>currentData<sp/>=<sp/>await<sp/>loadState(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.taskStore,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sessionId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>metadata</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Create<sp/>task<sp/>context</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>context<sp/>=<sp/>this.createTaskContext(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>currentData.task,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>currentData.history</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>currentData<sp/>=<sp/>await<sp/>updateState(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.taskStore,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>currentData,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>WORKING_UPDATE</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Send<sp/>the<sp/>working<sp/>status</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>status:<sp/>currentData.task.status,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>final:<sp/>false,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Process<sp/>the<sp/>task<sp/>using<sp/>the<sp/>shared<sp/>method</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>processTaskStream(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.taskStore,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.taskHandler,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>context,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>currentData,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.onCancel.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.onEnd.bind(this)</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.handleSendStreamingMessage(req,<sp/>res);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -420,76 +254,9 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>req:<sp/>TaskResubscriptionRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;void&gt;<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>{<sp/>id:<sp/>taskId<sp/>}<sp/>=<sp/>req.params;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!taskId)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>console.error(&quot;Task<sp/>ID<sp/>is<sp/>required&quot;,<sp/>req);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>INVALID_PARAMS(&quot;Missing<sp/>task<sp/>ID&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Try<sp/>to<sp/>load<sp/>the<sp/>task</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>data<sp/>=<sp/>await<sp/>this.taskStore.load(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!data)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>TASK_NOT_FOUND(&quot;Task<sp/>Id:<sp/>&quot;<sp/>+<sp/>taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Set<sp/>up<sp/>SSE<sp/>stream<sp/>with<sp/>current<sp/>task<sp/>status</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>setupSseStream(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>status:<sp/>data.task.status,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>final:<sp/>false,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.addStreamForTask.bind(this)</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Check<sp/>if<sp/>task<sp/>is<sp/>in<sp/>final<sp/>state</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(FINAL_STATES.includes(data.task.status.state))<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>If<sp/>the<sp/>task<sp/>is<sp/>already<sp/>complete,<sp/>send<sp/>all<sp/>artifacts<sp/>and<sp/>close</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(data.task.artifacts<sp/>&amp;&amp;<sp/>data.task.artifacts.length<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>(const<sp/>artifact<sp/>of<sp/>data.task.artifacts)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sendSSEEvent(res,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>id:<sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>artifact,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>final:<sp/>true,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Remove<sp/>from<sp/>tracking<sp/>and<sp/>close</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.removeStreamForTask(taskId,<sp/>res);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res.write(&quot;event:<sp/>close\ndata:<sp/>{}\n\n&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res.end();</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>For<sp/>non-final<sp/>states,<sp/>create<sp/>context<sp/>and<sp/>continue<sp/>processing</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>We<sp/>need<sp/>to<sp/>use<sp/>the<sp/>last<sp/>user<sp/>message<sp/>as<sp/>the<sp/>current<sp/>message</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>lastUserMessage<sp/>=<sp/>data.history</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>.filter((msg)<sp/>=&gt;<sp/>msg.role<sp/>===<sp/>&quot;user&quot;)</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>.pop();</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!lastUserMessage)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>throw<sp/>INVALID_REQUEST(&quot;No<sp/>user<sp/>message<sp/>found&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>context<sp/>=<sp/>this.createTaskContext(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>data.task,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>lastUserMessage,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>data.history</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>//<sp/>Continue<sp/>processing<sp/>the<sp/>task<sp/>using<sp/>the<sp/>shared<sp/>method</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>processTaskStream(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.taskStore,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.taskHandler,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>context,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>data,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.onCancel.bind(this),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.onEnd.bind(this)</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>await<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.handleTaskResubscribe(req,<sp/>res);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -498,14 +265,9 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>response<sp/>stream</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>addStreamForTask(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>void<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(!this.activeStreams.has(taskId))<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.activeStreams.set(taskId,<sp/>[]);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Adding<sp/>stream<sp/>for<sp/>task&quot;,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>activeStreams:<sp/>this.activeStreams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>this.activeStreams.get(taskId)?.push(res);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.addStreamForTask(taskId,<sp/>res);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -514,20 +276,9 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>res<sp/>The<sp/>response<sp/>stream</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>removeStreamForTask(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>void<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>streams<sp/>=<sp/>this.activeStreams.get(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(streams)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>index<sp/>=<sp/>streams.indexOf(res);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(index<sp/>!==<sp/>-1)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>streams.splice(index,<sp/>1);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(streams.length<sp/>===<sp/>0)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>logDebug(&quot;A2AServer&quot;,<sp/>&quot;Removing<sp/>stream<sp/>for<sp/>task&quot;,<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskId,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>activeStreams:<sp/>this.activeStreams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>this.activeStreams.delete(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.removeStreamForTask(taskId,<sp/>res);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -545,6 +296,8 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stateTransitionHistory:<sp/>true,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>},</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>skills:<sp/>[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>defaultInputModes:<sp/>[&quot;text&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>defaultOutputModes:<sp/>[&quot;text&quot;],</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
@@ -558,14 +311,12 @@
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>createTaskContext(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>task:<sp/>Task,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>userMessage:<sp/>Message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>history:<sp/>Message[]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>history:<sp/>Message[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>configuration?:<sp/>MessageSendConfiguration</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>):<sp/>TaskContext<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>task,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>userMessage,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>history,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>isCancelled:<sp/>()<sp/>=&gt;<sp/>this.activeCancellations.has(task.id),</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.createTaskContext(task,<sp/>userMessage,<sp/>history,<sp/>configuration);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
@@ -573,17 +324,9 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>taskId<sp/>The<sp/>task<sp/>ID</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>public<sp/>closeStreamsForTask(taskId:<sp/>string):<sp/>void<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>const<sp/>streams<sp/>=<sp/>this.activeStreams.get(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(streams)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Send<sp/>close<sp/>event<sp/>to<sp/>all<sp/>streams</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>(const<sp/>stream<sp/>of<sp/>streams)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(stream.writable)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stream.write(&quot;event:<sp/>close\ndata:<sp/>{}\n\n&quot;);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stream.end();</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.activeStreams.delete(taskId);</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>this.expressServer.getService(Protocol.A2A)<sp/>as<sp/>A2AService</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)?.state.closeStreamsForTask(taskId);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
     </programlisting>

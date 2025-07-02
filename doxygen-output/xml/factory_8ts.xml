@@ -28,7 +28,12 @@
 <codeline><highlight class="normal"><sp/><sp/>defaultSetTaskPushNotificationMethod,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>defaultGetTaskPushNotificationMethod,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;./a2a-methods.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>A2AResponse,<sp/>RequestParams<sp/>}<sp/>from<sp/>&quot;../../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2AResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../../types/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Creates<sp/>a<sp/>JSON-RPC<sp/>method<sp/>handler<sp/>from<sp/>a<sp/>function</highlight></codeline>
@@ -38,13 +43,13 @@
 <codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>A<sp/>JSON-RPC<sp/>method<sp/>handler</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>function<sp/>createJSONRPCMethod&lt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Params<sp/>extends<sp/>RequestParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Result<sp/>extends<sp/>A2AResponse<sp/>|<sp/>null,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>RequestParamT<sp/>extends<sp/>A2ARequest[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Result<sp/>extends<sp/>A2AResponse<sp/>|<sp/>Task<sp/>|<sp/>Message<sp/>|<sp/>null,</highlight></codeline>
 <codeline><highlight class="normal">&gt;(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>deps:<sp/>CreateJSONRPCServerParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>funct:<sp/>A2AMethodHandler&lt;Params,<sp/>Result&gt;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>funct:<sp/>A2AMethodHandler&lt;RequestParamT,<sp/>Result&gt;,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>methodName:<sp/>string<sp/>//<sp/>Pass<sp/>method<sp/>name<sp/>for<sp/>logging</highlight></codeline>
-<codeline><highlight class="normal">):<sp/>JSONRPCMethodHandler&lt;Params,<sp/>Result&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal">):<sp/>JSONRPCMethodHandler&lt;RequestParamT,<sp/>Result&gt;<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>return<sp/>async<sp/>(requestParams,<sp/>callback)<sp/>=&gt;<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>try<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!requestParams)<sp/>{</highlight></codeline>
@@ -79,7 +84,7 @@
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>taskSendMethod<sp/>=<sp/>createJSONRPCMethod(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>defaultSendTaskMethod,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;tasks/send&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;message/send&quot;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>taskGetMethod<sp/>=<sp/>createJSONRPCMethod(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params,</highlight></codeline>
@@ -94,21 +99,21 @@
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>taskPushNotificationSetMethod<sp/>=<sp/>createJSONRPCMethod(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>defaultSetTaskPushNotificationMethod,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;tasks/pushNotification/set&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;tasks/pushNotificationConfig/set&quot;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>const<sp/>taskPushNotificationGetMethod<sp/>=<sp/>createJSONRPCMethod(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>defaultGetTaskPushNotificationMethod,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;tasks/pushNotification/get&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>&quot;tasks/pushNotificationConfig/get&quot;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>return<sp/>new<sp/>JSONRPCServer(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/send&quot;:<sp/>taskSendMethod,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;message/send&quot;:<sp/>taskSendMethod,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/get&quot;:<sp/>taskGetMethod,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/cancel&quot;:<sp/>taskCancelMethod,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/pushNotification/set&quot;:<sp/>taskPushNotificationSetMethod,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/pushNotification/get&quot;:<sp/>taskPushNotificationGetMethod,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/pushNotificationConfig/set&quot;:<sp/>taskPushNotificationSetMethod,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&quot;tasks/pushNotificationConfig/get&quot;:<sp/>taskPushNotificationGetMethod,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>},</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>{<sp/>reviver:<sp/>undefined,<sp/>replacer:<sp/>undefined<sp/>}</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>);</highlight></codeline>

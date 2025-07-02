@@ -17,7 +17,7 @@
 <codeline><highlight class="normal"><sp/><sp/>TaskManagerProps,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskProxy,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/proxy.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>ExecutionContext<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">const<sp/>env<sp/>=<sp/>process.env;</highlight></codeline>
 <codeline></codeline>
@@ -52,7 +52,7 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>context<sp/>=<sp/>env.context<sp/>as<sp/>unknown<sp/>as<sp/>TaskContext;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>context<sp/>=<sp/>env.context<sp/>as<sp/>unknown<sp/>as<sp/>ExecutionContext;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>taskManagerProxy<sp/>=<sp/>env.taskManagerStub<sp/>as<sp/>unknown<sp/>as<sp/>TaskProxy;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(!taskManagerProxy<sp/>||<sp/>!context)<sp/>{</highlight></codeline>

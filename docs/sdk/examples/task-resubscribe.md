@@ -43,7 +43,7 @@ async function main() {
     console.log(`Sending task with ID: ${taskId}...`);
 
     // First, send the task without subscribing
-    await client.sendTask({
+    await client.sendMessage({
       id: taskId,
       message,
     });

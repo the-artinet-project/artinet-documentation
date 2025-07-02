@@ -17,72 +17,142 @@
 <codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskStatus,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Artifact,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>JSONRPCRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>JSONRPCResponse,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>JSONRPCMessage,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>JSONRPCError,</highlight></codeline>
-<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>FileWithBytes,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>FileWithUri,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MessageSendConfiguration,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./schemas/a2a/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ExecutionContext,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>executionContextConfig,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./services/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>Transformed<sp/>}<sp/>from<sp/>&quot;./transform.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>AgentEngine<sp/>}<sp/>from<sp/>&quot;./services/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Improved<sp/>JSON-RPC<sp/>Response<sp/>types<sp/>using<sp/>discriminated<sp/>unions</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>These<sp/>provide<sp/>better<sp/>type<sp/>safety<sp/>than<sp/>the<sp/>standard<sp/>optional<sp/>field<sp/>approach</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>content<sp/>of<sp/>a<sp/>file,<sp/>either<sp/>as<sp/>base64<sp/>encoded<sp/>bytes<sp/>or<sp/>a<sp/>URI.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Ensures<sp/>that<sp/>either<sp/>&apos;bytes&apos;<sp/>or<sp/>&apos;uri&apos;<sp/>is<sp/>provided,<sp/>but<sp/>not<sp/>both.<sp/>(Note:<sp/>This<sp/>constraint<sp/>is<sp/>informational<sp/>in<sp/>TypeScript<sp/>types).</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>FileContent<sp/>=<sp/>FileWithBytes<sp/>|<sp/>FileWithUri;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>JSONRPCResponse<sp/>instead</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>successful<sp/>JSON-RPC<sp/>response<sp/>with<sp/>a<sp/>result.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>possible<sp/>types<sp/>of<sp/>events<sp/>that<sp/>can<sp/>be<sp/>yielded<sp/>by<sp/>a<sp/>TaskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Either<sp/>a<sp/>partial<sp/>TaskStatus<sp/>(without<sp/>the<sp/>server-managed<sp/>timestamp)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>a<sp/>complete<sp/>Artifact<sp/>object.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCSuccessResponse&lt;R<sp/>=<sp/>any&gt;<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>result<sp/>of<sp/>the<sp/>method<sp/>invocation.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>result:<sp/>R;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>In<sp/>a<sp/>success<sp/>response,<sp/>error<sp/>must<sp/>never<sp/>be<sp/>present.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>error?:<sp/>never;</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>JSONRPCResponse<sp/>instead</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>an<sp/>error<sp/>JSON-RPC<sp/>response.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCErrorResponse&lt;E<sp/>=<sp/>any&gt;<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>error<sp/>object.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>error:<sp/>JSONRPCError&lt;E&gt;;</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>In<sp/>an<sp/>error<sp/>response,<sp/>result<sp/>must<sp/>never<sp/>be<sp/>present.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>result?:<sp/>never;</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline></codeline>
-<codeline><highlight class="normal">/**</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>Use<sp/>JSONRPCResponse<sp/>instead</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>Combined<sp/>JSON-RPC<sp/>response<sp/>type<sp/>as<sp/>a<sp/>discriminated<sp/>union.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>ensures<sp/>a<sp/>response<sp/>is<sp/>either<sp/>a<sp/>success<sp/>with<sp/>a<sp/>result,<sp/>or<sp/>an<sp/>error.</highlight></codeline>
-<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>ExtendedJSONRPCResponse&lt;R<sp/>=<sp/>any,<sp/>E<sp/>=<sp/>any&gt;<sp/>=</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCSuccessResponse&lt;R&gt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCErrorResponse&lt;E&gt;;</highlight></codeline>
-<codeline></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>TaskEvent<sp/>=<sp/>TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>possible<sp/>types<sp/>of<sp/>updates<sp/>that<sp/>can<sp/>be<sp/>yielded<sp/>by<sp/>a<sp/>TaskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Either<sp/>a<sp/>Message,<sp/>Task,<sp/>TaskStatusUpdateEvent,<sp/>or<sp/>TaskArtifactUpdateEvent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>UpdateEvent<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>Message</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>Task</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskStatusUpdateEvent</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskArtifactUpdateEvent;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>use<sp/>UpdateEvent<sp/>instead</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>possible<sp/>types<sp/>of<sp/>updates<sp/>a<sp/>TaskHandler<sp/>can<sp/>yield.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>Either<sp/>a<sp/>partial<sp/>TaskStatus<sp/>(without<sp/>the<sp/>server-managed<sp/>timestamp)</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*<sp/>or<sp/>a<sp/>complete<sp/>Artifact<sp/>object.</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>TaskYieldUpdate<sp/>=<sp/>Omit&lt;TaskStatus,<sp/>&quot;timestamp&quot;&gt;<sp/>|<sp/>Artifact;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskYieldUpdate<sp/>=<sp/>UpdateEvent;</highlight></codeline>
 <codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>This<sp/>interface<sp/>will<sp/>be<sp/>removed<sp/>in<sp/>the<sp/>future.<sp/>Use<sp/>TaskStatus<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>possible<sp/>types<sp/>of<sp/>updates<sp/>that<sp/>can<sp/>be<sp/>yielded<sp/>by<sp/>a<sp/>TaskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Either<sp/>a<sp/>partial<sp/>TaskStatus<sp/>(without<sp/>the<sp/>server-managed<sp/>timestamp)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>a<sp/>complete<sp/>Artifact<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>ExtendedTaskStatusUpdate<sp/>=<sp/>Omit&lt;TaskStatus,<sp/>&quot;timestamp&quot;&gt;;</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>RequestParams<sp/>=<sp/>Required&lt;Pick&lt;A2ARequest,<sp/>&quot;params&quot;&gt;&gt;[&quot;params&quot;];</highlight></codeline>
 <codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@deprecated<sp/>This<sp/>interface<sp/>will<sp/>be<sp/>removed<sp/>in<sp/>the<sp/>future.<sp/>Use<sp/>ExecutionContext<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Context<sp/>object<sp/>provided<sp/>to<sp/>the<sp/>TaskHandler.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Contains<sp/>the<sp/>information<sp/>needed<sp/>for<sp/>the<sp/>handler<sp/>to<sp/>process<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskContext</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>Transformed&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>Omit&lt;ExecutionContext,<sp/>&quot;getRequestParams&quot;<sp/>|<sp/>&quot;protocol&quot;&gt;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>typeof<sp/>executionContextConfig</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>context<sp/>ID<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>current<sp/>state<sp/>of<sp/>the<sp/>task<sp/>when<sp/>the<sp/>handler<sp/>is<sp/>invoked<sp/>or<sp/>resumed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>is<sp/>a<sp/>snapshot<sp/>-<sp/>the<sp/>latest<sp/>state<sp/>may<sp/>need<sp/>to<sp/>be<sp/>reloaded<sp/>during<sp/>async<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>specific<sp/>user<sp/>message<sp/>that<sp/>triggered<sp/>this<sp/>handler<sp/>invocation<sp/>or<sp/>resumption.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>userMessage:<sp/>Message;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Function<sp/>to<sp/>check<sp/>if<sp/>cancellation<sp/>has<sp/>been<sp/>requested<sp/>for<sp/>this<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Handlers<sp/>should<sp/>check<sp/>this<sp/>periodically<sp/>during<sp/>long-running<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>True<sp/>if<sp/>cancellation<sp/>has<sp/>been<sp/>requested,<sp/>false<sp/>otherwise.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>isCancelled():<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>message<sp/>history<sp/>associated<sp/>with<sp/>the<sp/>task<sp/>up<sp/>to<sp/>the<sp/>point<sp/>the<sp/>handler<sp/>is<sp/>invoked.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>history:<sp/>Message[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>latest<sp/>user<sp/>message<sp/>that<sp/>triggered<sp/>this<sp/>handler<sp/>invocation<sp/>or<sp/>resumption.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@note<sp/>It&apos;s<sp/>unclear<sp/>whether<sp/>this<sp/>is<sp/>necessary<sp/>as<sp/>userMessage<sp/>already<sp/>exists</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>latestUserMessage?:<sp/>Message;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>configuration<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>configuration?:<sp/>MessageSendConfiguration;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Defines<sp/>the<sp/>signature<sp/>for<sp/>a<sp/>task<sp/>handler<sp/>function.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Handlers<sp/>are<sp/>implemented<sp/>as<sp/>async<sp/>generators.<sp/>They<sp/>receive<sp/>context<sp/>about<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>task<sp/>and<sp/>the<sp/>triggering<sp/>message.<sp/>They<sp/>perform<sp/>work<sp/>and<sp/>yield<sp/>status</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>or<sp/>artifact<sp/>updates<sp/>(TaskYieldUpdate).<sp/>The<sp/>server<sp/>consumes<sp/>these<sp/>yields,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>updates<sp/>the<sp/>task<sp/>state<sp/>in<sp/>the<sp/>store,<sp/>and<sp/>streams<sp/>events<sp/>if<sp/>applicable.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@param<sp/>context<sp/>The<sp/>TaskContext<sp/>object<sp/>containing<sp/>task<sp/>details<sp/>and<sp/>state.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@yields<sp/>Updates<sp/>to<sp/>the<sp/>task&apos;s<sp/>status<sp/>or<sp/>artifacts.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@returns<sp/>Optionally<sp/>returns<sp/>the<sp/>final<sp/>complete<sp/>Task<sp/>object<sp/>(needed<sp/>for<sp/>non-streaming<sp/>&apos;message/send&apos;).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/>If<sp/>void<sp/>is<sp/>returned,<sp/>the<sp/>server<sp/>uses<sp/>the<sp/>last<sp/>known<sp/>state<sp/>after<sp/>processing<sp/>all<sp/>yields.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskHandler<sp/>=<sp/>AgentEngine;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>This<sp/>interface<sp/>will<sp/>be<sp/>removed<sp/>in<sp/>the<sp/>future.<sp/>Use<sp/>A2AContext<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>parameters<sp/>for<sp/>an<sp/>A2A<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2AContext<sp/>=<sp/>Pick&lt;A2ARequest,<sp/>&quot;params&quot;&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>This<sp/>interface<sp/>will<sp/>be<sp/>removed<sp/>in<sp/>the<sp/>future.<sp/>Use<sp/>A2AContext<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>parameters<sp/>for<sp/>an<sp/>A2A<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>RequestParams<sp/>=<sp/>Required&lt;A2AContext&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>parameters<sp/>for<sp/>an<sp/>A2A<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>interface<sp/>ServerDeploymentRequestParams<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>name<sp/>of<sp/>the<sp/>server</highlight></codeline>
@@ -152,11 +222,14 @@
 <codeline><highlight class="normal"><sp/><sp/>params:<sp/>ServerDeploymentRequestParams;</highlight></codeline>
 <codeline><highlight class="normal">}</highlight></codeline>
 <codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>response<sp/>for<sp/>a<sp/>server<sp/>deployment<sp/>request.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>ServerDeploymentResponse<sp/>=</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>JSONRPCResponse&lt;ServerDeploymentSuccessResponseParams&gt;;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./schema.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>{<sp/>A2AError<sp/>as<sp/>A2AErrorType<sp/>}<sp/>from<sp/>&quot;./schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./schemas/a2a/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>{<sp/>A2AError<sp/>as<sp/>A2AErrorType<sp/>}<sp/>from<sp/>&quot;./schemas/a2a/index.js&quot;;</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/extended-schema.ts"/>
   </compounddef>

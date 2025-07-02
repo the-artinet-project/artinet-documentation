@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="rpc_8ts" kind="file" language="C++">
+    <compoundname>rpc.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Base<sp/>interface<sp/>for<sp/>all<sp/>JSON-RPC<sp/>messages<sp/>(Requests<sp/>and<sp/>Responses).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>jsonrpc</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Specifies<sp/>the<sp/>JSON-RPC<sp/>version.<sp/>Must<sp/>be<sp/>&quot;2.0&quot;.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@default<sp/>&quot;2.0&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@const<sp/>&quot;2.0&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>readonly<sp/>jsonrpc:<sp/>&quot;2.0&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>An<sp/>identifier<sp/>established<sp/>by<sp/>the<sp/>Client<sp/>that<sp/>MUST<sp/>contain<sp/>a<sp/>String,<sp/>Number.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Can<sp/>be<sp/>a<sp/>string,<sp/>number.<sp/>Responses<sp/>must<sp/>have<sp/>the<sp/>same<sp/>ID<sp/>as<sp/>the<sp/>request<sp/>they<sp/>relate<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Notifications<sp/>(requests<sp/>without<sp/>an<sp/>expected<sp/>response)<sp/>should<sp/>omit<sp/>the<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id?:<sp/>number<sp/>|<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>request<sp/>object<sp/>base<sp/>structure.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>method</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>params</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCRequest&lt;Method<sp/>=<sp/>string,<sp/>Params<sp/>=<sp/>unknown&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Request<sp/>identifier.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>number<sp/>|<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>name<sp/>of<sp/>the<sp/>method<sp/>to<sp/>be<sp/>invoked.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>method:<sp/>Method;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Parameters<sp/>for<sp/>the<sp/>method.<sp/>Can<sp/>be<sp/>a<sp/>structured<sp/>object,<sp/>an<sp/>array,<sp/>or<sp/>omitted.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>A<sp/>Structured<sp/>value<sp/>that<sp/>holds<sp/>the<sp/>parameter<sp/>values<sp/>to<sp/>be<sp/>used<sp/>during<sp/>the<sp/>invocation<sp/>of<sp/>the<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params?:<sp/>Params;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>request<sp/>object<sp/>with<sp/>parameters.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>params</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCRequestWithParams&lt;Method<sp/>=<sp/>string,<sp/>Params<sp/>=<sp/>unknown&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extends<sp/>JSONRPCRequest&lt;Method,<sp/>Params&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params:<sp/>Params;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>error<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>code</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>message</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>data</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCError&lt;Code<sp/>=<sp/>number,<sp/>Data<sp/>=<sp/>unknown&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>A<sp/>number<sp/>indicating<sp/>the<sp/>error<sp/>type<sp/>that<sp/>occurred.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>code:<sp/>Code;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>A<sp/>string<sp/>providing<sp/>a<sp/>short<sp/>description<sp/>of<sp/>the<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>A<sp/>Primitive<sp/>or<sp/>Structured<sp/>value<sp/>that<sp/>contains<sp/>additional<sp/>information<sp/>about<sp/>the<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>data?:<sp/>Data;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>2.0<sp/>Success<sp/>Response<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>result</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@never<sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCSuccessResponse&lt;R<sp/>=<sp/>unknown&gt;<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>result<sp/>object<sp/>on<sp/>success</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>result:<sp/>R;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>error<sp/>object<sp/>on<sp/>failure</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Optional<sp/>&apos;never&apos;<sp/>helps<sp/>enforce<sp/>exclusivity</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>2.0<sp/>Error<sp/>Response<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@never<sp/>result</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>JSONRPCErrorResponse&lt;E<sp/>=<sp/>unknown&gt;<sp/>extends<sp/>JSONRPCMessage<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>result<sp/>object<sp/>on<sp/>success</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Optional<sp/>&apos;never&apos;<sp/>helps<sp/>enforce<sp/>exclusivity</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>result?:<sp/>never;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>result<sp/>object<sp/>on<sp/>failure</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>error:<sp/>E;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>JSON-RPC<sp/>response<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@oneOf<sp/>JSONRPCSuccessResponse<sp/>|<sp/>JSONRPCErrorResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>JSONRPCResponse&lt;R<sp/>=<sp/>unknown,<sp/>E<sp/>=<sp/>unknown&gt;<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCSuccessResponse&lt;R&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCErrorResponse&lt;E&gt;;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/rpc.ts"/>
+  </compounddef>
+</doxygen>

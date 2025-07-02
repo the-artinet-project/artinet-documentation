@@ -1,0 +1,320 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="types_2schemas_2a2a_2index_8ts" kind="file" language="C++">
+    <compoundname>index.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>SecurityScheme<sp/>}<sp/>from<sp/>&quot;./auth/auth.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>provider<sp/>or<sp/>organization<sp/>behind<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentProvider<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>name<sp/>of<sp/>the<sp/>organization<sp/>providing<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>organization:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>URL<sp/>associated<sp/>with<sp/>the<sp/>agent<sp/>provider.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Defines<sp/>optional<sp/>capabilities<sp/>supported<sp/>by<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentCapabilities<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Indicates<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>streaming<sp/>responses.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>streaming?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Indicates<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>push<sp/>notification<sp/>mechanisms.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushNotifications?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Indicates<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>providing<sp/>state<sp/>transition<sp/>history.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>stateTransitionHistory?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Extensions<sp/>supported<sp/>by<sp/>this<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>extensions?:<sp/>AgentExtension[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>A<sp/>declaration<sp/>of<sp/>an<sp/>extension<sp/>supported<sp/>by<sp/>an<sp/>Agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentExtension<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>URI<sp/>of<sp/>the<sp/>extension.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>uri:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>A<sp/>description<sp/>of<sp/>how<sp/>this<sp/>agent<sp/>uses<sp/>this<sp/>extension.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Whether<sp/>the<sp/>client<sp/>must<sp/>follow<sp/>specific<sp/>requirements<sp/>of<sp/>the<sp/>extension.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>required?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Optional<sp/>configuration<sp/>for<sp/>the<sp/>extension.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>params?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>a<sp/>unit<sp/>of<sp/>capability<sp/>that<sp/>an<sp/>agent<sp/>can<sp/>perform.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentSkill<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Unique<sp/>identifier<sp/>for<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Human-readable<sp/>name<sp/>of<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>description<sp/>of<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Description<sp/>of<sp/>the<sp/>skill<sp/>-<sp/>will<sp/>be<sp/>used<sp/>by<sp/>the<sp/>client<sp/>or<sp/>a<sp/>human</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>as<sp/>a<sp/>hint<sp/>to<sp/>understand<sp/>what<sp/>the<sp/>skill<sp/>does.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>list<sp/>of<sp/>tags<sp/>associated<sp/>with<sp/>the<sp/>skill<sp/>for<sp/>categorization.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Set<sp/>of<sp/>tagwords<sp/>describing<sp/>classes<sp/>of<sp/>capabilities<sp/>for<sp/>this<sp/>specific<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>[&quot;cooking&quot;,<sp/>&quot;customer<sp/>support&quot;,<sp/>&quot;billing&quot;]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>tags:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>list<sp/>of<sp/>example<sp/>inputs<sp/>or<sp/>use<sp/>cases<sp/>for<sp/>the<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>set<sp/>of<sp/>example<sp/>scenarios<sp/>that<sp/>the<sp/>skill<sp/>can<sp/>perform.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Will<sp/>be<sp/>used<sp/>by<sp/>the<sp/>client<sp/>as<sp/>a<sp/>hint<sp/>to<sp/>understand<sp/>how<sp/>the<sp/>skill<sp/>can<sp/>be<sp/>used.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>[&quot;I<sp/>need<sp/>a<sp/>recipe<sp/>for<sp/>bread&quot;]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>examples?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>list<sp/>of<sp/>input<sp/>modes<sp/>supported<sp/>by<sp/>this<sp/>skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>set<sp/>of<sp/>interaction<sp/>modes<sp/>that<sp/>the<sp/>skill<sp/>supports</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>(if<sp/>different<sp/>than<sp/>the<sp/>default).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Supported<sp/>mime<sp/>types<sp/>for<sp/>input.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>inputModes?:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>list<sp/>of<sp/>output<sp/>modes<sp/>supported<sp/>by<sp/>this<sp/>skil.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Supported<sp/>mime<sp/>types<sp/>for<sp/>output.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>outputModes?:<sp/>string[];</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>An<sp/>AgentCard<sp/>conveys<sp/>key<sp/>information:</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>-<sp/>Overall<sp/>details<sp/>(version,<sp/>name,<sp/>description,<sp/>uses)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>-<sp/>Skills:<sp/>A<sp/>set<sp/>of<sp/>capabilities<sp/>the<sp/>agent<sp/>can<sp/>perform</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>-<sp/>Default<sp/>modalities/content<sp/>types<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>-<sp/>Authentication<sp/>requirements</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>name</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>description</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>url</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>iconUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>version</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>capabilities</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>defaultInputModes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>defaultOutputModes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>skills</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>provider</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>documentationUrl</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>securitySchemes</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>security</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>supportsAuthenticatedExtendedCard</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>AgentCard<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Human<sp/>readable<sp/>name<sp/>of<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>&quot;Recipe<sp/>Agent&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>name:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>A<sp/>human-readable<sp/>description<sp/>of<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Used<sp/>to<sp/>assist<sp/>users<sp/>and<sp/>other<sp/>agents<sp/>in<sp/>understanding<sp/>what<sp/>the<sp/>agent<sp/>can<sp/>do.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>&quot;Agent<sp/>that<sp/>helps<sp/>users<sp/>with<sp/>recipes<sp/>and<sp/>cooking.&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>base<sp/>URL<sp/>endpoint<sp/>for<sp/>interacting<sp/>with<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>URL<sp/>where<sp/>the<sp/>agent<sp/>is<sp/>hosted.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>&quot;https://recipe-agent.com&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>url:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>URL<sp/>of<sp/>the<sp/>agent&apos;s<sp/>icon.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>URL<sp/>of<sp/>the<sp/>agent&apos;s<sp/>icon.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>&quot;https://recipe-agent.com/icon.png&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>iconUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>the<sp/>service<sp/>provider<sp/>of<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>organization<sp/>or<sp/>entity<sp/>that<sp/>provides<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>{<sp/>organization:<sp/>&quot;Recipe<sp/>Inc.&quot;,<sp/>url:<sp/>&quot;https://recipe-inc.com&quot;<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>provider?:<sp/>AgentProvider;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>version<sp/>identifier<sp/>for<sp/>the<sp/>agent<sp/>or<sp/>its<sp/>API.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>version<sp/>of<sp/>the<sp/>agent<sp/>-<sp/>format<sp/>is<sp/>up<sp/>to<sp/>the<sp/>provider.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>&quot;1.0.0&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>version:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>An<sp/>optional<sp/>URL<sp/>pointing<sp/>to<sp/>the<sp/>agent&apos;s<sp/>documentation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>A<sp/>URL<sp/>to<sp/>documentation<sp/>for<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>&quot;https://recipe-agent.com/docs&quot;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>documentationUrl?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>capabilities<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>capabilities<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>{<sp/>&quot;streaming&quot;:<sp/>true,<sp/>&quot;pushNotifications&quot;:<sp/>true,<sp/>&quot;stateTransitionHistory&quot;:<sp/>true<sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>capabilities:<sp/>AgentCapabilities;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Security<sp/>scheme<sp/>details<sp/>used<sp/>for<sp/>authenticating<sp/>with<sp/>this<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>security<sp/>schemes<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>securitySchemes?:<sp/>Record&lt;string,<sp/>SecurityScheme&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Security<sp/>requirements<sp/>for<sp/>contacting<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>security<sp/>requirements<sp/>for<sp/>contacting<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>security?:<sp/>Record&lt;string,<sp/>string[]&gt;[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>default<sp/>input<sp/>modes<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>set<sp/>of<sp/>interaction<sp/>modes<sp/>that<sp/>the<sp/>agent<sp/>supports<sp/>across<sp/>all<sp/>skills.<sp/>This<sp/>can<sp/>be<sp/>overridden<sp/>per-skill.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Supported<sp/>mime<sp/>types<sp/>for<sp/>input.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>defaultInputModes:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>default<sp/>output<sp/>modes<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Supported<sp/>mime<sp/>types<sp/>for<sp/>output.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>defaultOutputModes:<sp/>string[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>List<sp/>of<sp/>specific<sp/>skills<sp/>offered<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>The<sp/>set<sp/>of<sp/>skills<sp/>that<sp/>the<sp/>agent<sp/>can<sp/>perform.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@example<sp/>[{<sp/>&quot;id&quot;:<sp/>&quot;recipe-search&quot;,<sp/>&quot;name&quot;:<sp/>&quot;Recipe<sp/>Search&quot;,<sp/>&quot;description&quot;:<sp/>&quot;Search<sp/>for<sp/>recipes&quot;,<sp/>&quot;tags&quot;:<sp/>[&quot;cooking&quot;,<sp/>&quot;recipes&quot;],<sp/>&quot;examples&quot;:<sp/>[&quot;I<sp/>need<sp/>a<sp/>recipe<sp/>for<sp/>bread&quot;]<sp/>}]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>skills:<sp/>AgentSkill[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>true<sp/>if<sp/>the<sp/>agent<sp/>supports<sp/>providing<sp/>an<sp/>extended<sp/>agent<sp/>card<sp/>when<sp/>the<sp/>user<sp/>is<sp/>authenticated.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>supportsAuthenticatedExtendedCard?:<sp/>boolean;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./task.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./message.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./parameters.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./notification.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./auth/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./rpc.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendStreamingMessageRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendStreamingMessageResponse,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./message.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CancelTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CancelTaskResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./task.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationConfigResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationConfigResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationConfigRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationConfigRequest,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./notification.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2ARequest<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendMessageRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>CancelTaskRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SetTaskPushNotificationConfigRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskPushNotificationConfigRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskResubscriptionRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendStreamingMessageRequest;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>any<sp/>valid<sp/>JSON-RPC<sp/>response<sp/>defined<sp/>in<sp/>the<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>(This<sp/>is<sp/>a<sp/>helper<sp/>type,<sp/>not<sp/>explicitly<sp/>defined<sp/>with<sp/>`oneOf`<sp/>in<sp/>the<sp/>schema<sp/>like<sp/>A2ARequest,<sp/>but<sp/>useful).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2AResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendMessageResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SendStreamingMessageResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>CancelTaskResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>SetTaskPushNotificationConfigResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>GetTaskPushNotificationConfigResponse;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>*<sp/>from<sp/>&quot;./error.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONParseError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>InvalidRequestError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MethodNotFoundError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>InvalidParamsError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>InternalError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskNotFoundError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskNotCancelableError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>PushNotificationNotSupportedError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>UnsupportedOperationError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ContentTypeNotSupportedError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>InvalidAgentResponseError,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./error.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2AError<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONParseError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InvalidRequestError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>MethodNotFoundError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InvalidParamsError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InternalError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskNotFoundError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskNotCancelableError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>PushNotificationNotSupportedError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>UnsupportedOperationError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>ContentTypeNotSupportedError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InvalidAgentResponseError;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/index.ts"/>
+  </compounddef>
+</doxygen>

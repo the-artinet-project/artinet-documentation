@@ -108,8 +108,8 @@ async function talkToAgent() {
     console.log("Sending message to agent...");
 
     // Send the task and wait for the final response
-    // 'sendTask' is good for tasks that have a single, final response.
-    const taskResponse = await client.sendTask({
+    // 'sendMessage' is good for tasks that have a single, final response.
+const taskResponse = await client.sendMessage({
       id: "my-echo-task-01", // A unique ID for this task
       message: userMessage,
     });
@@ -135,7 +135,7 @@ talkToAgent();
 
 - **A2AClient**: Connects to and interacts with A2A-compliant agent servers.
 - **Message**: Structured format for communication, with a `role` and `parts` containing content.
-- **sendTask()**: Sends a one-time request and waits for the final response.
+- **sendMessage()**: Sends a one-time request and waits for the final response.
 
 ## 3. Receiving Streaming Updates
 
@@ -153,8 +153,8 @@ async function streamFromAgent() {
   };
   
   try {
-    // Use sendTaskSubscribe to get a stream of updates
-    const stream = client.sendTaskSubscribe({
+    // Use sendStreamingMessage to get a stream of updates
+const stream = client.sendStreamingMessage({
       id: "streaming-task-01",
       message: userMessage,
     });

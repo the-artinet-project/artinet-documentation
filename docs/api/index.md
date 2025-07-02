@@ -78,7 +78,7 @@ class A2AClient {
    * @param params The task parameters
    * @returns A Promise resolving to the completed task
    */
-  async sendTask(params: TaskSendParams): Promise<Task | null>;
+  async sendMessage(params: MessageSendParams): Promise<Task | null>;
   
   /**
    * Retrieves information about an existing task.
@@ -98,7 +98,7 @@ class A2AClient {
    * @param params The task parameters
    * @returns An AsyncIterable yielding status and artifact updates
    */
-  sendTaskSubscribe(params: TaskSendParams): AsyncIterable<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
+  sendStreamingMessage(params: MessageSendParams): AsyncIterable<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
   
   /**
    * Resubscribes to updates for an existing task.

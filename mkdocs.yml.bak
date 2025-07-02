@@ -51,12 +51,15 @@ nav:
       - Streaming Updates: sdk/examples/streaming-updates.md
       - Task Resubscribe: sdk/examples/task-resubscribe.md
       - Task Wrapper: sdk/examples/task-wrapper.md
+      - Nested Deployment: sdk/examples/nested-deployment.md
     - Tests:
       - Overview: sdk/tests/index.md
+      - A2A MCP: sdk/tests/a2a-mcp.test.md
       - A2A Protocol: sdk/tests/a2a-protocol.test.md
       - Bundler: sdk/tests/bundler.test.md
       - Client: sdk/tests/client.test.md
       - Common Errors: sdk/tests/common-errors.test.md
+      - Deployment: sdk/tests/deployment.xx.md
       - File Storage: sdk/tests/file-storage.test.md
       - HTTP Utils: sdk/tests/http-utils.test.md
       - Integration: sdk/tests/integration.test.md

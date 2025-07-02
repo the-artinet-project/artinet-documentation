@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="server_2lib_2update_2base_8ts" kind="file" language="C++">
+    <compoundname>base.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../../types/index.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>UpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>getCurrentTimestamp<sp/>}<sp/>from<sp/>&quot;../../../utils/common/utils.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>logError<sp/>}<sp/>from<sp/>&quot;../../../utils/logging/log.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;../../interfaces/store.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>processArtifactUpdate<sp/>}<sp/>from<sp/>&quot;../state.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>enum<sp/>UpdateKind<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message<sp/>=<sp/>&quot;message&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Task<sp/>=<sp/>&quot;task&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>StatusUpdate<sp/>=<sp/>&quot;status-update&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ArtifactUpdate<sp/>=<sp/>&quot;artifact-update&quot;,</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>UpdateProps&lt;T<sp/>extends<sp/>UpdateEvent<sp/>=<sp/>UpdateEvent&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context:<sp/>TaskContext;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>current:<sp/>TaskAndHistory;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>update:<sp/>T;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>Update&lt;T<sp/>extends<sp/>UpdateEvent&gt;<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>props:<sp/>UpdateProps&lt;T&gt;</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>Promise&lt;boolean&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">const<sp/>isMessageInHistory<sp/>=<sp/>(task:<sp/>Task,<sp/>message:<sp/>Message)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>task.history?.find((msg)<sp/>=&gt;<sp/>msg.messageId<sp/>===<sp/>message.messageId);</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">const<sp/>updateHistory<sp/>=<sp/>(current:<sp/>TaskAndHistory,<sp/>updateMessage:<sp/>Message)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!isMessageInHistory(current.task,<sp/>updateMessage))<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.history<sp/>=<sp/>[...(current.history<sp/>??<sp/>[]),<sp/>updateMessage];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.task.history<sp/>=<sp/>[...(current.task.history<sp/>??<sp/>[]),<sp/>updateMessage];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>updateMessage:<sp/>Update&lt;Message&gt;<sp/>=<sp/>async<sp/>(props)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>{<sp/>context,<sp/>update<sp/>}<sp/>=<sp/>props;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!update<sp/>||<sp/>update.kind<sp/>!==<sp/>UpdateKind.Message)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;updateMessage&quot;,<sp/>&quot;Invalid<sp/>update&quot;,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>context.latestUserMessage<sp/>=<sp/>update;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>true;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>updateTask:<sp/>Update&lt;Task&gt;<sp/>=<sp/>async<sp/>(props)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>{<sp/>context,<sp/>current,<sp/>update<sp/>}<sp/>=<sp/>props;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!update<sp/>||<sp/>update.kind<sp/>!==<sp/>UpdateKind.Task)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;updateTask&quot;,<sp/>&quot;Invalid<sp/>update<sp/>kind&quot;,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>current.task<sp/>=<sp/>{<sp/>...current.task,<sp/>...update<sp/>};</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>context.latestUserMessage<sp/>&amp;&amp;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>!isMessageInHistory(current.task,<sp/>context.latestUserMessage)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.task.history<sp/>=<sp/>[</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>context.latestUserMessage,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>...(current.task.history<sp/>??<sp/>[]),</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.history<sp/>=<sp/>[context.latestUserMessage,<sp/>...(current.history<sp/>??<sp/>[])];</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>true;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>updateTaskStatusUpdate:<sp/>Update&lt;TaskStatusUpdateEvent&gt;<sp/>=<sp/>async<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>props</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>{<sp/>current,<sp/>update<sp/>}<sp/>=<sp/>props;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!update<sp/>||<sp/>update.kind<sp/>!==<sp/>UpdateKind.StatusUpdate)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;updateTaskStatusUpdate&quot;,<sp/>&quot;Invalid<sp/>update<sp/>kind&quot;,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(current.task.id<sp/>===<sp/>update.taskId)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.task.status<sp/>=<sp/>update.status;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.task.status.timestamp<sp/>=<sp/>getCurrentTimestamp();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(update.status.message)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>updateHistory(current,<sp/>update.status.message);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>true;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>logError(&quot;updateTaskStatusUpdate&quot;,<sp/>&quot;Invalid<sp/>task<sp/>id&quot;,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>updateTaskArtifactUpdate:<sp/>Update&lt;TaskArtifactUpdateEvent&gt;<sp/>=<sp/>async<sp/>(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>props</highlight></codeline>
+<codeline><highlight class="normal">)<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>{<sp/>current,<sp/>update<sp/>}<sp/>=<sp/>props;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!update<sp/>||<sp/>update.kind<sp/>!==<sp/>UpdateKind.ArtifactUpdate)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;updateTaskArtifactUpdate&quot;,<sp/>&quot;Invalid<sp/>update<sp/>kind&quot;,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(current.task.id<sp/>===<sp/>update.taskId)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>current.task.artifacts<sp/>=<sp/>processArtifactUpdate(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>update.append<sp/>??<sp/>false,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>current.task.artifacts<sp/>??<sp/>[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>update.artifact</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>return<sp/>true;</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>update:<sp/>Update&lt;UpdateEvent&gt;<sp/>=<sp/>async<sp/>(props):<sp/>Promise&lt;boolean&gt;<sp/>=&gt;<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>const<sp/>{<sp/>context,<sp/>current,<sp/>update<sp/>}<sp/>=<sp/>props;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>if<sp/>(!update<sp/>||<sp/>!update.kind)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>logError(&quot;update&quot;,<sp/>&quot;Invalid<sp/>update&quot;,<sp/>update);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>switch<sp/>(update.kind)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>case<sp/>UpdateKind.Message:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>updateMessage({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>context,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>update:<sp/>update<sp/>as<sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>case<sp/>UpdateKind.Task:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>updateTask({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>context,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>update:<sp/>update<sp/>as<sp/>Task,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>case<sp/>UpdateKind.StatusUpdate:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>updateTaskStatusUpdate({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>context,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>update:<sp/>update<sp/>as<sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>case<sp/>UpdateKind.ArtifactUpdate:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>updateTaskArtifactUpdate({</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>context,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>update:<sp/>update<sp/>as<sp/>TaskArtifactUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>default:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>false;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">};</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/lib/update/base.ts"/>
+  </compounddef>
+</doxygen>

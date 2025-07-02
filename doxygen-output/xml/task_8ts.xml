@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="task_8ts" kind="file" language="C++">
+    <compoundname>task.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>Message,<sp/>Artifact<sp/>}<sp/>from<sp/>&quot;./parameters.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCErrorResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCRequestWithParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>JSONRPCSuccessResponse,</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>from<sp/>&quot;./rpc.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Represents<sp/>the<sp/>state<sp/>of<sp/>a<sp/>task<sp/>within<sp/>the<sp/>A2A<sp/>protocol.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>enum<sp/>TaskState<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Submitted<sp/>=<sp/>&quot;submitted&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Working<sp/>=<sp/>&quot;working&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>InputRequired<sp/>=<sp/>&quot;input-required&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Completed<sp/>=<sp/>&quot;completed&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Canceled<sp/>=<sp/>&quot;canceled&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Failed<sp/>=<sp/>&quot;failed&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Rejected<sp/>=<sp/>&quot;rejected&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>AuthRequired<sp/>=<sp/>&quot;auth-required&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Unknown<sp/>=<sp/>&quot;unknown&quot;,</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Basic<sp/>parameters<sp/>used<sp/>for<sp/>task<sp/>ID<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>by:<sp/>`tasks/cancel`,<sp/>`tasks/pushNotificationConfig/get`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskIdParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>The<sp/>unique<sp/>identifier<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>metadata<sp/>to<sp/>include<sp/>with<sp/>the<sp/>operation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Parameters<sp/>used<sp/>for<sp/>querying<sp/>task-related<sp/>information<sp/>by<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>by:<sp/>`tasks/get`,<sp/>`tasks/getHistory`,<sp/>`tasks/subscribe`,<sp/>`tasks/resubscribe`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskQueryParams<sp/>extends<sp/>TaskIdParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>Optional<sp/>history<sp/>length<sp/>to<sp/>retrieve<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>historyLength?:<sp/>number;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Basic<sp/>parameters<sp/>used<sp/>for<sp/>task<sp/>ID<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Used<sp/>by:<sp/>`tasks/cancel`,<sp/>`tasks/pushNotificationConfig/get`.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Basic<sp/>parameters<sp/>used<sp/>for<sp/>task<sp/>ID<sp/>operations.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskIdParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>unique<sp/>identifier<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>to<sp/>include<sp/>with<sp/>the<sp/>operation.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Parameters<sp/>used<sp/>for<sp/>querying<sp/>task-related<sp/>information<sp/>by<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Parameters<sp/>used<sp/>for<sp/>querying<sp/>task-related<sp/>information<sp/>by<sp/>ID.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>historyLength</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskQueryParams<sp/>extends<sp/>TaskIdParams<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Number<sp/>of<sp/>recent<sp/>messages<sp/>to<sp/>be<sp/>retrieved.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>historyLength?:<sp/>number;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>the<sp/>status<sp/>of<sp/>a<sp/>task<sp/>at<sp/>a<sp/>specific<sp/>point<sp/>in<sp/>time.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>A<sp/>task<sp/>status<sp/>is<sp/>a<sp/>snapshot<sp/>of<sp/>the<sp/>task<sp/>at<sp/>a<sp/>specific<sp/>point<sp/>in<sp/>time.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>state</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>message</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>timestamp</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskStatus<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>current<sp/>state<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>state:<sp/>TaskState;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>An<sp/>optional<sp/>message<sp/>associated<sp/>with<sp/>the<sp/>current<sp/>status<sp/>(e.g.,<sp/>progress<sp/>update,<sp/>final<sp/>response).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>message?:<sp/>Message;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>The<sp/>timestamp<sp/>when<sp/>this<sp/>status<sp/>was<sp/>recorded<sp/>(ISO<sp/>8601<sp/>format).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@format<sp/>date-time</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>timestamp?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>task<sp/>being<sp/>processed<sp/>by<sp/>an<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>A<sp/>task<sp/>is<sp/>a<sp/>unit<sp/>of<sp/>work<sp/>that<sp/>an<sp/>agent<sp/>can<sp/>perform.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>contextId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>status</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>history</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>artifacts</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>kind</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>Task<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Unique<sp/>identifier<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>id:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>identifier<sp/>for<sp/>the<sp/>session<sp/>this<sp/>task<sp/>belongs<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId?:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>current<sp/>status<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>status:<sp/>TaskStatus;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>list<sp/>of<sp/>historical<sp/>messages<sp/>associated<sp/>with<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>history?:<sp/>Message[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>list<sp/>of<sp/>artifacts<sp/>associated<sp/>with<sp/>the<sp/>task<sp/>(e.g.,<sp/>outputs,<sp/>intermediate<sp/>files).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifacts?:<sp/>Artifact[];</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>associated<sp/>with<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Event<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;task&quot;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>a<sp/>status<sp/>update<sp/>event<sp/>for<sp/>a<sp/>task,<sp/>typically<sp/>used<sp/>in<sp/>streaming<sp/>scenarios.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>A<sp/>status<sp/>update<sp/>event<sp/>is<sp/>a<sp/>snapshot<sp/>of<sp/>the<sp/>task<sp/>at<sp/>a<sp/>specific<sp/>point<sp/>in<sp/>time.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>taskId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>contextId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>kind</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>status</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskStatusUpdateEvent<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>being<sp/>updated.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>context<sp/>the<sp/>task<sp/>is<sp/>associated<sp/>with</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Event<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;status-update&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>current<sp/>status<sp/>of<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>status:<sp/>TaskStatus;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Flag<sp/>indicating<sp/>if<sp/>this<sp/>is<sp/>the<sp/>final<sp/>update<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>final:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>update<sp/>event.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Represents<sp/>an<sp/>artifact<sp/>update<sp/>event<sp/>for<sp/>a<sp/>task,<sp/>typically<sp/>used<sp/>in<sp/>streaming<sp/>scenarios.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>An<sp/>artifact<sp/>update<sp/>event<sp/>is<sp/>a<sp/>snapshot<sp/>of<sp/>the<sp/>task<sp/>at<sp/>a<sp/>specific<sp/>point<sp/>in<sp/>time.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>taskId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>contextId</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>kind</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>artifact</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>append</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>lastChunk</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>metadata</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>TaskArtifactUpdateEvent<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>ID<sp/>of<sp/>the<sp/>task<sp/>being<sp/>updated.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>taskId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>context<sp/>the<sp/>task<sp/>is<sp/>associated<sp/>with</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>contextId:<sp/>string;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Event<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>kind:<sp/>&quot;artifact-update&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>The<sp/>new<sp/>or<sp/>updated<sp/>artifact<sp/>for<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>artifact:<sp/>Artifact;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Indicates<sp/>if<sp/>this<sp/>artifact<sp/>appends<sp/>to<sp/>a<sp/>previous<sp/>one</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>append?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Indicates<sp/>if<sp/>this<sp/>is<sp/>the<sp/>last<sp/>chunk<sp/>of<sp/>the<sp/>artifact</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>lastChunk?:<sp/>boolean;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>metadata<sp/>associated<sp/>with<sp/>this<sp/>update<sp/>event.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>metadata?:<sp/>Record&lt;string,<sp/>unknown&gt;;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Request<sp/>to<sp/>retrieve<sp/>the<sp/>current<sp/>state<sp/>of<sp/>a<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>method</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>params</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskRequest<sp/>=<sp/>JSONRPCRequestWithParams&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&quot;tasks/get&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskQueryParams</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>JSON-RPC<sp/>success<sp/>response<sp/>model<sp/>for<sp/>the<sp/>&apos;tasks/get&apos;<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>result</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@never<sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskSuccessResponse<sp/>=<sp/>JSONRPCSuccessResponse&lt;Task&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Response<sp/>to<sp/>a<sp/>`tasks/get`<sp/>request.<sp/>Contains<sp/>the<sp/>Task<sp/>object<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@oneOf<sp/>GetTaskSuccessResponse<sp/>|<sp/>JSONRPCErrorResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>GetTaskResponse<sp/>=<sp/>GetTaskSuccessResponse<sp/>|<sp/>JSONRPCErrorResponse;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Request<sp/>to<sp/>resubscribe<sp/>to<sp/>updates<sp/>for<sp/>a<sp/>task<sp/>after<sp/>a<sp/>connection<sp/>interruption.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>method</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>params</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskResubscriptionRequest<sp/>=<sp/>JSONRPCRequestWithParams&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&quot;tasks/resubscribe&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskQueryParams</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Request<sp/>to<sp/>cancel<sp/>a<sp/>currently<sp/>running<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>id</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>method</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>params</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>CancelTaskRequest<sp/>=<sp/>JSONRPCRequestWithParams&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>&quot;tasks/cancel&quot;,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>TaskIdParams</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>JSON-RPC<sp/>success<sp/>response<sp/>model<sp/>for<sp/>the<sp/>&apos;tasks/cancel&apos;<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>result</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@never<sp/>error</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>CancelTaskSuccessResponse<sp/>=<sp/>JSONRPCSuccessResponse&lt;Task&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Response<sp/>to<sp/>a<sp/>`tasks/cancel`<sp/>request.<sp/>Contains<sp/>the<sp/>updated<sp/>Task<sp/>object<sp/>(usually<sp/>with<sp/>&apos;canceled&apos;<sp/>state)<sp/>or<sp/>an<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@oneOf<sp/>CancelTaskSuccessResponse<sp/>|<sp/>JSONRPCErrorResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>CancelTaskResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>CancelTaskSuccessResponse</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONRPCErrorResponse;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/task.ts"/>
+  </compounddef>
+</doxygen>

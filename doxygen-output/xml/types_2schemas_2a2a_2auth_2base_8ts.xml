@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="types_2schemas_2a2a_2auth_2base_8ts" kind="file" language="C++">
+    <compoundname>base.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Base<sp/>properties<sp/>shared<sp/>by<sp/>all<sp/>security<sp/>schemes.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@required<sp/>type</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@optional<sp/>description</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>interface<sp/>SecuritySchemeBase<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@required<sp/>Type<sp/>of<sp/>the<sp/>security<sp/>scheme.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>type:<sp/>&quot;apiKey&quot;<sp/>|<sp/>&quot;http&quot;<sp/>|<sp/>&quot;oauth2&quot;<sp/>|<sp/>&quot;openIdConnect&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@optional<sp/>Description<sp/>of<sp/>this<sp/>security<sp/>scheme.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>description?:<sp/>string;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/auth/base.ts"/>
+  </compounddef>
+</doxygen>

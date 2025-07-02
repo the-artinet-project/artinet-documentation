@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="error_8ts" kind="file" language="C++">
+    <compoundname>error.ts</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCError<sp/>}<sp/>from<sp/>&quot;./rpc.js&quot;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>JSON<sp/>Parse<sp/>Error<sp/>(-32700).<sp/>Invalid<sp/>JSON<sp/>was<sp/>received<sp/>by<sp/>the<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeParseError<sp/>=<sp/>-32700;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeParseError<sp/>=<sp/>typeof<sp/>ErrorCodeParseError;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>JSONParseError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeParseError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Invalid<sp/>Request<sp/>(-32600).<sp/>The<sp/>JSON<sp/>sent<sp/>is<sp/>not<sp/>a<sp/>valid<sp/>Request<sp/>object.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInvalidRequest<sp/>=<sp/>-32600;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInvalidRequest<sp/>=<sp/>typeof<sp/>ErrorCodeInvalidRequest;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>InvalidRequestError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInvalidRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Method<sp/>Not<sp/>Found<sp/>(-32601).<sp/>The<sp/>method<sp/>does<sp/>not<sp/>exist<sp/>/<sp/>is<sp/>not<sp/>available.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeMethodNotFound<sp/>=<sp/>-32601;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeMethodNotFound<sp/>=<sp/>typeof<sp/>ErrorCodeMethodNotFound;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>MethodNotFoundError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeMethodNotFound,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Invalid<sp/>Params<sp/>(-32602).<sp/>Invalid<sp/>method<sp/>parameter(s).</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInvalidParams<sp/>=<sp/>-32602;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInvalidParams<sp/>=<sp/>typeof<sp/>ErrorCodeInvalidParams;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>InvalidParamsError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInvalidParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Internal<sp/>Error<sp/>(-32603).<sp/>Internal<sp/>JSON-RPC<sp/>error.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInternalError<sp/>=<sp/>-32603;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInternalError<sp/>=<sp/>typeof<sp/>ErrorCodeInternalError;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>InternalError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInternalError,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Task<sp/>Not<sp/>Found<sp/>(-32001).<sp/>The<sp/>specified<sp/>task<sp/>was<sp/>not<sp/>found.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeTaskNotFound<sp/>=<sp/>-32001;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeTaskNotFound<sp/>=<sp/>typeof<sp/>ErrorCodeTaskNotFound;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskNotFoundError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeTaskNotFound,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Task<sp/>Not<sp/>Cancelable<sp/>(-32002).<sp/>The<sp/>specified<sp/>task<sp/>cannot<sp/>be<sp/>canceled.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeTaskNotCancelable<sp/>=<sp/>-32002;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeTaskNotCancelable<sp/>=<sp/>typeof<sp/>ErrorCodeTaskNotCancelable;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>TaskNotCancelableError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeTaskNotCancelable,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Push<sp/>Notification<sp/>Not<sp/>Supported<sp/>(-32003).<sp/>Push<sp/>Notifications<sp/>are<sp/>not<sp/>supported<sp/>for<sp/>this<sp/>operation<sp/>or<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodePushNotificationNotSupported<sp/>=<sp/>-32003;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodePushNotificationNotSupported<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>typeof<sp/>ErrorCodePushNotificationNotSupported;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>PushNotificationNotSupportedError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodePushNotificationNotSupported,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Unsupported<sp/>Operation<sp/>(-32004).<sp/>The<sp/>requested<sp/>operation<sp/>is<sp/>not<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeUnsupportedOperation<sp/>=<sp/>-32004;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeUnsupportedOperation<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>typeof<sp/>ErrorCodeUnsupportedOperation;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>UnsupportedOperationError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeUnsupportedOperation,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Content<sp/>Type<sp/>Not<sp/>Supported<sp/>(-32005).<sp/>The<sp/>requested<sp/>content<sp/>type<sp/>is<sp/>not<sp/>supported<sp/>by<sp/>the<sp/>agent.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeContentTypeNotSupported<sp/>=<sp/>-32005;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeContentTypeNotSupported<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>typeof<sp/>ErrorCodeContentTypeNotSupported;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ContentTypeNotSupportedError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeContentTypeNotSupported,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>@description<sp/>Error<sp/>code<sp/>for<sp/>Invalid<sp/>Agent<sp/>Response<sp/>(-32006).<sp/>The<sp/>agent<sp/>returned<sp/>an<sp/>invalid<sp/>response<sp/>for<sp/>the<sp/>current<sp/>method.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>const<sp/>ErrorCodeInvalidAgentResponse<sp/>=<sp/>-32006;</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>ErrorCodeInvalidAgentResponse<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>typeof<sp/>ErrorCodeInvalidAgentResponse;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>InvalidAgentResponseError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=<sp/>JSONRPCError&lt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>ErrorCodeInvalidAgentResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Data</highlight></codeline>
+<codeline><highlight class="normal">&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Union<sp/>of<sp/>all<sp/>well-known<sp/>A2A<sp/>and<sp/>standard<sp/>JSON-RPC<sp/>error<sp/>codes<sp/>defined<sp/>in<sp/>this<sp/>schema.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Use<sp/>this<sp/>type<sp/>for<sp/>checking<sp/>against<sp/>specific<sp/>error<sp/>codes.<sp/>A<sp/>server<sp/>might<sp/>theoretically</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>use<sp/>other<sp/>codes<sp/>within<sp/>the<sp/>valid<sp/>JSON-RPC<sp/>ranges.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>KnownErrorCode<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeParseError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInvalidRequest</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeMethodNotFound</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInvalidParams</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInternalError</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeTaskNotFound</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeTaskNotCancelable</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodePushNotificationNotSupported</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeUnsupportedOperation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeContentTypeNotSupported</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>typeof<sp/>ErrorCodeInvalidAgentResponse;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>A2AError&lt;Data<sp/>=<sp/>unknown&gt;<sp/>=</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>JSONParseError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InvalidRequestError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>MethodNotFoundError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InvalidParamsError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InternalError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskNotFoundError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>TaskNotCancelableError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>PushNotificationNotSupportedError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>UnsupportedOperationError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>ContentTypeNotSupportedError&lt;Data&gt;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>|<sp/>InvalidAgentResponseError&lt;Data&gt;;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/error.ts"/>
+  </compounddef>
+</doxygen>

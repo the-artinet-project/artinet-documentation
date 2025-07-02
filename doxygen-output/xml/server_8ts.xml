@@ -15,14 +15,14 @@
 <codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendStreamingMessageRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;./store.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCServerType<sp/>}<sp/>from<sp/>&quot;./params.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskAndHistory<sp/>}<sp/>from<sp/>&quot;./store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext,<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskContext,<sp/>TaskHandler<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">export<sp/>interface<sp/>Server<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>start():<sp/>express.Express;</highlight></codeline>
@@ -44,13 +44,17 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>userMessage:<sp/>Message,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>history:<sp/>Message[]</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>):<sp/>TaskContext;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>onCancel(data:<sp/>TaskAndHistory,<sp/>res:<sp/>Response):<sp/>Promise&lt;void&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>onCancel(</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>context:<sp/>TaskContext,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>data:<sp/>TaskAndHistory,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;void&gt;;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>onEnd(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>Promise&lt;void&gt;;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>addStreamForTask(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>void;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>removeStreamForTask(taskId:<sp/>string,<sp/>res:<sp/>Response):<sp/>void;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>closeStreamsForTask(taskId:<sp/>string):<sp/>void;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>handleTaskSendSubscribe(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>req:<sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>req:<sp/>SendStreamingMessageRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>):<sp/>Promise&lt;void&gt;;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>handleTaskResubscribe(</highlight></codeline>

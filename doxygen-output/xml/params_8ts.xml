@@ -8,36 +8,42 @@
     </detaileddescription>
     <programlisting>
 <codeline><highlight class="normal">import<sp/>{<sp/>CorsOptions<sp/>}<sp/>from<sp/>&quot;cors&quot;;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>A2AResponse,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>RequestParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>CancelTaskRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>CancelTaskResponse,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationRequest,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationConfigRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationConfigResponse,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>GetTaskRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>GetTaskResponse,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskRequest,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskResponse,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskStreamingRequest,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationRequest,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageResponse,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendStreamingMessageRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationConfigRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationConfigResponse,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskResubscriptionRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MessageSendConfiguration,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>A2ARequest,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>TaskStore<sp/>}<sp/>from<sp/>&quot;./store.js&quot;;</highlight></codeline>
-<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/context.js&quot;;</highlight></codeline>
+<codeline><highlight class="normal">import<sp/>{<sp/>TaskHandler,<sp/>TaskContext<sp/>}<sp/>from<sp/>&quot;../../types/index.js&quot;;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">import<sp/>jayson<sp/>from<sp/>&quot;jayson&quot;;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>ErrorHandler<sp/>}<sp/>from<sp/>&quot;../../utils/common/errors.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>JSONRPCError<sp/>}<sp/>from<sp/>&quot;../../types/extended-schema.js&quot;;</highlight></codeline>
+<codeline></codeline>
 <codeline><highlight class="normal">import<sp/>{<sp/>Response<sp/>}<sp/>from<sp/>&quot;express&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>JSONRPCServerType<sp/>=<sp/>jayson.Server;</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>const<sp/>JSONRPCServer<sp/>=<sp/>jayson.Server;</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">export<sp/>type<sp/>JSONRPCCallback&lt;Res<sp/>=<sp/>A2AResponse<sp/>|<sp/>null&gt;<sp/>=<sp/>(</highlight></codeline>
+<codeline><highlight class="normal">export<sp/>type<sp/>JSONRPCCallback&lt;Res<sp/>=<sp/>A2AResponse<sp/>|<sp/>Task<sp/>|<sp/>null&gt;<sp/>=<sp/>(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>error:<sp/>JSONRPCError<sp/>|<sp/>null,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>result?:<sp/>Res</highlight></codeline>
 <codeline><highlight class="normal">)<sp/>=&gt;<sp/>void;</highlight></codeline>
@@ -80,7 +86,8 @@
 <codeline><highlight class="normal">export<sp/>type<sp/>CreateTaskContext<sp/>=<sp/>(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>task:<sp/>Task,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>message:<sp/>Message,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>history:<sp/>Message[]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>history:<sp/>Message[],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>configuration?:<sp/>MessageSendConfiguration</highlight></codeline>
 <codeline><highlight class="normal">)<sp/>=&gt;<sp/>TaskContext;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -135,7 +142,7 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>rpcServer:<sp/>JSONRPCServerType;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>errorHandler:<sp/>ErrorHandler;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>onTaskSendSubscribe:<sp/>(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>req:<sp/>SendTaskStreamingRequest,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>req:<sp/>SendStreamingMessageRequest,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>res:<sp/>Response</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>=&gt;<sp/>Promise&lt;void&gt;;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>onTaskResubscribe:<sp/>(</highlight></codeline>
@@ -148,11 +155,11 @@
 <codeline><highlight class="normal"><sp/>*<sp/>This<sp/>can<sp/>be<sp/>used<sp/>by<sp/>consumers<sp/>to<sp/>implement<sp/>their<sp/>own<sp/>server<sp/>solutions</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>A2AMethodHandler&lt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Params<sp/>extends<sp/>RequestParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>Result<sp/>extends<sp/>A2AResponse<sp/>|<sp/>null,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>RequestParamT<sp/>extends<sp/>A2ARequest[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Result<sp/>extends<sp/>A2AResponse<sp/>|<sp/>Message<sp/>|<sp/>Task<sp/>|<sp/>null,</highlight></codeline>
 <codeline><highlight class="normal">&gt;<sp/>=<sp/>(</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>deps:<sp/>CreateJSONRPCServerParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>requestParams:<sp/>Params,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>requestParams:<sp/>RequestParamT,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>callback:<sp/>JSONRPCCallback&lt;Result&gt;</highlight></codeline>
 <codeline><highlight class="normal">)<sp/>=&gt;<sp/>Promise&lt;void&gt;;</highlight></codeline>
 <codeline></codeline>
@@ -161,8 +168,8 @@
 <codeline><highlight class="normal"><sp/>*<sp/>This<sp/>can<sp/>be<sp/>used<sp/>by<sp/>consumers<sp/>to<sp/>implement<sp/>their<sp/>own<sp/>server<sp/>solutions</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>SendTaskMethod<sp/>=<sp/>A2AMethodHandler&lt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskRequest[&quot;params&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SendTaskResponse<sp/>|<sp/>null</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageRequest[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SendMessageResponse<sp/>|<sp/>Message<sp/>|<sp/>Task<sp/>|<sp/>null</highlight></codeline>
 <codeline><highlight class="normal">&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -171,7 +178,7 @@
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>GetTaskMethod<sp/>=<sp/>A2AMethodHandler&lt;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>GetTaskRequest[&quot;params&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>GetTaskResponse<sp/>|<sp/>null</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskResponse<sp/>|<sp/>Task<sp/>|<sp/>null</highlight></codeline>
 <codeline><highlight class="normal">&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -180,7 +187,7 @@
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>CancelTaskMethod<sp/>=<sp/>A2AMethodHandler&lt;</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>CancelTaskRequest[&quot;params&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>CancelTaskResponse<sp/>|<sp/>null</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>CancelTaskResponse<sp/>|<sp/>Task<sp/>|<sp/>null</highlight></codeline>
 <codeline><highlight class="normal">&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -188,8 +195,8 @@
 <codeline><highlight class="normal"><sp/>*<sp/>This<sp/>can<sp/>be<sp/>used<sp/>by<sp/>consumers<sp/>to<sp/>implement<sp/>their<sp/>own<sp/>server<sp/>solutions</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>SetTaskPushNotificationMethod<sp/>=<sp/>A2AMethodHandler&lt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationRequest[&quot;params&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationResponse<sp/>|<sp/>null</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationConfigRequest[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>SetTaskPushNotificationConfigResponse<sp/>|<sp/>null</highlight></codeline>
 <codeline><highlight class="normal">&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -197,8 +204,8 @@
 <codeline><highlight class="normal"><sp/>*<sp/>This<sp/>can<sp/>be<sp/>used<sp/>by<sp/>consumers<sp/>to<sp/>implement<sp/>their<sp/>own<sp/>server<sp/>solutions</highlight></codeline>
 <codeline><highlight class="normal"><sp/>*/</highlight></codeline>
 <codeline><highlight class="normal">export<sp/>type<sp/>GetTaskPushNotificationMethod<sp/>=<sp/>A2AMethodHandler&lt;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationRequest[&quot;params&quot;],</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationResponse<sp/>|<sp/>null</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationConfigRequest[&quot;params&quot;],</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>GetTaskPushNotificationConfigResponse<sp/>|<sp/>null</highlight></codeline>
 <codeline><highlight class="normal">&gt;;</highlight></codeline>
     </programlisting>
     <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server/interfaces/params.ts"/>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['params_2ets_0',['params.ts',['../params_8ts.html',1,'']]],
-  ['parser_2ets_1',['parser.ts',['../parser_8ts.html',1,'']]],
-  ['proxy_2ets_2',['proxy.ts',['../proxy_8ts.html',1,'']]]
+  ['manager_2ets_0',['manager.ts',['../services_2manager_8ts.html',1,'(Global Namespace)'],['../types_2services_2manager_8ts.html',1,'(Global Namespace)']]],
+  ['memory_2ets_1',['memory.ts',['../memory_8ts.html',1,'']]],
+  ['message_2ets_2',['message.ts',['../message_8ts.html',1,'']]]
 ];

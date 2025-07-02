@@ -263,3 +263,6 @@ Contributions are welcome! Please see the [repository](https://github.com/the-ar
 - Contributing template improvements
 - Adding new agent templates
 
+---
+
+*Generated automatically from create-quick-agent source code*

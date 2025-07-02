@@ -9,15 +9,15 @@
     <programlisting>
 <codeline><highlight class="normal">import<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskPushNotificationConfig,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskArtifactUpdateEvent,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskIdParams,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>Task,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
 <codeline><highlight class="normal">import<sp/>type<sp/>{</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>AgentCard,</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/>TaskQueryParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskSendParams,</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>TaskStatusUpdateEvent,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>MessageSendParams,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>Message,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>UpdateEvent,</highlight></codeline>
 <codeline><highlight class="normal">}<sp/>from<sp/>&quot;./extended-schema.js&quot;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">/**</highlight></codeline>
@@ -49,22 +49,39 @@
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>to<sp/>the<sp/>agent<sp/>server.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task,<sp/>including<sp/>the<sp/>task<sp/>definition<sp/>and<sp/>metadata.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{MessageSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task,<sp/>including<sp/>the<sp/>task<sp/>definition<sp/>and<sp/>metadata.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;Task<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>initial<sp/>Task<sp/>object<sp/>representing<sp/>the<sp/>submitted<sp/>task,<sp/>or<sp/>null<sp/>if<sp/>the<sp/>submission<sp/>failed.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>sendTask(params:<sp/>TaskSendParams):<sp/>Promise&lt;Task<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendMessage(params:<sp/>MessageSendParams):<sp/>Promise&lt;Message<sp/>|<sp/>Task<sp/>|<sp/>null&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@deprecated<sp/>Use<sp/>sendMessage<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>to<sp/>the<sp/>agent<sp/>server.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{MessageSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task,<sp/>including<sp/>the<sp/>task<sp/>definition<sp/>and<sp/>metadata.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{Promise&lt;Task<sp/>|<sp/>null&gt;}<sp/>A<sp/>promise<sp/>that<sp/>resolves<sp/>with<sp/>the<sp/>initial<sp/>Task<sp/>object<sp/>representing<sp/>the<sp/>submitted<sp/>task,<sp/>or<sp/>null<sp/>if<sp/>the<sp/>submission<sp/>failed.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendTask(params:<sp/>MessageSendParams):<sp/>Promise&lt;Message<sp/>|<sp/>Task<sp/>|<sp/>null&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>and<sp/>subscribes<sp/>to<sp/>real-time<sp/>updates<sp/>(status<sp/>changes,<sp/>artifact<sp/>updates)<sp/>for<sp/>that<sp/>task.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>uses<sp/>a<sp/>streaming<sp/>connection<sp/>if<sp/>available.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{MessageSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;UpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>sendTaskSubscribe(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskSendParams</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>):<sp/>AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendStreamingMessage(params:<sp/>MessageSendParams):<sp/>AsyncIterable&lt;UpdateEvent&gt;;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@deprecated<sp/>Use<sp/>sendStreamingMessage<sp/>instead.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Sends<sp/>a<sp/>task<sp/>request<sp/>and<sp/>subscribes<sp/>to<sp/>real-time<sp/>updates<sp/>(status<sp/>changes,<sp/>artifact<sp/>updates)<sp/>for<sp/>that<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>uses<sp/>a<sp/>streaming<sp/>connection<sp/>if<sp/>available.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{MessageSendParams}<sp/>params<sp/>Parameters<sp/>required<sp/>to<sp/>send<sp/>the<sp/>task.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;UpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>sendTaskSubscribe(params:<sp/>MessageSendParams):<sp/>AsyncIterable&lt;UpdateEvent&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Retrieves<sp/>the<sp/>current<sp/>state<sp/>of<sp/>a<sp/>specific<sp/>task<sp/>by<sp/>its<sp/>ID.</highlight></codeline>
@@ -108,12 +125,10 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Resubscribes<sp/>to<sp/>updates<sp/>for<sp/>an<sp/>existing<sp/>task,<sp/>potentially<sp/>after<sp/>a<sp/>connection<sp/>drop<sp/>or<sp/>client<sp/>restart.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>This<sp/>allows<sp/>resuming<sp/>the<sp/>stream<sp/>of<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@param<sp/>{TaskQueryParams}<sp/>params<sp/>Parameters<sp/>containing<sp/>the<sp/>task<sp/>ID<sp/>to<sp/>resubscribe<sp/>to.</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@returns<sp/>{AsyncIterable&lt;UpdateEvent&gt;}<sp/>An<sp/>async<sp/>iterable<sp/>that<sp/>yields<sp/>task<sp/>status<sp/>and<sp/>artifact<sp/>updates.</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@async</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*/</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>resubscribeTask(</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>params:<sp/>TaskQueryParams</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>):<sp/>AsyncIterable&lt;TaskStatusUpdateEvent<sp/>|<sp/>TaskArtifactUpdateEvent&gt;;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>resubscribeTask(params:<sp/>TaskQueryParams):<sp/>AsyncIterable&lt;UpdateEvent&gt;;</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal"><sp/><sp/>/**</highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/>*<sp/>@description<sp/>Checks<sp/>if<sp/>the<sp/>agent<sp/>server<sp/>supports<sp/>a<sp/>specific<sp/>capability.</highlight></codeline>

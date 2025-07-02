@@ -20,12 +20,12 @@ registerServer(): Promise<string>; // Registers the server with the A2A registry
 
 ## A2AClient
 
-* The client class used to connect to an `A2AServer` instance. It allows you to send tasks (using `sendTask` for single responses or `sendTaskSubscribe` for streaming updates) and manage communication headers. Features refined error handling via `RpcError`, flexible header management for authentication, and clear separation of concerns.
+* The client class used to connect to an `A2AServer` instance. It allows you to send messages (using `sendMessage` for single responses or `sendStreamingMessage` for streaming updates) and manage communication headers. Features refined error handling via `RpcError`, flexible header management for authentication, and clear separation of concerns.
 
 ```typescript
 // Key methods
-async sendTask(params: TaskSendParams): Promise<Task | null>;
-sendTaskSubscribe(params: TaskSendParams): AsyncIterable<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
+async sendMessage(params: MessageSendParams): Promise<Task | null>;
+sendStreamingMessage(params: MessageSendParams): AsyncIterable<TaskStatusUpdateEvent | TaskArtifactUpdateEvent>;
 async getTask(params: TaskQueryParams): Promise<Task | null>;
 async cancelTask(params: TaskIdParams): Promise<Task | null>;
 async supports(capability: "streaming" | "pushNotifications" | "stateTransitionHistory"): Promise<boolean>;

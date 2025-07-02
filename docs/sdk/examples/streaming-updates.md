@@ -58,7 +58,7 @@ async function main() {
       console.log(`Sending streaming task with ID: ${taskId}...`);
 
       // Send the task and subscribe to updates
-      const stream = client.sendTaskSubscribe({
+      const stream = client.sendStreamingMessage({
         id: taskId,
         message,
       });

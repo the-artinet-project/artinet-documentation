@@ -2,12 +2,14 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
   <compounddef id="dir_4ae32042f0a0622e2a0f05c0172ff336" kind="dir">
     <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types</compoundname>
+    <innerdir refid="dir_8c7fc3ea0284ffdf8d4376a161970813">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas</innerdir>
+    <innerdir refid="dir_edd946a3b78057e4c678e73e2739e433">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services</innerdir>
     <innerfile refid="client_8ts">client.ts</innerfile>
-    <innerfile refid="context_8ts">context.ts</innerfile>
+    <innerfile refid="express_8ts">express.ts</innerfile>
     <innerfile refid="extended-schema_8ts">extended-schema.ts</innerfile>
     <innerfile refid="types_2index_8ts">index.ts</innerfile>
     <innerfile refid="proxy_8ts">proxy.ts</innerfile>
-    <innerfile refid="schema_8ts">schema.ts</innerfile>
+    <innerfile refid="transform_8ts">transform.ts</innerfile>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
