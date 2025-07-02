@@ -698,6 +698,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/nested-deployment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nested Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -767,6 +790,29 @@
   
   <span class="md-ellipsis">
     Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="a2a-mcp.test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A2A MCP
     
   </span>
   
@@ -859,6 +905,29 @@
   
   <span class="md-ellipsis">
     Common Errors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deployment.xx.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
     
   </span>
   
@@ -2018,7 +2087,7 @@
 <a id="__codelineno-0-383" name="__codelineno-0-383" href="#__codelineno-0-383"></a><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-384" name="__codelineno-0-384" href="#__codelineno-0-384"></a><span class="w">        </span><span class="c1">// Verify it&#39;s an A2AError with the right code</span>
 <a id="__codelineno-0-385" name="__codelineno-0-385" href="#__codelineno-0-385"></a><span class="w">        </span><span class="nx">expect</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nx">SystemError</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-<a id="__codelineno-0-386" name="__codelineno-0-386" href="#__codelineno-0-386"></a><span class="w">        </span><span class="nx">expect</span><span class="p">((</span><span class="nx">error</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">SystemError</span><span class="p">).</span><span class="nx">code</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">ErrorCodeParseError</span><span class="p">);</span>
+<a id="__codelineno-0-386" name="__codelineno-0-386" href="#__codelineno-0-386"></a><span class="w">        </span><span class="nx">expect</span><span class="p">((</span><span class="nx">error</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">SystemError</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="p">).</span><span class="nx">code</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">ErrorCodeParseError</span><span class="p">);</span>
 <a id="__codelineno-0-387" name="__codelineno-0-387" href="#__codelineno-0-387"></a><span class="w">      </span><span class="p">}</span>
 <a id="__codelineno-0-388" name="__codelineno-0-388" href="#__codelineno-0-388"></a><span class="w">    </span><span class="p">});</span>
 <a id="__codelineno-0-389" name="__codelineno-0-389" href="#__codelineno-0-389"></a><span class="w">  </span><span class="p">});</span>
@@ -2416,7 +2485,7 @@
 <a id="__codelineno-0-781" name="__codelineno-0-781" href="#__codelineno-0-781"></a><span class="w">        </span><span class="nx">parseResponse</span><span class="p">(</span><span class="s2">&quot;invalid json&quot;</span><span class="p">);</span>
 <a id="__codelineno-0-782" name="__codelineno-0-782" href="#__codelineno-0-782"></a><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-783" name="__codelineno-0-783" href="#__codelineno-0-783"></a><span class="w">        </span><span class="nx">expect</span><span class="p">(</span><span class="nx">error</span><span class="p">).</span><span class="nx">toBeInstanceOf</span><span class="p">(</span><span class="nx">SystemError</span><span class="p">);</span>
-<a id="__codelineno-0-784" name="__codelineno-0-784" href="#__codelineno-0-784"></a><span class="w">        </span><span class="nx">expect</span><span class="p">((</span><span class="nx">error</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">SystemError</span><span class="p">).</span><span class="nx">code</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">ErrorCodeParseError</span><span class="p">);</span>
+<a id="__codelineno-0-784" name="__codelineno-0-784" href="#__codelineno-0-784"></a><span class="w">        </span><span class="nx">expect</span><span class="p">((</span><span class="nx">error</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">SystemError</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="p">).</span><span class="nx">code</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">ErrorCodeParseError</span><span class="p">);</span>
 <a id="__codelineno-0-785" name="__codelineno-0-785" href="#__codelineno-0-785"></a><span class="w">      </span><span class="p">}</span>
 <a id="__codelineno-0-786" name="__codelineno-0-786" href="#__codelineno-0-786"></a><span class="w">    </span><span class="p">});</span>
 <a id="__codelineno-0-787" name="__codelineno-0-787" href="#__codelineno-0-787"></a><span class="w">  </span><span class="p">});</span>

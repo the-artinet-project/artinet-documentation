@@ -824,6 +824,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/nested-deployment.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nested Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -893,6 +916,29 @@
   
   <span class="md-ellipsis">
     Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests/a2a-mcp.test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A2A MCP
     
   </span>
   
@@ -985,6 +1031,29 @@
   
   <span class="md-ellipsis">
     Common Errors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests/deployment.xx.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
     
   </span>
   
@@ -1806,8 +1875,8 @@ If you're using Yarn, you can use:</p>
 <a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Sending message to agent...&quot;</span><span class="p">);</span>
 <a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
 <a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="c1">// Send the task and wait for the final response</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="c1">// &#39;sendTask&#39; is good for tasks that have a single, final response.</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">taskResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">sendTask</span><span class="p">({</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="c1">// &#39;sendMessage&#39; is good for tasks that have a single, final response.</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="kd">const</span><span class="w"> </span><span class="nx">taskResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">({</span>
 <a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;my-echo-task-01&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// A unique ID for this task</span>
 <a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="kt">userMessage</span><span class="p">,</span>
 <a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">    </span><span class="p">});</span>
@@ -1832,7 +1901,7 @@ If you're using Yarn, you can use:</p>
 <ul>
 <li><strong>A2AClient</strong>: Connects to and interacts with A2A-compliant agent servers.</li>
 <li><strong>Message</strong>: Structured format for communication, with a <code>role</code> and <code>parts</code> containing content.</li>
-<li><strong>sendTask()</strong>: Sends a one-time request and waits for the final response.</li>
+<li><strong>sendMessage()</strong>: Sends a one-time request and waits for the final response.</li>
 </ul>
 <h2 id="3-receiving-streaming-updates">3. Receiving Streaming Updates</h2>
 <p>For long-running tasks or real-time updates, you can use the streaming API:</p>
@@ -1847,8 +1916,8 @@ If you're using Yarn, you can use:</p>
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="p">};</span>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="c1">// Use sendTaskSubscribe to get a stream of updates</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">sendTaskSubscribe</span><span class="p">({</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="c1">// Use sendStreamingMessage to get a stream of updates</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">sendStreamingMessage</span><span class="p">({</span>
 <a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">      </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;streaming-task-01&quot;</span><span class="p">,</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="kt">userMessage</span><span class="p">,</span>
 <a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="p">});</span>
