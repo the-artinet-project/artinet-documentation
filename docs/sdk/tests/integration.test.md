@@ -168,7 +168,7 @@ describe("Client-Server Integration Tests", () => {
 
   test("client can send task and get response", async () => {
     const testMessage = "Hello, A2A!";
-    const task = await client.sendMessage({
+    const task = await client.sendTask({
       message: {
         messageId: "test-message-id",
         kind: "message",
@@ -197,7 +197,7 @@ describe("Client-Server Integration Tests", () => {
 
   test("client can stream task updates", async () => {
     const testMessage = "Test streaming";
-    const stream = client.sendStreamingMessage({
+    const stream = client.sendTaskSubscribe({
       message: {
         taskId: "stream-task-test",
         messageId: "test-message-id",
@@ -247,7 +247,7 @@ describe("Client-Server Integration Tests", () => {
 
   test("client can cancel a task", async () => {
     // First send a task to create it
-    const task = client.sendMessage({
+    const task = client.sendTask({
       message: {
         taskId: "cancel-task-test",
         messageId: "test-message-id",
@@ -266,7 +266,7 @@ describe("Client-Server Integration Tests", () => {
   });
 
   test("client can get task by ID", async () => {
-    await client.sendMessage({
+    await client.sendTask({
       message: {
         taskId: "get-task-test",
         messageId: "test-message-id",

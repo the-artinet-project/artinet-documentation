@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://the-artinet-project.github.io/artinet-documentation/agents/create-quick-agent.html">
+        <link rel="canonical" href="https://the-artinet-project.github.io/artinet-documentation/agents/api-keys.html">
       
       
-        <link rel="prev" href="api-keys.html">
+        <link rel="prev" href="grid-management.html">
       
       
-        <link rel="next" href="../sdk/quickstart.html">
+        <link rel="next" href="create-quick-agent.html">
       
       
       <link rel="icon" href="../images/artinet-logo.ico">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Quick Agent Tool - Artinet SDK Documentation</title>
+        <title>API Key Management - Artinet SDK Documentation</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#create-quick-agent" class="md-skip">
+        <a href="#api-key-management" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Quick Agent Tool
+              API Key Management
             
           </span>
         </div>
@@ -472,29 +472,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="api-keys.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    API Key Management
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -512,7 +489,7 @@
   
   
   <span class="md-ellipsis">
-    Quick Agent Tool
+    API Key Management
     
   </span>
   
@@ -520,12 +497,12 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="create-quick-agent.html" class="md-nav__link md-nav__link--active">
+      <a href="api-keys.html" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Quick Agent Tool
+    API Key Management
     
   </span>
   
@@ -557,28 +534,154 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation-usage" class="md-nav__link">
+  <a href="#generating-api-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation &amp; Usage
+      Generating API Keys
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Installation &amp; Usage">
+    <nav class="md-nav" aria-label="Generating API Keys">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#creating-your-first-api-key" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start
+      Creating Your First API Key
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#interactive-workflow" class="md-nav__link">
+  <a href="#api-key-configuration-options" class="md-nav__link">
     <span class="md-ellipsis">
-      Interactive Workflow
+      API Key Configuration Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Key Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Settings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-types-and-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Types and Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Types and Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#development-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergency-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emergency Keys
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-key-security-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Key Security Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Key Security Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-generation-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Generation Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-and-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage and Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-and-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Alerts
     </span>
   </a>
   
@@ -590,37 +693,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-templates" class="md-nav__link">
+  <a href="#api-key-management-interface" class="md-nav__link">
     <span class="md-ellipsis">
-      Available Templates
+      API Key Management Interface
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Available Templates">
+    <nav class="md-nav" aria-label="API Key Management Interface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#echo-agent" class="md-nav__link">
+  <a href="#dashboard-features" class="md-nav__link">
     <span class="md-ellipsis">
-      echo agent
+      Dashboard Features
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#coding-agent" class="md-nav__link">
+  <a href="#bulk-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      coding agent
+      Bulk Operations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#orchestrator-agent" class="md-nav__link">
+  <a href="#audit-and-compliance" class="md-nav__link">
     <span class="md-ellipsis">
-      orchestrator agent
+      Audit and Compliance
     </span>
   </a>
   
@@ -632,19 +735,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#template-structure" class="md-nav__link">
+  <a href="#integration-examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Template Structure
+      Integration Examples
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Template Structure">
+    <nav class="md-nav" aria-label="Integration Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-project-structure" class="md-nav__link">
+  <a href="#basic-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      Example Project Structure
+      Basic Authentication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      JavaScript Integration
     </span>
   </a>
   
@@ -656,37 +777,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#template-details" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      Template Details
+      Troubleshooting
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Template Details">
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-template" class="md-nav__link">
+  <a href="#common-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Template
+      Common Issues
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#coder-template" class="md-nav__link">
+  <a href="#support-and-recovery" class="md-nav__link">
     <span class="md-ellipsis">
-      Coder Template
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#orchestrator-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      Orchestrator Template
+      Support and Recovery
     </span>
   </a>
   
@@ -698,37 +810,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
+  <a href="#advanced-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Workflow
+      Advanced Features
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
+    <nav class="md-nav" aria-label="Advanced Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#agent-card" class="md-nav__link">
+  <a href="#key-hierarchies" class="md-nav__link">
     <span class="md-ellipsis">
-      Agent Card
+      Key Hierarchies
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
+  <a href="#integration-webhooks" class="md-nav__link">
     <span class="md-ellipsis">
-      Environment Variables
+      Integration Webhooks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Permissions
     </span>
   </a>
   
@@ -740,36 +852,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Requirements
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#package-information" class="md-nav__link">
-    <span class="md-ellipsis">
-      Package Information
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Links
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Contributing
+      Next Steps
     </span>
   </a>
   
@@ -779,6 +864,29 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="create-quick-agent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Agent Tool
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1916,28 +2024,154 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation-usage" class="md-nav__link">
+  <a href="#generating-api-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation &amp; Usage
+      Generating API Keys
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Installation &amp; Usage">
+    <nav class="md-nav" aria-label="Generating API Keys">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#creating-your-first-api-key" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start
+      Creating Your First API Key
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#interactive-workflow" class="md-nav__link">
+  <a href="#api-key-configuration-options" class="md-nav__link">
     <span class="md-ellipsis">
-      Interactive Workflow
+      API Key Configuration Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Key Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Settings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-types-and-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Types and Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Types and Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#development-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergency-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emergency Keys
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-key-security-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Key Security Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Key Security Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-generation-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Generation Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-and-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage and Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-and-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Alerts
     </span>
   </a>
   
@@ -1949,37 +2183,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-templates" class="md-nav__link">
+  <a href="#api-key-management-interface" class="md-nav__link">
     <span class="md-ellipsis">
-      Available Templates
+      API Key Management Interface
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Available Templates">
+    <nav class="md-nav" aria-label="API Key Management Interface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#echo-agent" class="md-nav__link">
+  <a href="#dashboard-features" class="md-nav__link">
     <span class="md-ellipsis">
-      echo agent
+      Dashboard Features
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#coding-agent" class="md-nav__link">
+  <a href="#bulk-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      coding agent
+      Bulk Operations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#orchestrator-agent" class="md-nav__link">
+  <a href="#audit-and-compliance" class="md-nav__link">
     <span class="md-ellipsis">
-      orchestrator agent
+      Audit and Compliance
     </span>
   </a>
   
@@ -1991,19 +2225,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#template-structure" class="md-nav__link">
+  <a href="#integration-examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Template Structure
+      Integration Examples
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Template Structure">
+    <nav class="md-nav" aria-label="Integration Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-project-structure" class="md-nav__link">
+  <a href="#basic-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      Example Project Structure
+      Basic Authentication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      JavaScript Integration
     </span>
   </a>
   
@@ -2015,37 +2267,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#template-details" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      Template Details
+      Troubleshooting
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Template Details">
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-template" class="md-nav__link">
+  <a href="#common-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Template
+      Common Issues
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#coder-template" class="md-nav__link">
+  <a href="#support-and-recovery" class="md-nav__link">
     <span class="md-ellipsis">
-      Coder Template
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#orchestrator-template" class="md-nav__link">
-    <span class="md-ellipsis">
-      Orchestrator Template
+      Support and Recovery
     </span>
   </a>
   
@@ -2057,37 +2300,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
+  <a href="#advanced-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Workflow
+      Advanced Features
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
+    <nav class="md-nav" aria-label="Advanced Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#agent-card" class="md-nav__link">
+  <a href="#key-hierarchies" class="md-nav__link">
     <span class="md-ellipsis">
-      Agent Card
+      Key Hierarchies
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
+  <a href="#integration-webhooks" class="md-nav__link">
     <span class="md-ellipsis">
-      Environment Variables
+      Integration Webhooks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Permissions
     </span>
   </a>
   
@@ -2099,36 +2342,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Requirements
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#package-information" class="md-nav__link">
-    <span class="md-ellipsis">
-      Package Information
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Links
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Contributing
+      Next Steps
     </span>
   </a>
   
@@ -2153,229 +2369,246 @@
   
 
 
-<h1 id="create-quick-agent">Create Quick Agent</h1>
-<p>A tool to create a Quick-Agent project via the CLI.</p>
+<h1 id="api-key-management">API Key Management</h1>
+<p>API keys are essential for securing access to your agents and workflows in the Artinet ecosystem. This guide covers everything you need to know about generating, managing, and securing API keys for optimal agent operation.</p>
 <h2 id="overview">Overview</h2>
-<p><code>create-quick-agent</code> streamlines the initial setup process for building AI agents with the Artinet SDK, allowing you to get your new agent project up and running in minutes.</p>
-<p><strong>Key Features:</strong>
-- 🚀 Quick project scaffolding with predefined templates
-- 🎯 Multiple agent types (basic, coder, orchestrator)
-- 📦 Automatic dependency installation
-- 🛠️ Ready-to-use project structure
-- 🔧 Pre-configured build and deployment scripts</p>
-<h2 id="installation-usage">Installation &amp; Usage</h2>
-<h3 id="quick-start">Quick Start</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Using npx (recommended)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>npx<span class="w"> </span>@artinet/create-quick-agent@latest
+<p>API keys in Artinet serve multiple purposes:
+- <strong>Agent Authentication</strong>: Secure access to your deployed agents
+- <strong>Workflow Integration</strong>: Connect external systems to your agent workflows
+- <strong>Resource Protection</strong>: Control who can use your computational resources
+- <strong>Usage Tracking</strong>: Monitor API consumption and billing
+- <strong>Access Control</strong>: Fine-grained permissions for different use cases</p>
+<h2 id="generating-api-keys">Generating API Keys</h2>
+<h3 id="creating-your-first-api-key">Creating Your First API Key</h3>
+<ol>
+<li><strong>Navigate to API Management</strong>: Go to your dashboard and select "API Keys"</li>
+<li><strong>Click "Generate New Key"</strong>: Start the key creation process</li>
+<li><strong>Configure Key Settings</strong>: Set permissions, expiration, and scope</li>
+<li><strong>Copy and Secure</strong>: Save the key immediately - it won't be shown again</li>
+<li><strong>Test Integration</strong>: Verify the key works with a simple API call</li>
+</ol>
+<h3 id="api-key-configuration-options">API Key Configuration Options</h3>
+<h4 id="key-permissions">Key Permissions</h4>
+<p>Set specific permissions for each API key:</p>
+<p><strong>Agent Access Levels</strong>:
+- <strong>Read Only</strong>: Query agent status and retrieve results
+- <strong>Execute</strong>: Send tasks to agents and trigger workflows<br />
+- <strong>Manage</strong>: Modify agent configurations and settings
+- <strong>Full Access</strong>: Complete control including deployment and deletion</p>
+<p><strong>Resource Scope</strong>:
+- <strong>Single Agent</strong>: Access limited to one specific agent
+- <strong>Agent Group</strong>: Access to a defined set of agents
+- <strong>All Agents</strong>: Access to your entire agent ecosystem
+- <strong>Workflow Specific</strong>: Access limited to specific workflows</p>
+<h4 id="security-settings">Security Settings</h4>
+<p><strong>Expiration Options</strong>:
+- <strong>30 Days</strong>: Short-term keys for temporary integrations
+- <strong>90 Days</strong>: Medium-term keys for project-based work
+- <strong>1 Year</strong>: Long-term keys for production systems
+- <strong>No Expiration</strong>: Permanent keys (use with caution)</p>
+<p><strong>IP Restrictions</strong>:
+- <strong>Any IP</strong>: Allow access from any location (default)
+- <strong>Specific IPs</strong>: Restrict to defined IP addresses
+- <strong>IP Ranges</strong>: Allow access from specific network ranges
+- <strong>Dynamic IPs</strong>: Support for changing IP addresses with validation</p>
+<p><strong>Usage Limits</strong>:
+- <strong>Rate Limiting</strong>: Requests per minute/hour/day
+- <strong>Resource Quotas</strong>: Computational resource consumption limits
+- <strong>Bandwidth Limits</strong>: Data transfer restrictions
+- <strong>Concurrent Connections</strong>: Maximum simultaneous connections</p>
+<h3 id="key-types-and-use-cases">Key Types and Use Cases</h3>
+<h4 id="development-keys">Development Keys</h4>
+<p><strong>Purpose</strong>: Testing and development environments
+- <strong>Permissions</strong>: Limited access to test agents
+- <strong>Expiration</strong>: Short-term (30 days)
+- <strong>Rate Limits</strong>: Low limits to prevent accidental overuse
+- <strong>IP Restrictions</strong>: Development environment IPs only</p>
+<h4 id="production-keys">Production Keys</h4>
+<p><strong>Purpose</strong>: Live applications and services
+- <strong>Permissions</strong>: Specific to production requirements
+- <strong>Expiration</strong>: Long-term or no expiration
+- <strong>Rate Limits</strong>: Higher limits based on expected usage
+- <strong>IP Restrictions</strong>: Production server IPs only</p>
+<h4 id="integration-keys">Integration Keys</h4>
+<p><strong>Purpose</strong>: Third-party service connections
+- <strong>Permissions</strong>: Minimal required permissions
+- <strong>Expiration</strong>: Based on integration lifecycle
+- <strong>Rate Limits</strong>: Moderate limits
+- <strong>IP Restrictions</strong>: Service provider IP ranges</p>
+<h4 id="emergency-keys">Emergency Keys</h4>
+<p><strong>Purpose</strong>: Backup access and incident response
+- <strong>Permissions</strong>: Full access for emergency situations
+- <strong>Expiration</strong>: Short-term with regular rotation
+- <strong>Rate Limits</strong>: High limits for rapid response
+- <strong>IP Restrictions</strong>: Authorized personnel IPs only</p>
+<h2 id="api-key-security-best-practices">API Key Security Best Practices</h2>
+<h3 id="key-generation-security">Key Generation Security</h3>
+<p><strong>Strong Key Generation</strong>:
+- Keys are generated using cryptographically secure random number generators
+- Minimum 256-bit entropy for all production keys
+- Unique keys with no predictable patterns
+- Immediate encryption of keys in our systems</p>
+<h3 id="storage-and-handling">Storage and Handling</h3>
+<p><strong>Secure Storage</strong>:
+- <strong>Environment Variables</strong>: Store keys as environment variables, not in code
+- <strong>Secrets Management</strong>: Use dedicated secrets management systems
+- <strong>Encryption at Rest</strong>: Encrypt stored keys with additional encryption
+- <strong>Access Logging</strong>: Monitor and log all key access attempts</p>
+<p><strong>Code Security</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># ✅ Good - Using environment variable</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ARTINET_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key-here&quot;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Or install globally</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@artinet/create-quick-agent
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>create-quick-agent
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># ❌ Bad - Hardcoded in code</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ak_1234567890abcdef&quot;</span>
+</code></pre></div></p>
+<p><strong>Version Control</strong>:
+- <strong>Never commit keys</strong>: Add API keys to .gitignore
+- <strong>Environment files</strong>: Keep .env files out of repositories
+- <strong>Key scanning</strong>: Use tools to scan for accidentally committed keys
+- <strong>Immediate rotation</strong>: Rotate any keys that may have been exposed</p>
+<h3 id="key-rotation">Key Rotation</h3>
+<p><strong>Regular Rotation Schedule</strong>:
+- <strong>Production Keys</strong>: Rotate every 90 days
+- <strong>Development Keys</strong>: Rotate every 30 days
+- <strong>High-privilege Keys</strong>: Rotate every 30 days
+- <strong>Emergency Keys</strong>: Rotate after each use</p>
+<p><strong>Rotation Process</strong>:
+1. Generate new key with same permissions
+2. Update applications to use new key
+3. Test all integrations with new key
+4. Deactivate old key after verification
+5. Monitor for any failed authentications</p>
+<h3 id="monitoring-and-alerts">Monitoring and Alerts</h3>
+<p><strong>Key Usage Monitoring</strong>:
+- <strong>Unusual Patterns</strong>: Alert on unexpected usage patterns
+- <strong>Failed Authentications</strong>: Monitor failed API key attempts
+- <strong>Rate Limit Violations</strong>: Track keys hitting rate limits
+- <strong>Geographic Anomalies</strong>: Alert on access from unusual locations</p>
+<p><strong>Security Alerts</strong>:
+- <strong>Key Compromise</strong>: Immediate alerts for suspected key theft
+- <strong>Privilege Escalation</strong>: Monitor for unusual permission usage
+- <strong>Bulk Operations</strong>: Alert on mass operations that could indicate misuse
+- <strong>New Key Creation</strong>: Notify on new key generation</p>
+<h2 id="api-key-management-interface">API Key Management Interface</h2>
+<h3 id="dashboard-features">Dashboard Features</h3>
+<p><strong>Key Overview</strong>:
+- <strong>Active Keys</strong>: List of all active API keys
+- <strong>Key Status</strong>: Health and usage status of each key
+- <strong>Permission Summary</strong>: Quick view of key permissions
+- <strong>Usage Statistics</strong>: Recent usage patterns and metrics</p>
+<p><strong>Key Details</strong>:
+- <strong>Creation Date</strong>: When the key was generated
+- <strong>Last Used</strong>: Most recent API call timestamp
+- <strong>Usage Stats</strong>: Detailed usage analytics
+- <strong>Security Events</strong>: Log of security-related events</p>
+<h3 id="bulk-operations">Bulk Operations</h3>
+<p><strong>Multi-Key Management</strong>:
+- <strong>Batch Rotation</strong>: Rotate multiple keys simultaneously
+- <strong>Group Permissions</strong>: Apply permission changes to key groups
+- <strong>Bulk Deactivation</strong>: Quickly deactivate multiple keys
+- <strong>Export Configuration</strong>: Export key settings for backup</p>
+<h3 id="audit-and-compliance">Audit and Compliance</h3>
+<p><strong>Audit Logging</strong>:
+- <strong>Key Generation</strong>: Log all key creation events
+- <strong>Permission Changes</strong>: Track modifications to key permissions
+- <strong>Access Patterns</strong>: Detailed logs of API key usage
+- <strong>Security Events</strong>: Comprehensive security event logging</p>
+<p><strong>Compliance Reports</strong>:
+- <strong>Access Reports</strong>: Who has access to what resources
+- <strong>Usage Reports</strong>: Resource consumption by API key
+- <strong>Security Reports</strong>: Security events and responses
+- <strong>Compliance Dashboards</strong>: Real-time compliance status</p>
+<h2 id="integration-examples">Integration Examples</h2>
+<h3 id="basic-authentication">Basic Authentication</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Basic API call with authentication</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer YOUR_API_KEY&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">     </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">     </span><span class="s2">&quot;https://api.artinet.io/v1/agents/your-agent-id/execute&quot;</span>
 </code></pre></div>
-<h3 id="interactive-workflow">Interactive Workflow</h3>
-<ol>
-<li>Run the command</li>
-<li>Select a template from the available options</li>
-<li>Enter your project name</li>
-<li>The tool creates your project directory</li>
-<li>Dependencies are automatically installed</li>
-<li>Follow the generated instructions to start developing</li>
-</ol>
-<h2 id="available-templates">Available Templates</h2>
-<p>The tool provides several pre-built templates to jumpstart your agent development:</p>
-<h3 id="echo-agent">echo agent</h3>
-<ul>
-<li><strong>Template ID</strong>: <code>basic</code></li>
-<li><strong>Description</strong>: a simple echo agent that returns your original message. (best for beginners)</li>
-</ul>
-<h3 id="coding-agent">coding agent</h3>
-<ul>
-<li><strong>Template ID</strong>: <code>coder</code></li>
-<li><strong>Description</strong>: a coding agent that will return code snippets based on your requests.</li>
-</ul>
-<h3 id="orchestrator-agent">orchestrator agent</h3>
-<ul>
-<li><strong>Template ID</strong>: <code>orchestrator</code></li>
-<li><strong>Description</strong>: an orchestrator agent that can call other agents to get the information it needs.</li>
-</ul>
-<h2 id="template-structure">Template Structure</h2>
-<p>Each generated project includes:</p>
-<ul>
-<li><strong><code>agent.js</code></strong> - Main agent logic and task handler</li>
-<li><strong><code>package.json</code></strong> - Project configuration and dependencies  </li>
-<li><strong><code>launch.js</code></strong> - Local development server</li>
-<li><strong><code>deploy.js</code></strong> - Production deployment script</li>
-<li><strong><code>test-deploy.js</code></strong> - Test deployment functionality</li>
-<li><strong><code>lib/</code></strong> - Configuration files (card.js, deployment.js, etc.)</li>
-</ul>
-<h3 id="example-project-structure">Example Project Structure</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>my-agent-project/
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── agent.js              # Main agent implementation
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── package.json          # Project dependencies
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── launch.js             # Development server
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├── deploy.js             # Production deployment
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├── test-deploy.js        # Test runner
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>└── lib/
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    ├── card.js           # Agent card configuration
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    ├── deployment.js     # Deployment configuration
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    └── artinet-agent.js  # Artinet platform integration
+<h3 id="python-integration">Python Integration</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Secure key retrieval from environment</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ARTINET_API_KEY&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer </span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="s1">&#39;https://api.artinet.io/v1/agents/execute&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;your task here&#39;</span><span class="p">}</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="p">)</span>
 </code></pre></div>
-<h2 id="template-details">Template Details</h2>
-<h3 id="basic-template">Basic Template</h3>
-<p><strong>Files included</strong>: agent.js, deploy.js, launch.js, lib, package.json, test-deploy.js</p>
-<p><strong>Description</strong>: a simple echo agent that returns your original message.</p>
-<p><strong>Agent Preview</strong>:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cm">/**</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cm"> * Basic Agent Example</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="cm"> *</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="cm"> * This example demonstrates how to create a simple agent</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="cm"> * that responds to incoming tasks.</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="cm"> */</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">export</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="o">*</span><span class="w"> </span><span class="nx">demoAgent</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="c1">// Extract the user&#39;s message</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">userMessage</span><span class="p">.</span><span class="nx">parts</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">part</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">part</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">part</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">part</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Processing request: </span><span class="si">${</span><span class="nx">userText</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">  </span><span class="c1">// Send a &quot;working&quot; status update</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">  </span><span class="k">yield</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;working&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1">// ... (truncated for brevity)</span>
-</code></pre></div></p>
-<h3 id="coder-template">Coder Template</h3>
-<p><strong>Files included</strong>: agent.js, deploy.js, lib, package.json, test-deploy.js</p>
-<p><strong>Description</strong>: a coding agent that will return code snippets based on your requests.</p>
-<p><strong>Agent Preview</strong>:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">artinet</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@artinet/sdk/agents&quot;</span><span class="p">;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">export</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="o">*</span><span class="w"> </span><span class="nx">demoAgent</span><span class="p">({</span><span class="w"> </span><span class="nx">task</span><span class="p">,</span><span class="w"> </span><span class="nx">history</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nx">history</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">history</span><span class="p">,</span><span class="w"> </span><span class="p">...(</span><span class="nx">task</span><span class="p">.</span><span class="nx">status</span><span class="p">.</span><span class="nx">message</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">[</span><span class="nx">task</span><span class="p">.</span><span class="nx">status</span><span class="p">.</span><span class="nx">message</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">[])];</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">messages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">history</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="p">[])</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">m</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="nx">m</span><span class="p">.</span><span class="nx">role</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;agent&quot;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;model&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="nx">m</span><span class="p">.</span><span class="nx">parts</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">        </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">p</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">!!</span><span class="nx">p</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">p</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="p">}))</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">m</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">m</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="sb">`[CoderAgent] No history/messages found for task </span><span class="si">${</span><span class="nx">task</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="k">yield</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">      </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;failed&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">        </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;agent&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="c1">// ... (truncated for brevity)</span>
-</code></pre></div></p>
-<h3 id="orchestrator-template">Orchestrator Template</h3>
-<p><strong>Files included</strong>: agent.js, deploy.js, lib, package.json, test-deploy.js</p>
-<p><strong>Description</strong>: an orchestrator agent that can call other agents to get the information it needs.</p>
-<p><strong>Agent Preview</strong>:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">artinet</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@artinet/sdk/agents&quot;</span><span class="p">;</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">export</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="o">*</span><span class="w"> </span><span class="nx">demoAgent</span><span class="p">({</span><span class="w"> </span><span class="nx">userMessage</span><span class="p">,</span><span class="w"> </span><span class="nx">isCancelled</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="k">yield</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;working&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;agent&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="nx">parts</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Thinking about your request...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="w"> </span><span class="p">}],</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="p">};</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">userText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userMessage</span><span class="p">.</span><span class="nx">parts</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">part</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">part</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">part</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">part</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="c1">// Create a response</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Failed to send task`</span><span class="p">;</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1">// ... (truncated for brevity)</span>
-</code></pre></div></p>
-<h2 id="development-workflow">Development Workflow</h2>
-<p>After creating your project:</p>
-<ol>
-<li>
-<p><strong>Navigate to your project</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>your-project-name
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Test your agent locally</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>npm<span class="w"> </span><span class="nb">test</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Start development server</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>npm<span class="w"> </span>start
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Deploy to production</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>npm<span class="w"> </span>run<span class="w"> </span>deploy
-</code></pre></div></p>
-</li>
-</ol>
-<h2 id="configuration">Configuration</h2>
-<h3 id="agent-card">Agent Card</h3>
-<p>Update the <code>./lib/card.js</code> file to customize your agent's metadata:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">agentCard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;your-agent-name&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Your agent description&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;https://your-agent.example.com/api&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nx">version</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nx">capabilities</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="nx">streaming</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="nx">pushNotifications</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nx">stateTransitionHistory</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="nx">skills</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">      </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;your-skill&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Your Skill&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">      </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;What your agent can do&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="p">};</span>
+<h3 id="javascript-integration">JavaScript Integration</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Secure API key usage in Node.js</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ARTINET_API_KEY</span><span class="p">;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.artinet.io/v1/agents/execute&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="s1">&#39;Authorization&#39;</span><span class="o">:</span><span class="w"> </span><span class="sb">`Bearer </span><span class="si">${</span><span class="nx">apiKey</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="nx">task</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your task here&#39;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="p">})</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">});</span>
 </code></pre></div>
-<h3 id="environment-variables">Environment Variables</h3>
-<p>For deployment, ensure you have:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nv">ARTINET_API_KEY</span><span class="o">=</span>your_api_key_here
-</code></pre></div>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li><strong>Node.js</strong>: &gt;=22.0.0</li>
-<li><strong>npm</strong>: Comes with Node.js</li>
-</ul>
-<h2 id="package-information">Package Information</h2>
-<ul>
-<li><strong>Version</strong>: 0.0.6</li>
-<li><strong>License</strong>: Apache-2.0</li>
-<li><strong>Repository</strong>: <a href="https://github.com/the-artinet-project/create-quick-agent">https://github.com/the-artinet-project/create-quick-agent</a></li>
-</ul>
-<h2 id="links">Links</h2>
-<ul>
-<li><a href="https://the-artinet-project.github.io/artinet-documentation/">Artinet SDK Documentation</a></li>
-<li><a href="https://github.com/the-artinet-project/create-quick-agent">GitHub Repository</a></li>
-<li><a href="https://www.npmjs.com/package/@artinet/create-quick-agent">npm Package</a></li>
-</ul>
-<h2 id="contributing">Contributing</h2>
-<p>Contributions are welcome! Please see the <a href="https://github.com/the-artinet-project/create-quick-agent">repository</a> for guidelines on:</p>
-<ul>
-<li>Submitting bug reports</li>
-<li>Requesting new features  </li>
-<li>Contributing template improvements</li>
-<li>Adding new agent templates</li>
-</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<p><strong>Authentication Failures</strong>:
+- <strong>Invalid Key</strong>: Verify the key is copied correctly
+- <strong>Expired Key</strong>: Check expiration date and rotate if needed
+- <strong>Wrong Permissions</strong>: Ensure key has required permissions
+- <strong>IP Restrictions</strong>: Verify request is from authorized IP</p>
+<p><strong>Rate Limit Issues</strong>:
+- <strong>Exceeded Limits</strong>: Monitor usage and adjust limits if needed
+- <strong>Burst Traffic</strong>: Implement proper request queuing
+- <strong>Multiple Keys</strong>: Distribute load across multiple keys
+- <strong>Usage Optimization</strong>: Optimize requests to reduce API calls</p>
+<p><strong>Integration Problems</strong>:
+- <strong>Header Format</strong>: Ensure proper Authorization header format
+- <strong>HTTPS Requirements</strong>: All API calls must use HTTPS
+- <strong>Request Format</strong>: Verify JSON formatting and content types
+- <strong>Response Handling</strong>: Implement proper error response handling</p>
+<h3 id="support-and-recovery">Support and Recovery</h3>
+<p><strong>Key Recovery</strong>:
+- <strong>Lost Keys</strong>: Cannot be recovered - generate new keys
+- <strong>Compromised Keys</strong>: Immediately deactivate and rotate
+- <strong>Access Issues</strong>: Contact support with account verification
+- <strong>Emergency Access</strong>: Use emergency key procedures</p>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="key-hierarchies">Key Hierarchies</h3>
+<p><strong>Parent-Child Relationships</strong>:
+- <strong>Master Keys</strong>: Full access keys for system administration
+- <strong>Derived Keys</strong>: Limited keys derived from master keys
+- <strong>Inheritance</strong>: Permission inheritance from parent keys
+- <strong>Revocation</strong>: Cascading revocation of child keys</p>
+<h3 id="integration-webhooks">Integration Webhooks</h3>
+<p><strong>Key Event Notifications</strong>:
+- <strong>Key Creation</strong>: Notify when new keys are generated
+- <strong>Usage Anomalies</strong>: Alert on unusual usage patterns
+- <strong>Security Events</strong>: Immediate notification of security issues
+- <strong>Expiration Warnings</strong>: Advance warning of key expiration</p>
+<h3 id="custom-permissions">Custom Permissions</h3>
+<p><strong>Advanced Permission Models</strong>:
+- <strong>Time-based Access</strong>: Keys that only work during specific hours
+- <strong>Geographic Restrictions</strong>: Location-based access control
+- <strong>Resource Quotas</strong>: Fine-grained resource usage limits
+- <strong>Conditional Access</strong>: Context-aware permission evaluation</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>Master API key management and explore:
+- <a href="agent-creation.html">Agent Creation</a> - Return to agent creation guide
+- <a href="grid-management.html">Grid Management</a> - Build visual workflows with your agents
+- <a href="test-and-deploy.html">Test and Deploy</a> - Deploy and monitor your agents</p>
 <hr />
-<p><em>Generated automatically from create-quick-agent source code</em></p>
+<blockquote>
+<p><strong>🔐 Security First</strong>: Proper API key management is the foundation of secure agent operations. Always follow security best practices and regularly audit your key usage patterns. </p>
+</blockquote>
 
 
 

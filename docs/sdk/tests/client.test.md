@@ -367,7 +367,7 @@ describe("A2AClient", () => {
       message,
     };
 
-    const task = await client.sendMessage(params);
+    const task = await client.sendTask(params);
     expect(task).toEqual(MOCK_TASK);
   });
 
@@ -436,7 +436,7 @@ describe("A2AClient", () => {
       | TaskArtifactUpdateEvent
       | Message
     )[] = [];
-    const stream = client.sendStreamingMessage(params);
+    const stream = client.sendTaskSubscribe(params);
     for await (const event of stream) {
       events.push(event);
     }
@@ -552,7 +552,7 @@ describe("A2AClient", () => {
       })
     );
 
-    const stream = client.sendStreamingMessage({
+    const stream = client.sendTaskSubscribe({
       message: {
         messageId: "test-message-id",
         kind: "message",

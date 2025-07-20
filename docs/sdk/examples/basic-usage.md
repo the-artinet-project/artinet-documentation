@@ -61,7 +61,7 @@ async function main() {
     // Send a task
     console.log(`Sending task with ID: ${taskId}...`);
 
-    const task = await client.sendMessage({
+    const task = await client.sendTask({
       id: taskId,
       message,
     });

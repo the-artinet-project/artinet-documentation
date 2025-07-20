@@ -1,84 +1,147 @@
-# Welcome to Artinet SDK!
+# Artinet Documentation
 
-## What is the Artinet SDK?
+Welcome to Artinet, the comprehensive platform for creating, testing, and deploying intelligent agents that work together to solve complex problems. Whether you're building simple conversational agents or orchestrating complex multi-agent workflows, Artinet provides the tools and framework you need.
 
-The Artinet SDK is a robust implementation of the [Agent2Agent (A2A) Protocol](https://github.com/google/A2A) that enables developers to create and connect AI agents. Written in TypeScript, this SDK provides everything you need to build, deploy, and interact with A2A-compliant agents.
+## Getting Started with Agent Creation
 
-## Key Features
+Artinet's **Hero Types** system makes agent creation accessible to everyone, from business users to technical developers. Instead of writing complex code, you can create powerful agents by selecting from three specialized types optimized for different roles.
 
-* **Production-Ready**: Built with a focus on developer experience, reliability, and comprehensive features.
-* **Plug-and-Play Server**: Built on Express.js, the SDK handles JSON-RPC complexity, routing, protocol compliance, and streaming mechanics automatically.
-* **Enhanced Client**: Features refined error handling, flexible header management for authentication, and clear separation of concerns.
-* **TypeScript First**: Fully written in TypeScript with comprehensive type definitions for a robust developer experience.
-* **Flexible Storage**: Choose between memory storage for development or file-based persistence for production.
-* **Server Registration**: Easily register your agents with the A2A registry for discovery.
+### 🎭 Hero Types: The Foundation of Agent Creation
 
-## Getting Started
+**[Director Agents](agents/hero-types.md#director-agent)** - Orchestrate and manage other agents
+- Coordinate complex multi-agent workflows
+- Make strategic decisions and delegate tasks
+- Perfect for project management and business process automation
 
-```bash
-# Install the SDK
-npm install @artinet/sdk@0.5.2
-```
+**[Worker Agents](agents/hero-types.md#worker-agent)** - Execute specialized tasks with tool access
+- Connect to external systems and APIs via MCP tools
+- Handle data processing, analysis, and system integrations
+- Ideal for technical operations and specialized computations
 
-Create your first agent in just a few lines of code:
+**[Speaker Agents](agents/hero-types.md#speaker-agent)** - Excel at communication and content creation
+- Natural language processing and conversation management
+- Content creation and user interaction
+- Perfect for customer service, writing, and user interfaces
 
-```typescript
-import {
-  A2AServer,
-  TaskContext,
-  TaskHandler,
-  InMemoryTaskStore,
-} from "@artinet/sdk";
+### Quick Start Guide
 
-// Define your agent logic
-const myAgentLogic: TaskHandler = async function* (context: TaskContext) {
-  yield { state: "working" };
-  yield {
-    state: "completed",
-    message: {
-      role: "agent",
-      parts: [{ type: "text", text: "Hello from Artinet!" }],
-    },
-  };
-};
+1. **[Create Your First Agent](agents/agent-creation.md)** - Learn the Hero Types system and create agents optimized for specific roles
+2. **[Test and Deploy](agents/test-and-deploy.md)** - Thoroughly test your agents and deploy them to production
+3. **[Build Workflows](agents/grid-management.md)** - Use the visual Grid interface to connect agents in powerful workflows
+4. **[Secure Access](agents/api-keys.md)** - Generate and manage API keys for secure agent interactions
 
-// Start your server
-const server = new A2AServer({
-  handler: myAgentLogic,
-  taskStore: new InMemoryTaskStore(),
-  port: 3000,
-  basePath: "/a2a",
-  card: {
-    name: "My First Agent",
-    url: "http://localhost:3000/a2a",
-    version: "0.1.0",
-    capabilities: { streaming: true },
-    skills: [{ id: "greeting", name: "Greeting Skill" }],
-  },
-});
+## Why Choose Artinet's Hero Types?
 
-server.start();
-console.log("Agent running at http://localhost:3000/a2a");
-```
+**✅ No Coding Required**: Create sophisticated agents using our intuitive interface and Hero Type templates
 
-## Why Use Artinet SDK?
+**✅ Optimized Performance**: Each Hero Type is optimized for its specific role and use case
 
-* **A2A Protocol Compliance**: Full implementation of the official A2A specification using the official JSON schema.
-* **Robust Streaming**: Reliable Server-Sent Events (SSE) support for real-time communication.
-* **Configurable Logging**: Integrated structured logging via `pino` with configurable levels.
-* **Advanced Customization**: Fine-grained control over the JSON-RPC server, enabling integration with existing Express apps or adding custom methods.
-* **Comprehensive Testing**: Includes a robust test suite to ensure reliability and maintainability.
-* **Agent Discovery**: Support for registering agents with the A2A registry for discovery.
+**✅ Better Collaboration**: Agents understand each other's capabilities through standardized Hero Types
 
-## Development Tools
+**✅ Scalable Architecture**: Easily build from simple single-agent solutions to complex multi-agent ecosystems
 
-## Next Steps
+**✅ Rapid Development**: Go from concept to deployed agent in minutes, not days
 
-Ready to dive deeper? Check out these resources:
+## Featured Workflows
 
-- [Quick Start Guide](./sdk/quickstart.md) - Get up and running with a complete agent example
-- [Core Components](./sdk/core.md) - Understand the fundamental building blocks of the SDK
-- [Examples](./sdk/examples/index.md) - Explore common usage patterns and scenarios
-- [API Reference](./api/index.md) - Detailed documentation of all classes and methods
+### Business Process Automation
+Use a **Director** to coordinate:
+- **Worker** agents for data processing and system integration
+- **Speaker** agents for customer communication and notifications
+- Complete automation of complex business workflows
+
+### Content Production Pipeline
+Create sophisticated content workflows:
+- **Director** manages editorial calendar and assigns tasks
+- **Worker** agents research and gather data from various sources  
+- **Speaker** agents create, edit, and publish content across channels
+
+### Customer Service Excellence
+Build comprehensive customer support:
+- **Speaker** agents handle initial customer interactions
+- **Worker** agents access customer data and process requests
+- **Director** escalates and coordinates complex issue resolution
+
+## Advanced Development
+
+For developers who need complete control over agent behavior and want to build custom solutions from the ground up, Artinet provides a comprehensive SDK.
+
+### 🔧 Custom Agent Development (Advanced)
+
+The Artinet SDK is designed for advanced or custom agent creation scenarios where the Hero Types system doesn't fully meet your specific requirements. While Hero Types are recommended for most use cases, the SDK provides:
+
+**Complete Customization**: Build agents with exact specifications for unique requirements
+
+**Low-Level Control**: Direct access to the Agent2Agent protocol and communication layers
+
+**Custom Integrations**: Create specialized integrations beyond standard MCP tools
+
+**Research and Experimentation**: Prototype new agent behaviors and interaction patterns
+
+> **💡 Recommendation**: Most users should start with Hero Types, as they're likely to be better supported and more compatible with the broader Artinet ecosystem. Consider the SDK only when Hero Types cannot meet your specific requirements.
+
+**[Explore Advanced SDK Development →](sdk/quickstart.md)**
+
+## Platform Features
+
+### Visual Grid Interface
+- **Drag-and-Drop Workflows**: Create complex multi-agent systems visually
+- **Real-Time Testing**: Test individual agents and complete workflows
+- **Save and Share**: Store workflow templates and share with team members
+
+### Comprehensive Testing
+- **Sandbox Environment**: Safe testing environment for all agent types
+- **End-to-End Validation**: Test complete workflows before deployment
+- **Performance Monitoring**: Track agent performance and optimize accordingly
+
+### Security and Management
+- **API Key Management**: Fine-grained access control and security
+- **Usage Analytics**: Monitor agent performance and resource consumption
+- **Team Collaboration**: Share agents and workflows across your organization
+
+### Integration Ecosystem
+- **MCP Tools**: Extensive library of tools for Worker agents
+- **External APIs**: Connect to any REST API or webhook
+- **Database Access**: Direct integration with popular databases
+- **Cloud Services**: Native integration with major cloud providers
+
+## Community and Support
+
+### Learning Resources
+- **[Hero Types Deep Dive](agents/hero-types.md)** - Comprehensive guide to all three Hero Types
+- **[Best Practices](agents/agent-creation.md#best-practices)** - Learn from successful agent implementations
+- **[Example Workflows](agents/grid-management.md#best-practices)** - Ready-to-use workflow templates
+
+### Getting Help
+- **Documentation Search**: Find answers in our comprehensive documentation
+- **Community Forums**: Connect with other Artinet developers and users
+- **Support Channels**: Get help from our technical support team
+- **Video Tutorials**: Step-by-step video guides for common tasks
+
+## Architecture Overview
+
+Artinet is built on the **Agent2Agent (A2A) protocol**, enabling secure, efficient communication between agents regardless of their implementation or location. This architecture provides:
+
+- **Decentralized Operation**: Agents can run anywhere while maintaining coordination
+- **Secure Communication**: Built-in authentication and encryption
+- **Scalable Infrastructure**: From single agents to thousands of coordinated agents
+- **Standard Protocols**: Open standards enable interoperability and extensibility
+
+## Ready to Begin?
+
+### For Business Users and Content Creators
+Start with **[Agent Creation](agents/agent-creation.md)** to learn about Hero Types and create your first agents using our intuitive interface.
+
+### For Developers and Technical Users
+Begin with **[Hero Types Overview](agents/hero-types.md)** to understand the three agent types, then proceed to **[Grid Management](agents/grid-management.md)** for workflow creation.
+
+### For Advanced Developers
+Explore **[SDK Development](sdk/quickstart.md)** for complete customization and advanced agent development scenarios.
+
+---
+
+> **🚀 Start Building**: The future of work is collaborative intelligence between humans and agents. Artinet makes that future accessible today, whether you're automating simple tasks or building sophisticated multi-agent systems.
+
+**Ready to create your first agent? [Get started with Hero Types →](agents/agent-creation.md)**
 
 

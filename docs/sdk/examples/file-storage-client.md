@@ -64,7 +64,7 @@ async function sendMessage(client, taskId, text) {
   };
 
   // Send a task
-  const task = await client.sendMessage({
+  const task = await client.sendTask({
     id: taskId,
     message,
   });

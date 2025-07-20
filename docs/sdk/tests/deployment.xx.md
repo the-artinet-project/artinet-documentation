@@ -304,7 +304,7 @@ describe("FullDeployment", () => {
     const params: MessageSendParams = {
       message: message,
     };
-    const task = await client.sendMessage(params);
+    const task = await client.sendTask(params);
     logDebug("testDeployment", "task:", JSON.stringify(task));
     expect(task).toBeDefined();
     expect(task?.kind).toBe("task");
@@ -324,7 +324,7 @@ describe("FullDeployment", () => {
     const params: MessageSendParams = {
       message: message,
     };
-    const task = await client.sendMessage(params);
+    const task = await client.sendTask(params);
     logDebug("testDeployment", "task:", JSON.stringify(task));
     expect(task).toBeDefined();
     expect(task?.kind).toBe("task");

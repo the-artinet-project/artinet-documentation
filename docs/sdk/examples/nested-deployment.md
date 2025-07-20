@@ -53,7 +53,7 @@ export async function* simpleEchoAgent(
         },
       ],
     };
-    const task = await agentClient.sendMessage({
+    const task = await agentClient.sendTask({
       id: "111",
       message: message,
     });
