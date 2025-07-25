@@ -20,11 +20,11 @@
       
       
       <link rel="icon" href="../images/artinet-logo.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
-        <title>API Key Management - Artinet SDK Documentation</title>
+        <title>API Key Creation - Artinet Documentation</title>
       
     
     
@@ -64,8 +64,6 @@
   
     
     
-      
-    
     
     
     
@@ -90,7 +88,7 @@
     
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="https://the-artinet-project.github.io/artinet-documentation/" title="Artinet SDK Documentation" class="md-header__button md-logo" aria-label="Artinet SDK Documentation">
+    <a href="https://the-artinet-project.github.io/artinet-documentation/" title="Artinet Documentation" class="md-header__button md-logo" aria-label="Artinet Documentation">
       
   <img src="../images/artinet-logo.png" alt="logo">
 
@@ -102,13 +100,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Artinet SDK Documentation
+            Artinet Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              API Key Management
+              API Key Creation
             
           </span>
         </div>
@@ -284,12 +282,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="Artinet SDK Documentation" class="md-nav__button md-logo" aria-label="Artinet SDK Documentation" data-md-component="logo">
+    <a href="../index.html" title="Artinet Documentation" class="md-nav__button md-logo" aria-label="Artinet Documentation" data-md-component="logo">
       
   <img src="../images/artinet-logo.png" alt="logo">
 
     </a>
-    Artinet SDK Documentation
+    Artinet Documentation
   </label>
   
     <div class="md-nav__source">
@@ -406,29 +404,6 @@
   
   
     <li class="md-nav__item">
-      <a href="hero-types.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Hero Types
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="test-and-deploy.html" class="md-nav__link">
         
   
@@ -457,7 +432,7 @@
   
   
   <span class="md-ellipsis">
-    Grid Management
+    The Grid
     
   </span>
   
@@ -489,7 +464,7 @@
   
   
   <span class="md-ellipsis">
-    API Key Management
+    API Key Creation
     
   </span>
   
@@ -502,7 +477,7 @@
   
   
   <span class="md-ellipsis">
-    API Key Management
+    API Key Creation
     
   </span>
   
@@ -547,300 +522,6 @@
   <a href="#creating-your-first-api-key" class="md-nav__link">
     <span class="md-ellipsis">
       Creating Your First API Key
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-key-configuration-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Key Configuration Options
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Key Configuration Options">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#key-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Settings
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#key-types-and-use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Types and Use Cases
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Types and Use Cases">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#development-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#production-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Production Keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#emergency-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Emergency Keys
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api-key-security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Key Security Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Key Security Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#key-generation-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Generation Security
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#storage-and-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Storage and Handling
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#key-rotation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Rotation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring-and-alerts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring and Alerts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api-key-management-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Key Management Interface
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Key Management Interface">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dashboard-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dashboard Features
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bulk-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bulk Operations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#audit-and-compliance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Audit and Compliance
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Integration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      Basic Authentication
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#python-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python Integration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#javascript-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      JavaScript Integration
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#support-and-recovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      Support and Recovery
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advanced-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Advanced Features
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Advanced Features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#key-hierarchies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Hierarchies
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration-webhooks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Webhooks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#custom-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom Permissions
     </span>
   </a>
   
@@ -956,7 +637,7 @@
   
   
   <span class="md-ellipsis">
-    SDK Overview
+    Quickstart
     
   </span>
   
@@ -979,7 +660,7 @@
   
   
   <span class="md-ellipsis">
-    Core SDK
+    Core
     
   </span>
   
@@ -2042,300 +1723,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#api-key-configuration-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Key Configuration Options
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Key Configuration Options">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#key-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Settings
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#key-types-and-use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Types and Use Cases
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Types and Use Cases">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#development-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#production-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Production Keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Keys
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#emergency-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      Emergency Keys
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api-key-security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Key Security Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Key Security Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#key-generation-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Generation Security
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#storage-and-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Storage and Handling
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#key-rotation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Rotation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring-and-alerts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring and Alerts
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api-key-management-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Key Management Interface
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Key Management Interface">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dashboard-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dashboard Features
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bulk-operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bulk Operations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#audit-and-compliance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Audit and Compliance
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Integration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      Basic Authentication
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#python-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Python Integration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#javascript-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      JavaScript Integration
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#support-and-recovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      Support and Recovery
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advanced-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Advanced Features
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Advanced Features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#key-hierarchies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Hierarchies
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration-webhooks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Webhooks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#custom-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom Permissions
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2370,245 +1757,23 @@
 
 
 <h1 id="api-key-management">API Key Management</h1>
-<p>API keys are essential for securing access to your agents and workflows in the Artinet ecosystem. This guide covers everything you need to know about generating, managing, and securing API keys for optimal agent operation.</p>
+<p>API keys are for securing access to your agents and workflows in the Artinet ecosystem. This guide covers everything you need to know about generating your API keys.</p>
 <h2 id="overview">Overview</h2>
-<p>API keys in Artinet serve multiple purposes:
-- <strong>Agent Authentication</strong>: Secure access to your deployed agents
-- <strong>Workflow Integration</strong>: Connect external systems to your agent workflows
-- <strong>Resource Protection</strong>: Control who can use your computational resources
-- <strong>Usage Tracking</strong>: Monitor API consumption and billing
-- <strong>Access Control</strong>: Fine-grained permissions for different use cases</p>
+<p>API keys in Artinet are used for deployment onto the Artinet. This allows agents to be registered to you, the creator.</p>
 <h2 id="generating-api-keys">Generating API Keys</h2>
 <h3 id="creating-your-first-api-key">Creating Your First API Key</h3>
 <ol>
 <li><strong>Navigate to API Management</strong>: Go to your dashboard and select "API Keys"</li>
 <li><strong>Click "Generate New Key"</strong>: Start the key creation process</li>
-<li><strong>Configure Key Settings</strong>: Set permissions, expiration, and scope</li>
 <li><strong>Copy and Secure</strong>: Save the key immediately - it won't be shown again</li>
-<li><strong>Test Integration</strong>: Verify the key works with a simple API call</li>
 </ol>
-<h3 id="api-key-configuration-options">API Key Configuration Options</h3>
-<h4 id="key-permissions">Key Permissions</h4>
-<p>Set specific permissions for each API key:</p>
-<p><strong>Agent Access Levels</strong>:
-- <strong>Read Only</strong>: Query agent status and retrieve results
-- <strong>Execute</strong>: Send tasks to agents and trigger workflows<br />
-- <strong>Manage</strong>: Modify agent configurations and settings
-- <strong>Full Access</strong>: Complete control including deployment and deletion</p>
-<p><strong>Resource Scope</strong>:
-- <strong>Single Agent</strong>: Access limited to one specific agent
-- <strong>Agent Group</strong>: Access to a defined set of agents
-- <strong>All Agents</strong>: Access to your entire agent ecosystem
-- <strong>Workflow Specific</strong>: Access limited to specific workflows</p>
-<h4 id="security-settings">Security Settings</h4>
-<p><strong>Expiration Options</strong>:
-- <strong>30 Days</strong>: Short-term keys for temporary integrations
-- <strong>90 Days</strong>: Medium-term keys for project-based work
-- <strong>1 Year</strong>: Long-term keys for production systems
-- <strong>No Expiration</strong>: Permanent keys (use with caution)</p>
-<p><strong>IP Restrictions</strong>:
-- <strong>Any IP</strong>: Allow access from any location (default)
-- <strong>Specific IPs</strong>: Restrict to defined IP addresses
-- <strong>IP Ranges</strong>: Allow access from specific network ranges
-- <strong>Dynamic IPs</strong>: Support for changing IP addresses with validation</p>
-<p><strong>Usage Limits</strong>:
-- <strong>Rate Limiting</strong>: Requests per minute/hour/day
-- <strong>Resource Quotas</strong>: Computational resource consumption limits
-- <strong>Bandwidth Limits</strong>: Data transfer restrictions
-- <strong>Concurrent Connections</strong>: Maximum simultaneous connections</p>
-<h3 id="key-types-and-use-cases">Key Types and Use Cases</h3>
-<h4 id="development-keys">Development Keys</h4>
-<p><strong>Purpose</strong>: Testing and development environments
-- <strong>Permissions</strong>: Limited access to test agents
-- <strong>Expiration</strong>: Short-term (30 days)
-- <strong>Rate Limits</strong>: Low limits to prevent accidental overuse
-- <strong>IP Restrictions</strong>: Development environment IPs only</p>
-<h4 id="production-keys">Production Keys</h4>
-<p><strong>Purpose</strong>: Live applications and services
-- <strong>Permissions</strong>: Specific to production requirements
-- <strong>Expiration</strong>: Long-term or no expiration
-- <strong>Rate Limits</strong>: Higher limits based on expected usage
-- <strong>IP Restrictions</strong>: Production server IPs only</p>
-<h4 id="integration-keys">Integration Keys</h4>
-<p><strong>Purpose</strong>: Third-party service connections
-- <strong>Permissions</strong>: Minimal required permissions
-- <strong>Expiration</strong>: Based on integration lifecycle
-- <strong>Rate Limits</strong>: Moderate limits
-- <strong>IP Restrictions</strong>: Service provider IP ranges</p>
-<h4 id="emergency-keys">Emergency Keys</h4>
-<p><strong>Purpose</strong>: Backup access and incident response
-- <strong>Permissions</strong>: Full access for emergency situations
-- <strong>Expiration</strong>: Short-term with regular rotation
-- <strong>Rate Limits</strong>: High limits for rapid response
-- <strong>IP Restrictions</strong>: Authorized personnel IPs only</p>
-<h2 id="api-key-security-best-practices">API Key Security Best Practices</h2>
-<h3 id="key-generation-security">Key Generation Security</h3>
-<p><strong>Strong Key Generation</strong>:
-- Keys are generated using cryptographically secure random number generators
-- Minimum 256-bit entropy for all production keys
-- Unique keys with no predictable patterns
-- Immediate encryption of keys in our systems</p>
-<h3 id="storage-and-handling">Storage and Handling</h3>
-<p><strong>Secure Storage</strong>:
-- <strong>Environment Variables</strong>: Store keys as environment variables, not in code
-- <strong>Secrets Management</strong>: Use dedicated secrets management systems
-- <strong>Encryption at Rest</strong>: Encrypt stored keys with additional encryption
-- <strong>Access Logging</strong>: Monitor and log all key access attempts</p>
-<p><strong>Code Security</strong>:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># ✅ Good - Using environment variable</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ARTINET_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key-here&quot;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># ❌ Bad - Hardcoded in code</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ak_1234567890abcdef&quot;</span>
-</code></pre></div></p>
-<p><strong>Version Control</strong>:
-- <strong>Never commit keys</strong>: Add API keys to .gitignore
-- <strong>Environment files</strong>: Keep .env files out of repositories
-- <strong>Key scanning</strong>: Use tools to scan for accidentally committed keys
-- <strong>Immediate rotation</strong>: Rotate any keys that may have been exposed</p>
-<h3 id="key-rotation">Key Rotation</h3>
-<p><strong>Regular Rotation Schedule</strong>:
-- <strong>Production Keys</strong>: Rotate every 90 days
-- <strong>Development Keys</strong>: Rotate every 30 days
-- <strong>High-privilege Keys</strong>: Rotate every 30 days
-- <strong>Emergency Keys</strong>: Rotate after each use</p>
-<p><strong>Rotation Process</strong>:
-1. Generate new key with same permissions
-2. Update applications to use new key
-3. Test all integrations with new key
-4. Deactivate old key after verification
-5. Monitor for any failed authentications</p>
-<h3 id="monitoring-and-alerts">Monitoring and Alerts</h3>
-<p><strong>Key Usage Monitoring</strong>:
-- <strong>Unusual Patterns</strong>: Alert on unexpected usage patterns
-- <strong>Failed Authentications</strong>: Monitor failed API key attempts
-- <strong>Rate Limit Violations</strong>: Track keys hitting rate limits
-- <strong>Geographic Anomalies</strong>: Alert on access from unusual locations</p>
-<p><strong>Security Alerts</strong>:
-- <strong>Key Compromise</strong>: Immediate alerts for suspected key theft
-- <strong>Privilege Escalation</strong>: Monitor for unusual permission usage
-- <strong>Bulk Operations</strong>: Alert on mass operations that could indicate misuse
-- <strong>New Key Creation</strong>: Notify on new key generation</p>
-<h2 id="api-key-management-interface">API Key Management Interface</h2>
-<h3 id="dashboard-features">Dashboard Features</h3>
-<p><strong>Key Overview</strong>:
-- <strong>Active Keys</strong>: List of all active API keys
-- <strong>Key Status</strong>: Health and usage status of each key
-- <strong>Permission Summary</strong>: Quick view of key permissions
-- <strong>Usage Statistics</strong>: Recent usage patterns and metrics</p>
-<p><strong>Key Details</strong>:
-- <strong>Creation Date</strong>: When the key was generated
-- <strong>Last Used</strong>: Most recent API call timestamp
-- <strong>Usage Stats</strong>: Detailed usage analytics
-- <strong>Security Events</strong>: Log of security-related events</p>
-<h3 id="bulk-operations">Bulk Operations</h3>
-<p><strong>Multi-Key Management</strong>:
-- <strong>Batch Rotation</strong>: Rotate multiple keys simultaneously
-- <strong>Group Permissions</strong>: Apply permission changes to key groups
-- <strong>Bulk Deactivation</strong>: Quickly deactivate multiple keys
-- <strong>Export Configuration</strong>: Export key settings for backup</p>
-<h3 id="audit-and-compliance">Audit and Compliance</h3>
-<p><strong>Audit Logging</strong>:
-- <strong>Key Generation</strong>: Log all key creation events
-- <strong>Permission Changes</strong>: Track modifications to key permissions
-- <strong>Access Patterns</strong>: Detailed logs of API key usage
-- <strong>Security Events</strong>: Comprehensive security event logging</p>
-<p><strong>Compliance Reports</strong>:
-- <strong>Access Reports</strong>: Who has access to what resources
-- <strong>Usage Reports</strong>: Resource consumption by API key
-- <strong>Security Reports</strong>: Security events and responses
-- <strong>Compliance Dashboards</strong>: Real-time compliance status</p>
-<h2 id="integration-examples">Integration Examples</h2>
-<h3 id="basic-authentication">Basic Authentication</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Basic API call with authentication</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer YOUR_API_KEY&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">     </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">     </span><span class="s2">&quot;https://api.artinet.io/v1/agents/your-agent-id/execute&quot;</span>
-</code></pre></div>
-<h3 id="python-integration">Python Integration</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Secure key retrieval from environment</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ARTINET_API_KEY&#39;</span><span class="p">)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer </span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="s1">&#39;https://api.artinet.io/v1/agents/execute&#39;</span><span class="p">,</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;your task here&#39;</span><span class="p">}</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="p">)</span>
-</code></pre></div>
-<h3 id="javascript-integration">JavaScript Integration</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Secure API key usage in Node.js</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ARTINET_API_KEY</span><span class="p">;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://api.artinet.io/v1/agents/execute&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="s1">&#39;Authorization&#39;</span><span class="o">:</span><span class="w"> </span><span class="sb">`Bearer </span><span class="si">${</span><span class="nx">apiKey</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="nx">task</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your task here&#39;</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="p">})</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">});</span>
-</code></pre></div>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="common-issues">Common Issues</h3>
-<p><strong>Authentication Failures</strong>:
-- <strong>Invalid Key</strong>: Verify the key is copied correctly
-- <strong>Expired Key</strong>: Check expiration date and rotate if needed
-- <strong>Wrong Permissions</strong>: Ensure key has required permissions
-- <strong>IP Restrictions</strong>: Verify request is from authorized IP</p>
-<p><strong>Rate Limit Issues</strong>:
-- <strong>Exceeded Limits</strong>: Monitor usage and adjust limits if needed
-- <strong>Burst Traffic</strong>: Implement proper request queuing
-- <strong>Multiple Keys</strong>: Distribute load across multiple keys
-- <strong>Usage Optimization</strong>: Optimize requests to reduce API calls</p>
-<p><strong>Integration Problems</strong>:
-- <strong>Header Format</strong>: Ensure proper Authorization header format
-- <strong>HTTPS Requirements</strong>: All API calls must use HTTPS
-- <strong>Request Format</strong>: Verify JSON formatting and content types
-- <strong>Response Handling</strong>: Implement proper error response handling</p>
-<h3 id="support-and-recovery">Support and Recovery</h3>
-<p><strong>Key Recovery</strong>:
-- <strong>Lost Keys</strong>: Cannot be recovered - generate new keys
-- <strong>Compromised Keys</strong>: Immediately deactivate and rotate
-- <strong>Access Issues</strong>: Contact support with account verification
-- <strong>Emergency Access</strong>: Use emergency key procedures</p>
-<h2 id="advanced-features">Advanced Features</h2>
-<h3 id="key-hierarchies">Key Hierarchies</h3>
-<p><strong>Parent-Child Relationships</strong>:
-- <strong>Master Keys</strong>: Full access keys for system administration
-- <strong>Derived Keys</strong>: Limited keys derived from master keys
-- <strong>Inheritance</strong>: Permission inheritance from parent keys
-- <strong>Revocation</strong>: Cascading revocation of child keys</p>
-<h3 id="integration-webhooks">Integration Webhooks</h3>
-<p><strong>Key Event Notifications</strong>:
-- <strong>Key Creation</strong>: Notify when new keys are generated
-- <strong>Usage Anomalies</strong>: Alert on unusual usage patterns
-- <strong>Security Events</strong>: Immediate notification of security issues
-- <strong>Expiration Warnings</strong>: Advance warning of key expiration</p>
-<h3 id="custom-permissions">Custom Permissions</h3>
-<p><strong>Advanced Permission Models</strong>:
-- <strong>Time-based Access</strong>: Keys that only work during specific hours
-- <strong>Geographic Restrictions</strong>: Location-based access control
-- <strong>Resource Quotas</strong>: Fine-grained resource usage limits
-- <strong>Conditional Access</strong>: Context-aware permission evaluation</p>
 <h2 id="next-steps">Next Steps</h2>
-<p>Master API key management and explore:
-- <a href="agent-creation.html">Agent Creation</a> - Return to agent creation guide
-- <a href="grid-management.html">Grid Management</a> - Build visual workflows with your agents
-- <a href="test-and-deploy.html">Test and Deploy</a> - Deploy and monitor your agents</p>
-<hr />
-<blockquote>
-<p><strong>🔐 Security First</strong>: Proper API key management is the foundation of secure agent operations. Always follow security best practices and regularly audit your key usage patterns. </p>
-</blockquote>
+<p>Master API key management and explore:</p>
+<ul>
+<li><a href="agent-creation.html">Agent Creation</a> - Return to agent creation guide</li>
+<li><a href="grid-management.html">Grid Management</a> - Build visual workflows with your agents</li>
+<li><a href="test-and-deploy.html">Test and Deploy</a> - Test and deploy your agents</li>
+</ul>
 
 
 
@@ -2650,7 +1815,7 @@
       <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
         <script src="../javascript/extra.js"></script>
       
