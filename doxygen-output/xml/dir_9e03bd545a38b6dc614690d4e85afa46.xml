@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
   <compounddef id="dir_9e03bd545a38b6dc614690d4e85afa46" kind="dir">
-    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common</compoundname>
+    <compoundname>/home/mpickett/Artinet/artinet-sdk/src/utils/common</compoundname>
     <innerfile refid="constants_8ts">constants.ts</innerfile>
     <innerfile refid="errors_8ts">errors.ts</innerfile>
     <innerfile refid="utils_8ts">utils.ts</innerfile>
@@ -9,6 +9,6 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils/common/"/>
+    <location file="/home/mpickett/Artinet/artinet-sdk/src/utils/common/"/>
   </compounddef>
 </doxygen>

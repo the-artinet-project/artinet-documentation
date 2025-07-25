@@ -119,6 +119,6 @@ Explore **[SDK Development](sdk/quickstart.md)** for complete customization and 
 
 > **🚀 Start Building**: The future of work is collaborative intelligence between humans and agents. Artinet makes that future accessible today, whether you're automating simple tasks or building sophisticated multi-agent systems.
 
-**Ready to create your first agent? [Get started with Hero Types →](agents/agent-creation.md)**
+**Ready to create your first agent? [Get started with Agent Creation →](agents/agent-creation.md)**
 
 

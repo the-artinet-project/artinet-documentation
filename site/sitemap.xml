@@ -2,174 +2,170 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/index.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/versions.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/agents/agent-creation.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/agents/api-keys.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/agents/create-quick-agent.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/agents/grid-management.html</loc>
-         <lastmod>2025-07-20</lastmod>
-    </url>
-    <url>
-         <loc>https://the-artinet-project.github.io/artinet-documentation/agents/hero-types.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/agents/test-and-deploy.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/api/index.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/api/bundler.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/api/client.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/api/server.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/api/task-context.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/contributing/code-documentation.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/core.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/quickstart.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/index.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/basic-server.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/basic-usage.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/code-deployment.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/file-storage-client-continued.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/file-storage-client.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/file-storage-server.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/nested-deployment.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/streaming-updates.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/task-resubscribe.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/examples/task-wrapper.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/index.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/a2a-mcp.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/a2a-protocol.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/bundler.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/client.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/common-errors.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/deployment.xx.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/file-storage.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/http-utils.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/integration.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/register.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/rpc-client.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/server-error-handling.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/server-impl.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/server.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
     <url>
          <loc>https://the-artinet-project.github.io/artinet-documentation/sdk/tests/streaming.test.html</loc>
-         <lastmod>2025-07-20</lastmod>
+         <lastmod>2025-07-25</lastmod>
     </url>
 </urlset>

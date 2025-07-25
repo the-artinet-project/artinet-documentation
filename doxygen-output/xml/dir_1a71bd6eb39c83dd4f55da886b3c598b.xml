@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
   <compounddef id="dir_1a71bd6eb39c83dd4f55da886b3c598b" kind="dir">
-    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/rpc</compoundname>
+    <compoundname>/home/mpickett/Artinet/artinet-sdk/src/transport/rpc</compoundname>
     <innerfile refid="parser_8ts">parser.ts</innerfile>
     <innerfile refid="rpc-client_8ts">rpc-client.ts</innerfile>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport/rpc/"/>
+    <location file="/home/mpickett/Artinet/artinet-sdk/src/transport/rpc/"/>
   </compounddef>
 </doxygen>

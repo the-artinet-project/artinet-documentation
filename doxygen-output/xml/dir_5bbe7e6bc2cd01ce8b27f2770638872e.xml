@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
   <compounddef id="dir_5bbe7e6bc2cd01ce8b27f2770638872e" kind="dir">
-    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/auth</compoundname>
+    <compoundname>/home/mpickett/Artinet/artinet-sdk/src/types/schemas/a2a/auth</compoundname>
     <innerfile refid="auth_8ts">auth.ts</innerfile>
     <innerfile refid="types_2schemas_2a2a_2auth_2base_8ts">base.ts</innerfile>
     <innerfile refid="types_2schemas_2a2a_2auth_2index_8ts">index.ts</innerfile>
@@ -10,6 +10,6 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/schemas/a2a/auth/"/>
+    <location file="/home/mpickett/Artinet/artinet-sdk/src/types/schemas/a2a/auth/"/>
   </compounddef>
 </doxygen>

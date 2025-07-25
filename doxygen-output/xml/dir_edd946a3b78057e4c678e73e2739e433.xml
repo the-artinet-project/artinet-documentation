@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
   <compounddef id="dir_edd946a3b78057e4c678e73e2739e433" kind="dir">
-    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services</compoundname>
-    <innerdir refid="dir_0794c5caba61de4768678926ee798af2">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/a2a</innerdir>
-    <innerdir refid="dir_ff552cab3c5c76062d55091ea04c83e4">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/mcp</innerdir>
+    <compoundname>/home/mpickett/Artinet/artinet-sdk/src/types/services</compoundname>
+    <innerdir refid="dir_0794c5caba61de4768678926ee798af2">/home/mpickett/Artinet/artinet-sdk/src/types/services/a2a</innerdir>
+    <innerdir refid="dir_ff552cab3c5c76062d55091ea04c83e4">/home/mpickett/Artinet/artinet-sdk/src/types/services/mcp</innerdir>
     <innerfile refid="context_8ts">context.ts</innerfile>
     <innerfile refid="dispatcher_8ts">dispatcher.ts</innerfile>
     <innerfile refid="types_2services_2index_8ts">index.ts</innerfile>
@@ -14,6 +14,6 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types/services/"/>
+    <location file="/home/mpickett/Artinet/artinet-sdk/src/types/services/"/>
   </compounddef>
 </doxygen>

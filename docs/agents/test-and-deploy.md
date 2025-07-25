@@ -45,9 +45,9 @@ After deployment:
 ## Next Steps
 
 After successful deployment:
+
 - [Grid Management](grid-management.md) - Learn about workflow integration
 - [API Key Management](api-keys.md) - Generate keys
-- [Hero Types](hero-types.md) - Deep dive into the three agent types
 
 ---
 

@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
   <compounddef id="dir_11d4b6bc4b47a464143cdb4c4b810e9e" kind="dir">
-    <compoundname>/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src</compoundname>
-    <innerdir refid="dir_d99d95f99ba554b9fa257e22b0b049a6">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/client</innerdir>
-    <innerdir refid="dir_1eedc1b0248a44ec7ac7a29e048f4082">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/server</innerdir>
-    <innerdir refid="dir_0fe43b3980a10b7eca7178805e9170b0">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/services</innerdir>
-    <innerdir refid="dir_7a2c89cf85c87e71af29da720dcbaaf8">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/transport</innerdir>
-    <innerdir refid="dir_4ae32042f0a0622e2a0f05c0172ff336">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/types</innerdir>
-    <innerdir refid="dir_5cacdd47e5fc42c1cde4a2af35b0a573">/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/utils</innerdir>
+    <compoundname>/home/mpickett/Artinet/artinet-sdk/src</compoundname>
+    <innerdir refid="dir_d99d95f99ba554b9fa257e22b0b049a6">/home/mpickett/Artinet/artinet-sdk/src/client</innerdir>
+    <innerdir refid="dir_1eedc1b0248a44ec7ac7a29e048f4082">/home/mpickett/Artinet/artinet-sdk/src/server</innerdir>
+    <innerdir refid="dir_0fe43b3980a10b7eca7178805e9170b0">/home/mpickett/Artinet/artinet-sdk/src/services</innerdir>
+    <innerdir refid="dir_7a2c89cf85c87e71af29da720dcbaaf8">/home/mpickett/Artinet/artinet-sdk/src/transport</innerdir>
+    <innerdir refid="dir_4ae32042f0a0622e2a0f05c0172ff336">/home/mpickett/Artinet/artinet-sdk/src/types</innerdir>
+    <innerdir refid="dir_5cacdd47e5fc42c1cde4a2af35b0a573">/home/mpickett/Artinet/artinet-sdk/src/utils</innerdir>
     <innerfile refid="index_8ts">index.ts</innerfile>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/davronbekimamov/Desktop/content-synchro/artinet-sdk/src/"/>
+    <location file="/home/mpickett/Artinet/artinet-sdk/src/"/>
   </compounddef>
 </doxygen>

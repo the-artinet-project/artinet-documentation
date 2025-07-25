@@ -25,7 +25,7 @@ cp mkdocs.yml mkdocs.yml.bak
 
 # Update the navigation section to properly include examples and tests
 cat > mkdocs.yml << 'EOF'
-site_name: Artinet SDK Documentation
+site_name: Artinet Documentation
 site_url: https://the-artinet-project.github.io/artinet-documentation/
 use_directory_urls: false
 repo_url: https://github.com/the-artinet-project/artinet-sdk
@@ -64,7 +64,13 @@ extra:
 
 nav:
   - Home: index.md
-  - SDK:
+  - Agent Creation:
+    - Overview: agents/agent-creation.md
+    - Test and Deploy: agents/test-and-deploy.md
+    - The Grid: agents/grid-management.md
+    - API Key Creation: agents/api-keys.md
+    - Quick Agent Tool: agents/create-quick-agent.md
+  - Advanced Development:
     - Quickstart: sdk/quickstart.md
     - Core: sdk/core.md
     - Examples:
@@ -78,12 +84,15 @@ nav:
       - Streaming Updates: sdk/examples/streaming-updates.md
       - Task Resubscribe: sdk/examples/task-resubscribe.md
       - Task Wrapper: sdk/examples/task-wrapper.md
-    - Tests:
+      - Nested Deployment: sdk/examples/nested-deployment.md
+    - SDK Tests:
       - Overview: sdk/tests/index.md
+      - A2A MCP: sdk/tests/a2a-mcp.test.md
       - A2A Protocol: sdk/tests/a2a-protocol.test.md
       - Bundler: sdk/tests/bundler.test.md
       - Client: sdk/tests/client.test.md
       - Common Errors: sdk/tests/common-errors.test.md
+      - Deployment: sdk/tests/deployment.xx.md
       - File Storage: sdk/tests/file-storage.test.md
       - HTTP Utils: sdk/tests/http-utils.test.md
       - Integration: sdk/tests/integration.test.md
@@ -93,10 +102,7 @@ nav:
       - Server Error Handling: sdk/tests/server-error-handling.test.md
       - Server Impl: sdk/tests/server-impl.test.md
       - Streaming: sdk/tests/streaming.test.md
-  - Agents:
-    - Quick Agents: agents/quick_agents.md
-    - Create Quick Agent: agents/create-quick-agent.md
-  - API:
+  - API Reference:
     - Overview: api/index.md
     - A2AClient: api/client.md
     - A2AServer: api/server.md

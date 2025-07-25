@@ -1,4 +1,4 @@
-site_name: Artinet SDK Documentation
+site_name: Artinet Documentation
 site_url: https://the-artinet-project.github.io/artinet-documentation/
 use_directory_urls: false
 repo_url: https://github.com/the-artinet-project/artinet-sdk
@@ -11,20 +11,8 @@ theme:
   favicon: images/artinet-logo.ico
   custom_dir: docs/overrides
   palette:
-    # Light mode
-    - scheme: default
-      primary: black
-      accent: black
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    # Dark mode  
-    - scheme: slate
-      primary: black
-      accent: black
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+    primary: black
+    accent: black
   features:
     - navigation.tabs
     - navigation.sections
@@ -51,14 +39,13 @@ nav:
   - Home: index.md
   - Agent Creation:
     - Overview: agents/agent-creation.md
-    - Hero Types: agents/hero-types.md
     - Test and Deploy: agents/test-and-deploy.md
-    - Grid Management: agents/grid-management.md
-    - API Key Management: agents/api-keys.md
+    - The Grid: agents/grid-management.md
+    - API Key Creation: agents/api-keys.md
     - Quick Agent Tool: agents/create-quick-agent.md
   - Advanced Development:
-    - SDK Overview: sdk/quickstart.md
-    - Core SDK: sdk/core.md
+    - Quickstart: sdk/quickstart.md
+    - Core: sdk/core.md
     - Examples:
       - Overview: sdk/examples/index.md
       - Basic Server: sdk/examples/basic-server.md
