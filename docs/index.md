@@ -8,17 +8,17 @@ Artinet's **Hero Types** system makes agent creation accessible to everyone, fro
 
 ### 🎭 Hero Types: The Foundation of Agent Creation
 
-**[Director Agents](agents/hero-types.md#director-agent)** - Orchestrate and manage other agents
+**Director Agents** - Orchestrate and manage other agents
 - Coordinate complex multi-agent workflows
 - Make strategic decisions and delegate tasks
 - Perfect for project management and business process automation
 
-**[Worker Agents](agents/hero-types.md#worker-agent)** - Execute specialized tasks with tool access
+**Worker Agents** - Execute specialized tasks with tool access
 - Connect to external systems and APIs via MCP tools
 - Handle data processing, analysis, and system integrations
 - Ideal for technical operations and specialized computations
 
-**[Speaker Agents](agents/hero-types.md#speaker-agent)** - Excel at communication and content creation
+**Speaker Agents** - Excel at communication and content creation
 - Natural language processing and conversation management
 - Content creation and user interaction
 - Perfect for customer service, writing, and user interfaces
@@ -92,31 +92,10 @@ The Artinet SDK is designed for advanced or custom agent creation scenarios wher
 ### Comprehensive Testing
 - **Sandbox Environment**: Safe testing environment for all agent types
 - **End-to-End Validation**: Test complete workflows before deployment
-- **Performance Monitoring**: Track agent performance and optimize accordingly
-
-### Security and Management
-- **API Key Management**: Fine-grained access control and security
-- **Usage Analytics**: Monitor agent performance and resource consumption
-- **Team Collaboration**: Share agents and workflows across your organization
 
 ### Integration Ecosystem
 - **MCP Tools**: Extensive library of tools for Worker agents
 - **External APIs**: Connect to any REST API or webhook
-- **Database Access**: Direct integration with popular databases
-- **Cloud Services**: Native integration with major cloud providers
-
-## Community and Support
-
-### Learning Resources
-- **[Hero Types Deep Dive](agents/hero-types.md)** - Comprehensive guide to all three Hero Types
-- **[Best Practices](agents/agent-creation.md#best-practices)** - Learn from successful agent implementations
-- **[Example Workflows](agents/grid-management.md#best-practices)** - Ready-to-use workflow templates
-
-### Getting Help
-- **Documentation Search**: Find answers in our comprehensive documentation
-- **Community Forums**: Connect with other Artinet developers and users
-- **Support Channels**: Get help from our technical support team
-- **Video Tutorials**: Step-by-step video guides for common tasks
 
 ## Architecture Overview
 
@@ -129,11 +108,9 @@ Artinet is built on the **Agent2Agent (A2A) protocol**, enabling secure, efficie
 
 ## Ready to Begin?
 
-### For Business Users and Content Creators
 Start with **[Agent Creation](agents/agent-creation.md)** to learn about Hero Types and create your first agents using our intuitive interface.
 
-### For Developers and Technical Users
-Begin with **[Hero Types Overview](agents/hero-types.md)** to understand the three agent types, then proceed to **[Grid Management](agents/grid-management.md)** for workflow creation.
+Use **[The Grid](agents/grid-management.md)** for workflow creation.
 
 ### For Advanced Developers
 Explore **[SDK Development](sdk/quickstart.md)** for complete customization and advanced agent development scenarios.
